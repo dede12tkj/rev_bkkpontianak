@@ -39,7 +39,7 @@
                         </thead>
 
                         <tbody>
-                            @forelse ($gambar as $item)
+                            @foreach ($gambar as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
 
@@ -55,64 +55,60 @@
                                         </button>
                                     </td>
                                 </tr>
-
-                                {{-- Modal Edit --}}
-                                <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
-                                    aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('gambarmaklumatpelayanan.update', $item->id) }}"
-                                                method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel{{ $item->id }}">
-                                                        Edit Gambar
-                                                    </h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="mb-3">
-                                                        <label>Gambar Sekarang</label><br>
-                                                        <img src="{{ asset('storage/' . $item->path) }}"
-                                                            style="max-width: 100%; border-radius: 5px;">
-                                                    </div>
-
-                                                    <div class="form-group mt-2">
-                                                        <label>Ganti Gambar (opsional)</label>
-                                                        <input type="file" name="path" class="form-control">
-                                                        <small class="text-muted">
-                                                            Kosongkan jika tidak ingin mengganti gambar.
-                                                        </small>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">
-                                        Tidak ada Maklumat.
-                                    </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
+
+                {{-- Modal Edit/Hapus (di luar tabel agar DataTables tidak error) --}}
+                @foreach ($gambar as $item)
+                        {{-- Modal Edit --}}
+                        <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1"
+                            aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="{{ route('gambarmaklumatpelayanan.update', $item->id) }}"
+                                        method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel{{ $item->id }}">
+                                                Edit Gambar
+                                            </h5>
+                                            <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="mb-3">
+                                                <label>Gambar Sekarang</label><br>
+                                                <img src="{{ asset('storage/' . $item->path) }}"
+                                                    style="max-width: 100%; border-radius: 5px;">
+                                            </div>
+
+                                            <div class="form-group mt-2">
+                                                <label>Ganti Gambar (opsional)</label>
+                                                <input type="file" name="path" class="form-control">
+                                                <small class="text-muted">
+                                                    Kosongkan jika tidak ingin mengganti gambar.
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                @endforeach
             </div>
         </div>
 

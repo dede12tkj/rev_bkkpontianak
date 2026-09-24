@@ -188,7 +188,7 @@
                 icon: 'success',
                 title: 'Pertanyaan berhasil dikirim. Kami akan segera menindaklanjutinya melalui email Anda.',
                 text: 'Kami akan segera menindaklanjutinya melalui email Anda.',
-                confirmButtonColor: '#0d6efd',
+                confirmButtonColor: '#007C85',
                 confirmButtonText: 'OK'
             });
         </script>

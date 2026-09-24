@@ -222,7 +222,7 @@
                 title: "Berhasil!",
                 text: "{{ session('success') }}",
                 icon: "success",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#007C85",
                 confirmButtonText: "OK"
             });
         </script>

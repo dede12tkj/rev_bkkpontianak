@@ -42,7 +42,7 @@
                         </thead>
 
                         <tbody>
-                            @forelse ($carousel as $item)
+                            @foreach ($carousel as $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
 
@@ -68,90 +68,88 @@
                                     </td>
 
                                 </tr>
-                                <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="{{ route('carousel.update', $item->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Edit Carousel</h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Gambar Saat Ini</label><br>
-                                                        <img src="{{ asset('storage/' . $item->path) }}"
-                                                            class="img-thumbnail mb-2" style="max-width: 200px;">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Ganti Gambar (Opsional)</label>
-                                                        <input type="file" name="path" class="form-control">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Teks</label>
-                                                        <textarea name="text" class="form-control" rows="4" required>{{ $item->text }}</textarea>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('carousel.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title text-danger">Hapus Carousel</h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-
-                                                <div class="modal-body text-center">
-                                                    <p>Apakah Anda yakin ingin menghapus carousel ini?</p>
-                                                    <img src="{{ asset('storage/' . $item->path) }}" class="img-thumbnail"
-                                                        style="max-width: 200px;">
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">
-                                        Tidak ada data carousel
-                                    </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
 
                     </table>
                 </div>
+
+                {{-- Modal Edit/Hapus (di luar tabel agar DataTables tidak error) --}}
+                @foreach ($carousel as $item)
+                        <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="{{ route('carousel.update', $item->id) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Carousel</h5>
+                                            <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Gambar Saat Ini</label><br>
+                                                <img src="{{ asset('storage/' . $item->path) }}"
+                                                    class="img-thumbnail mb-2" style="max-width: 200px;">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Ganti Gambar (Opsional)</label>
+                                                <input type="file" name="path" class="form-control">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Teks</label>
+                                                <textarea name="text" class="form-control" rows="4" required>{{ $item->text }}</textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="{{ route('carousel.destroy', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-danger">Hapus Carousel</h5>
+                                            <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body text-center">
+                                            <p>Apakah Anda yakin ingin menghapus carousel ini?</p>
+                                            <img src="{{ asset('storage/' . $item->path) }}" class="img-thumbnail"
+                                                style="max-width: 200px;">
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                @endforeach
             </div>
         </div>
 

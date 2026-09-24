@@ -45,7 +45,7 @@
                         </thead>
 
                         <tbody>
-                            @forelse ($tentang_kami as $item)
+                            @foreach ($tentang_kami as $item)
                                 <tr>
                                     <td>
                                         {{ $item->text }}
@@ -64,57 +64,55 @@
                                     </td>
 
                                 </tr>
-                                <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <form action="{{ route('tentang-kami.update', $item->id) }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                @method('PUT')
-
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Edit Tentang Kami</h5>
-                                                    <button type="button" class="btn-close"
-                                                        data-bs-dismiss="modal"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Teks</label>
-
-                                                        <div id="snow-edit-{{ $item->id }}" style="height: 250px;">
-                                                            {!! $item->text !!}
-                                                        </div>
-
-                                                        <input type="hidden" name="text"
-                                                            id="text-edit-{{ $item->id }}">
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">
-                                        Tidak ada data Tentang Kami
-                                    </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
 
                     </table>
                 </div>
+
+                {{-- Modal Edit/Hapus (di luar tabel agar DataTables tidak error) --}}
+                @foreach ($tentang_kami as $item)
+                        <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="{{ route('tentang-kami.update', $item->id) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Tentang Kami</h5>
+                                            <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Teks</label>
+
+                                                <div id="snow-edit-{{ $item->id }}" style="height: 250px;">
+                                                    {!! $item->text !!}
+                                                </div>
+
+                                                <input type="hidden" name="text"
+                                                    id="text-edit-{{ $item->id }}">
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                @endforeach
             </div>
         </div>
 

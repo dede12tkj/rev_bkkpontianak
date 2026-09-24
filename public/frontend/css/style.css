@@ -1,18 +1,25 @@
 /********** Template CSS **********/
+/* Tema warna mengikuti identitas Kementerian Kesehatan RI (hijau/turquoise) */
 :root {
-    /* --primary: #06A3DA; */
-    --primary: #00b1a9;
-    --secondary: #34ad54;
-    --light: #eef9ff;
-    --dark: #091e3e;
+    --primary: #007C85;
+    /* Turquoise Gelap - Kemenkes */
+    --secondary: #1ABCCB;
+    /* Turquoise Medium - Kemenkes */
+    --accent: #D6DF21;
+    /* Hijau Kuning - Kemenkes (aksen sorotan) */
+    --light: #EDF7F5;
+    --dark: #0B2B27;
+    --dark-2: #123F38;
+    --dark-gradient: linear-gradient(135deg, #051614 0%, #0B2B27 45%, #123F38 100%);
     --green: #007c85;
-    --black: #1a1a1a;
+    --black: #10201D;
     --orange: #f08e20;
     --kemenkes-green: #007c85;
     --kemenkes-green-light: #03b8a4;
     --kemenkes-yellow: #d6df21;
     --kemenkes-blue: #1abccb;
     --kemenkes-orange: #f08e20;
+    --font-heading: 'Poppins', sans-serif;
 }
 
 /* Grid 6 Kolom */
@@ -38,7 +45,7 @@
 .nav-card.active {
     background: #007c85; /* Biru Bootstrap */
     color: white;
-    border-color: #0a58ca;
+    border-color: #00646b;
     transform: translateY(-5px);
 }
 
@@ -304,7 +311,7 @@ i {
 }
 
 .berita-indicators .active {
-    background-color: #0d6efd;
+    background-color: #007C85;
 }
 
 #header-carousel .carousel-item {
@@ -358,7 +365,7 @@ i {
 
 .berita-prev:hover,
 .berita-next:hover {
-    background: #0d6efd;
+    background: #007C85;
 }
 
 /* Carousel controls */
@@ -610,16 +617,30 @@ h6,
 }
 
 /*** Navbar ***/
+.navbar-dark {
+    background: linear-gradient(180deg, rgba(5, 22, 20, 0.92) 0%, rgba(11, 43, 39, 0.55) 70%, rgba(11, 43, 39, 0) 100%);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.navbar-dark .navbar-brand h3 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
 .navbar-dark .navbar-nav .nav-link {
-    font-family: "Nunito", sans-serif;
+    font-family: var(--font-heading);
     position: relative;
-    margin-left: 25px;
+    margin-left: 22px;
     padding: 35px 0;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
     outline: none;
-    transition: 0.5s;
+    transition: 0.35s;
 }
 
 .sticky-top.navbar-dark .navbar-nav .nav-link {
@@ -629,7 +650,7 @@ h6,
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
-    color: var(--green);
+    color: var(--accent);
 }
 
 .navbar-dark .navbar-brand h3 {
@@ -637,25 +658,57 @@ h6,
 }
 
 .navbar-dark .navbar-toggler {
-    color: var(--primary) !important;
-    border-color: var(--primary) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+/* Dropdown menu bergaya gelap agar menyatu dengan tema */
+.navbar-dark .dropdown-menu {
+    background: var(--dark-gradient);
+    border: 1px solid rgba(214, 223, 33, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 0;
+}
+
+.navbar-dark .dropdown-menu .dropdown-item {
+    color: #eafffb;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    transition: 0.25s;
+}
+
+.navbar-dark .dropdown-menu .dropdown-item:hover,
+.navbar-dark .dropdown-menu .dropdown-item.active {
+    background: rgba(214, 223, 33, 0.12);
+    color: var(--accent);
 }
 
 @media (max-width: 991.98px) {
+    .navbar-dark {
+        background: var(--dark-gradient) !important;
+    }
+
     .sticky-top.navbar-dark {
         position: relative;
-        background: #ffffff;
+        background: var(--dark-gradient) !important;
     }
 
     .navbar-dark .navbar-nav .nav-link,
     .navbar-dark .navbar-nav .nav-link.show,
     .sticky-top.navbar-dark .navbar-nav .nav-link {
         padding: 10px 0;
-        color: var(--dark);
+        color: #ffffff;
     }
 
     .navbar-dark .navbar-brand h3 {
-        color: var(--primary);
+        color: #ffffff;
+    }
+
+    .navbar-dark .dropdown-menu {
+        border: none;
+        background: rgba(255, 255, 255, 0.04);
     }
 }
 
@@ -665,13 +718,13 @@ h6,
         width: 100%;
         top: 0;
         left: 0;
-        border-bottom: 1px solid rgba(256, 256, 256, 0.1);
+        border-bottom: 1px solid rgba(214, 223, 33, 0.15);
         z-index: 999;
     }
 
     .sticky-top.navbar-dark {
         position: fixed;
-        background: #ffffff;
+        background: var(--dark-gradient);
     }
 
     .navbar-dark .navbar-nav .nav-link::before {
@@ -681,8 +734,8 @@ h6,
         height: 2px;
         bottom: -1px;
         left: 50%;
-        background: var(--green);
-        transition: 0.5s;
+        background: var(--accent);
+        transition: 0.35s;
     }
 
     .navbar-dark .navbar-nav .nav-link:hover::before,
@@ -696,18 +749,31 @@ h6,
     }
 
     .sticky-top.navbar-dark .navbar-brand h3 {
-        color: var(--black);
+        color: #ffffff;
     }
 }
 
 /*** Carousel ***/
+#header-carousel {
+    position: relative;
+}
+
+#header-carousel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(100deg, rgba(5, 22, 20, 0.88) 0%, rgba(11, 43, 39, 0.55) 35%, rgba(11, 43, 39, 0.15) 60%, rgba(11, 43, 39, 0.55) 100%);
+}
+
 .carousel-caption {
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(9, 30, 62, 0.7);
-    z-index: 1;
+    background: transparent;
+    z-index: 2;
 }
 
 @media (max-width: 576px) {
@@ -761,7 +827,7 @@ h6,
     width: 6px;
     height: 5px;
     bottom: 0px;
-    background: #ffffff;
+    background: var(--accent);
     -webkit-animation: section-title-run 5s infinite linear;
     animation: section-title-run 5s infinite linear;
 }
@@ -1045,7 +1111,7 @@ h6,
 }
 
 .service-item h4 {
-    /* color: #00b1a9; */
+    /* color: #007C85; */
     font-size: 1.5rem;
     text-align: center;
 }
@@ -1217,7 +1283,7 @@ h6,
 }
 
 .team-item:hover .team-social {
-    background: rgba(9, 30, 62, 0.7);
+    background: rgba(11, 43, 39, 0.7);
 }
 
 .team-item:hover .team-social a.btn:first-child {
@@ -1280,7 +1346,7 @@ h6,
 
 .bg-header {
     background:
-        linear-gradient(rgba(9, 30, 62, 0.7), rgba(9, 30, 62, 0.7)),
+        linear-gradient(rgba(11, 43, 39, 0.7), rgba(11, 43, 39, 0.7)),
         url(../img/carousel-1.jpg) center center no-repeat;
     background-size: cover;
 }

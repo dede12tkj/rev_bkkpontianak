@@ -1,8 +1,10 @@
-<div class="container-fluid bg-black text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+<div class="container-fluid text-light mt-5 wow fadeInUp" data-wow-delay="0.1s"
+    style="background: var(--dark-gradient); border-top: 3px solid var(--accent);">
     <div class="container">
         <div class="row gx-5">
             <div class="col-lg-4 col-md-6 footer-about">
-                <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-green p-4">
+                <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 p-4"
+                    style="background: rgba(0, 124, 133, 0.35); border-radius: 10px;">
                     <a href="#navbar" class="navbar-brand align-items-center p-0 ">
                         <img src="{{ asset('frontend/img/logokarantina.png') }}" alt="Logo BKK" style="height: 150px;">
                         <h1 style="margin-top: 5px; font-size: 20px">BKK Kelas I Pontianak</h1>
@@ -93,12 +95,12 @@
         </div>
     </div>
 </div>
-<div class="container-fluid text-white" style="background: white;">
+<div class="container-fluid" style="background: #051614;">
     <div class="container text-center">
         <div class="row justify-content-end">
             <div class="col-lg-8 col-md-6">
                 <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                    <p class="mb-0" style="color: black">&copy; Balai Kekarantinaan Kesehatan Kelas I Pontianak
+                    <p class="mb-0" style="color: #EDF7F5">&copy; Balai Kekarantinaan Kesehatan Kelas I Pontianak
                     </p>
 
                 </div>

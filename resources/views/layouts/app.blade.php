@@ -3,14 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>@yield('title', 'BKK Pontianak')</title>
+    <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    {{-- Sebelumnya keywords & description masih bawaan template gratisan
-         ("Free HTML Templates"). Sekarang defaultnya masuk akal, dan tiap
-         halaman BISA override dengan @section('meta_description', '...')
-         di atas @section('content') pada view masing-masing. --}}
-    <meta content="Balai Kesehatan Kerja (BKK) Pontianak" name="keywords">
-    <meta content="@yield('meta_description', 'Website resmi Balai Kesehatan Kerja (BKK) Pontianak — informasi layanan, PPID, dan publikasi resmi.')" name="description">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
     @include('includes.frontend.style')
     <style>
         .visitor-counter {
@@ -24,7 +20,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            background: linear-gradient(135deg, #007C85, #0B2B27);
             color: white;
             padding: 12px 15px;
             border-radius: 15px;
@@ -61,7 +57,7 @@
     <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-content" style="background: rgba(6, 22, 20, .88);">
                 <div class="modal-header border-0">
                     <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>

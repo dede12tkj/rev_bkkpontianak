@@ -1,4 +1,5 @@
-<div class="container-fluid bg-kemenkes-green px-5 d-none d-lg-block">
+<div class="container-fluid px-5 d-none d-lg-block"
+    style="background: linear-gradient(90deg, #051614 0%, #007C85 100%); border-bottom: 1px solid rgba(214,223,33,0.25);">
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">

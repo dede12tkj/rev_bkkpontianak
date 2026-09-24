@@ -21,7 +21,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            background: linear-gradient(135deg, #007C85, #0B2B27);
             color: white;
             padding: 12px 15px;
             border-radius: 15px;
@@ -74,7 +74,7 @@
     <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-content" style="background: rgba(6, 22, 20, .88);">
                 <div class="modal-header border-0">
                     <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>

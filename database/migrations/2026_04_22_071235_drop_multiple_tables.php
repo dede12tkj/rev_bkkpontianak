@@ -11,10 +11,12 @@ return new class extends Migration
      */
      public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('infografis');
         Schema::dropIfExists('sunmore');
         Schema::dropIfExists('dashboard_interaktif');
         Schema::dropIfExists('bedesut');
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -22,6 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::disableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
     }
 };
