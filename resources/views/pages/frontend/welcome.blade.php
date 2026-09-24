@@ -900,37 +900,29 @@
         </div>
     </div> --}}
 
-    <div class="container-fluid wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="section-title text-center position-relative pb-3 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">Layanan Kami</h5>
-                <h1 class="mb-0">Pelayanan Balai Kekarantinaan Kesehatan Kelas I Pontianak</h1>
+    <div class="layanan-section wow fadeInUp" data-wow-delay="0.1s">
+        <div class="layanan-glow"></div>
+        <div class="container position-relative">
+            <div class="text-center position-relative mx-auto mb-3" style="max-width: 700px; z-index: 2;">
+                <h5 class="fw-bold text-uppercase layanan-kicker">Layanan Kami</h5>
+                <h1 class="text-white mb-0">Pelayanan Balai Kekarantinaan Kesehatan Kelas I Pontianak</h1>
             </div>
 
-            <div class="row g-4 mt-3">
-
+            <div class="owl-carousel layanan-carousel position-relative mt-4" style="z-index: 2;">
                 @foreach ($layanan as $item)
-                    <div class="col-lg-4 col-md-6 wow fadeInUp">
-                        <div class="service-card shadow text-center p-4 h-100">
-
-                            <!-- ICON -->
-                            <i class="{{ $item->icon }} service-icon"></i>
-
-                            <!-- JUDUL -->
-                            <h5>
-                                {{ $item->nama_tampilan ?? $item->nama }}
-                            </h5>
-
-                            <!-- BUTTON -->
+                    <div class="item">
+                        <div class="layanan-card text-center h-100">
+                            <div class="layanan-icon-wrap">
+                                <i class="{{ $item->icon }}"></i>
+                            </div>
+                            <h5>{{ $item->nama_tampilan ?? $item->nama }}</h5>
                             <a href="{{ route('standar-pelayanan.show', $item->id) }}"
-                                class="btn btn-kemenkes btn-sm mt-3 text-white">
+                                class="btn btn-layanan-detail btn-sm mt-3">
                                 Detail
                             </a>
-
                         </div>
                     </div>
                 @endforeach
-
             </div>
         </div>
     </div>

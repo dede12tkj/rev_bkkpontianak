@@ -1163,6 +1163,163 @@ h6,
     min-height: 60px;
 }
 
+/*** Layanan Kami (Beranda) - carousel gaya coverflow ***/
+.layanan-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark-gradient);
+    padding: 90px 0;
+}
+
+.layanan-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 620px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0, 124, 133, 0.45) 0%, rgba(11, 43, 39, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.layanan-kicker {
+    color: var(--accent);
+    letter-spacing: 2px;
+    font-size: 14px;
+}
+
+.layanan-section h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.layanan-carousel .item {
+    padding: 10px 0 30px;
+}
+
+.layanan-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 40px 22px 30px;
+    color: #eafffb;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: 0.4s;
+    min-height: 260px;
+}
+
+.layanan-icon-wrap {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+}
+
+.layanan-icon-wrap i {
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.layanan-card h5 {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    min-height: 48px;
+}
+
+.btn-layanan-detail {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--dark);
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    padding: 6px 24px;
+    transition: 0.3s;
+}
+
+.btn-layanan-detail:hover {
+    background: var(--accent);
+    color: var(--dark);
+}
+
+.layanan-carousel .owl-item {
+    opacity: 0.55;
+    transform: scale(0.9);
+    transition: 0.4s;
+}
+
+.layanan-carousel .owl-item.center {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.layanan-carousel .owl-item.center .layanan-card {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(214, 223, 33, 0.45);
+    box-shadow: 0 0 45px rgba(0, 124, 133, 0.6), 0 0 90px rgba(214, 223, 33, 0.12);
+}
+
+.layanan-carousel .owl-item.center .layanan-icon-wrap {
+    background: var(--accent);
+}
+
+.layanan-carousel .owl-item.center .layanan-icon-wrap i {
+    color: var(--dark);
+}
+
+.layanan-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    right: -5px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.layanan-carousel .owl-nav button.owl-prev,
+.layanan-carousel .owl-nav button.owl-next {
+    pointer-events: all;
+    width: 46px;
+    height: 46px;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #fff !important;
+    font-size: 18px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    backdrop-filter: blur(4px);
+}
+
+.layanan-carousel .owl-nav button.owl-prev:hover,
+.layanan-carousel .owl-nav button.owl-next:hover {
+    background: var(--accent) !important;
+    color: var(--dark) !important;
+}
+
+@media (max-width: 767.98px) {
+    .layanan-section {
+        padding: 60px 0;
+    }
+
+    .layanan-glow {
+        width: 380px;
+        height: 380px;
+    }
+}
+
 .btn-kemenkes {
     background: var(--kemenkes-green);
     border: none;
