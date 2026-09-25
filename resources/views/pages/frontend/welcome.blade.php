@@ -900,12 +900,7 @@
         </div>
     </div> --}}
 
-    {{-- Class "wow fadeInUp" sengaja dihapus: sebelumnya section ini baru muncul
-         kalau WOW.js berhasil mendeteksi scroll ke posisinya, tapi deteksinya
-         tidak selalu jalan (scroll cepat / lompat lewat anchor bisa terlewat),
-         jadi section ini kadang terlihat "hilang". Sekarang selalu langsung
-         tampil begitu halaman dimuat. --}}
-    <div class="layanan-section">
+    <div class="layanan-section wow fadeInUp" data-wow-delay="0.1s">
         <div class="layanan-glow"></div>
         <div class="container position-relative">
             <div class="text-center position-relative mx-auto mb-3" style="max-width: 700px; z-index: 2;">
@@ -996,7 +991,7 @@
                                 </div>
 
                                 <div class="card-footer bg-white border-0 text-center pb-4">
-                                    <a href="{{ $fskm->link }}" target="_blank"
+                                    <a href="{{ route('skm-survey.show') }}"
                                         class="btn btn-primary btn-lg px-5 rounded-pill">
                                         Isi Survey IKM
                                     </a>

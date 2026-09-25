@@ -45,6 +45,14 @@
                                     <a href="{{ route('form-survey-kepuasan-masyarakat.index') }}"
                                         class="submenu-link">Form Survey Kepuasan Masyarakat</a>
                                 </li>
+                                <li class="submenu-item {{ request()->routeIs('admin-skm-survey.*') ? 'active' : '' }}">
+                                    <a href="{{ route('admin-skm-survey.index') }}"
+                                        class="submenu-link">Builder Survei IKM</a>
+                                </li>
+                                <li class="submenu-item {{ request()->routeIs('admin-skm-survey.responses') ? 'active' : '' }}">
+                                    <a href="{{ route('admin-skm-survey.responses') }}"
+                                        class="submenu-link">Rekap Hasil Survei IKM</a>
+                                </li>
                                 <li class="submenu-item {{ request()->routeIs('sosmed.index') ? 'active' : '' }}">
                                     <a href="{{ route('sosmed.index') }}" class="submenu-link">Sosial Media</a>
                                 </li>
