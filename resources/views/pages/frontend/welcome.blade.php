@@ -900,7 +900,12 @@
         </div>
     </div> --}}
 
-    <div class="layanan-section wow fadeInUp" data-wow-delay="0.1s">
+    {{-- Class "wow fadeInUp" sengaja dihapus: sebelumnya section ini baru muncul
+         kalau WOW.js berhasil mendeteksi scroll ke posisinya, tapi deteksinya
+         tidak selalu jalan (scroll cepat / lompat lewat anchor bisa terlewat),
+         jadi section ini kadang terlihat "hilang". Sekarang selalu langsung
+         tampil begitu halaman dimuat. --}}
+    <div class="layanan-section">
         <div class="layanan-glow"></div>
         <div class="container position-relative">
             <div class="text-center position-relative mx-auto mb-3" style="max-width: 700px; z-index: 2;">
