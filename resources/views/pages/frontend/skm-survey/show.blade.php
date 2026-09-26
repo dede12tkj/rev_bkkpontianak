@@ -28,6 +28,10 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
+                    @if (session('error'))
+                        <div class="alert alert-warning">{{ session('error') }}</div>
+                    @endif
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <strong>Mohon periksa kembali isian Anda:</strong>
@@ -41,6 +45,13 @@
 
                     <form method="POST" action="{{ route('skm-survey.store', $survey->id) }}">
                         @csrf
+
+                        {{-- Honeypot anti-spam: field ini disembunyikan dari manusia lewat CSS,
+                             tapi bot pengisi form otomatis biasanya tetap mengisinya. --}}
+                        <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                        </div>
 
                         @foreach ($survey->sections as $section)
                             <div class="card shadow-sm border-0 mb-4">

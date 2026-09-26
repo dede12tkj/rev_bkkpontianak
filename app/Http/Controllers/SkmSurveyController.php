@@ -8,10 +8,17 @@ use App\Models\SkmResponse;
 use App\Models\SkmSurvey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
 
 class SkmSurveyController extends Controller
 {
+    // Maksimal pengisian per IP dalam satu jendela waktu, sebelum diblokir sementara
+    private const MAX_ATTEMPTS = 3;
+
+    // Panjang jendela waktu rate limit, dalam menit
+    private const DECAY_MINUTES = 60;
+
     /**
      * Tampilkan form survey (publik).
      */
@@ -30,6 +37,28 @@ class SkmSurveyController extends Controller
      */
     public function store(Request $request, SkmSurvey $skmSurvey)
     {
+        $rateLimitKey = 'skm-survey-submit:' . $request->ip();
+
+        // 1) Cegah pengisian bertubi-tubi dari IP yang sama
+        if (RateLimiter::tooManyAttempts($rateLimitKey, self::MAX_ATTEMPTS)) {
+            $minutes = max(1, (int) ceil(RateLimiter::availableIn($rateLimitKey) / 60));
+
+            return back()
+                ->withInput()
+                ->with('error', "Anda sudah mengisi survei ini beberapa kali dalam waktu singkat. "
+                    . "Silakan coba lagi dalam {$minutes} menit.");
+        }
+
+        // 2) Honeypot: field tersembunyi yang hanya akan terisi oleh bot.
+        // Pengguna manusia tidak pernah melihat/mengisi field ini.
+        if (trim((string) $request->input('website', '')) !== '') {
+            // Berpura-pura berhasil supaya bot tidak tahu bahwa ia terdeteksi,
+            // tapi tidak benar-benar menyimpan apapun ke database.
+            return redirect()
+                ->route('skm-survey.show')
+                ->with('success', 'Terima kasih, jawaban survei Anda berhasil kami terima.');
+        }
+
         $questions = SkmQuestion::whereHas('section', function ($q) use ($skmSurvey) {
             $q->where('skm_survey_id', $skmSurvey->id);
         })->with('options')->get();
@@ -143,6 +172,10 @@ class SkmSurveyController extends Controller
                 SkmAnswer::create($payload);
             }
         });
+
+        // 3) Baru hitung jatah rate limit SETELAH submit benar-benar berhasil,
+        // supaya orang yang salah isi form (validasi gagal) tidak dirugikan jatahnya.
+        RateLimiter::hit($rateLimitKey, self::DECAY_MINUTES * 60);
 
         return redirect()
             ->route('skm-survey.show')
