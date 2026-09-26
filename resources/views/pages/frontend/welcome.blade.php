@@ -908,25 +908,50 @@
                 <h1 class="text-white mb-0">Pelayanan Balai Kekarantinaan Kesehatan Kelas I Pontianak</h1>
             </div>
 
-            <div class="owl-carousel layanan-carousel position-relative mt-4" style="z-index: 2;">
-                @foreach ($layanan as $item)
-                    <div class="item">
-                        <div class="layanan-card text-center h-100">
-                            <div class="layanan-icon-wrap">
-                                <i class="{{ $item->icon }}"></i>
-                            </div>
-                            <h5>{{ $item->nama_tampilan ?? $item->nama }}</h5>
-                            <a href="{{ route('standar-pelayanan.show', $item->id) }}"
-                                class="btn btn-layanan-detail btn-sm mt-3">
-                                Detail
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            <section class="splide layanan-splide position-relative mt-4" style="z-index: 2;"
+                aria-label="Layanan Kami">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        @foreach ($layanan as $item)
+                            <li class="splide__slide">
+                                <div class="layanan-card text-center h-100">
+                                    <div class="layanan-icon-wrap">
+                                        <i class="{{ $item->icon }}"></i>
+                                    </div>
+                                    <h5>{{ $item->nama_tampilan ?? $item->nama }}</h5>
+                                    <a href="{{ route('standar-pelayanan.show', $item->id) }}"
+                                        class="btn btn-layanan-detail btn-sm mt-3">
+                                        Detail
+                                    </a>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </section>
         </div>
     </div>
     <!-- Service End -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('.layanan-splide', {
+                type: 'loop',
+                perPage: 5,
+                focus: 'center',
+                gap: '1rem',
+                autoplay: true,
+                interval: 3500,
+                pagination: false,
+                arrows: true,
+                breakpoints: {
+                    992: { perPage: 3 },
+                    768: { perPage: 2 },
+                    576: { perPage: 1 },
+                }
+            }).mount();
+        });
+    </script>
 
 
     <!-- IKM Start -->

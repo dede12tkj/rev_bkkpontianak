@@ -98,35 +98,8 @@
     });
 
 
-    // Layanan Kami carousel (Beranda)
-    $(".layanan-carousel").owlCarousel({
-        autoplay: true,
-        autoplayTimeout: 3500,
-        smartSpeed: 800,
-        loop: true,
-        center: true,
-        dots: false,
-        nav: true,
-        navText: [
-            '<i class="bi bi-chevron-left"></i>',
-            '<i class="bi bi-chevron-right"></i>'
-        ],
-        margin: 20,
-        responsive: {
-            0:{
-                items:1
-            },
-            576:{
-                items:2
-            },
-            768:{
-                items:3
-            },
-            992:{
-                items:5
-            }
-        }
-    });
+    // Catatan: carousel "Layanan Kami" di Beranda sudah dipindah ke Splide.js
+    // (lihat inline <script> di welcome.blade.php), bukan lagi Owl Carousel.
 
 
     // Vendor carousel

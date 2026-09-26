@@ -1194,8 +1194,21 @@ h6,
     font-weight: 700;
 }
 
-.layanan-carousel .item {
-    padding: 10px 0 30px;
+.layanan-splide {
+    padding: 10px 0 45px;
+}
+
+.layanan-splide .splide__slide {
+    padding: 10px 4px 20px;
+    opacity: 0.55;
+    transform: scale(0.9);
+    transition: 0.4s;
+}
+
+.layanan-splide .splide__slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
 }
 
 .layanan-card {
@@ -1208,6 +1221,12 @@ h6,
     -webkit-backdrop-filter: blur(6px);
     transition: 0.4s;
     min-height: 260px;
+}
+
+.layanan-splide .splide__slide.is-active .layanan-card {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(214, 223, 33, 0.45);
+    box-shadow: 0 0 45px rgba(0, 124, 133, 0.6), 0 0 90px rgba(214, 223, 33, 0.12);
 }
 
 .layanan-icon-wrap {
@@ -1225,6 +1244,14 @@ h6,
 .layanan-icon-wrap i {
     font-size: 30px;
     color: #ffffff;
+}
+
+.layanan-splide .splide__slide.is-active .layanan-icon-wrap {
+    background: var(--accent);
+}
+
+.layanan-splide .splide__slide.is-active .layanan-icon-wrap i {
+    color: var(--dark);
 }
 
 .layanan-card h5 {
@@ -1249,64 +1276,37 @@ h6,
     color: var(--dark);
 }
 
-.layanan-carousel .owl-item {
-    opacity: 0.55;
-    transform: scale(0.9);
-    transition: 0.4s;
-}
-
-.layanan-carousel .owl-item.center {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 2;
-}
-
-.layanan-carousel .owl-item.center .layanan-card {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(214, 223, 33, 0.45);
-    box-shadow: 0 0 45px rgba(0, 124, 133, 0.6), 0 0 90px rgba(214, 223, 33, 0.12);
-}
-
-.layanan-carousel .owl-item.center .layanan-icon-wrap {
-    background: var(--accent);
-}
-
-.layanan-carousel .owl-item.center .layanan-icon-wrap i {
-    color: var(--dark);
-}
-
-.layanan-carousel .owl-nav {
-    position: absolute;
-    top: 50%;
-    left: -5px;
-    right: -5px;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.layanan-carousel .owl-nav button.owl-prev,
-.layanan-carousel .owl-nav button.owl-next {
-    pointer-events: all;
+.layanan-splide .splide__arrow {
     width: 46px;
     height: 46px;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.12) !important;
-    color: #fff !important;
-    font-size: 18px;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.12);
+    opacity: 1;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: 0.3s;
 }
 
-.layanan-carousel .owl-nav button.owl-prev:hover,
-.layanan-carousel .owl-nav button.owl-next:hover {
-    background: var(--accent) !important;
-    color: var(--dark) !important;
+.layanan-splide .splide__arrow svg {
+    fill: #ffffff;
+    width: 1em;
+    height: 1em;
+}
+
+.layanan-splide .splide__arrow:hover:not(:disabled) {
+    background: var(--accent);
+    opacity: 1;
+}
+
+.layanan-splide .splide__arrow:hover:not(:disabled) svg {
+    fill: var(--dark);
+}
+
+.layanan-splide .splide__arrow--prev {
+    left: -5px;
+}
+
+.layanan-splide .splide__arrow--next {
+    right: -5px;
 }
 
 @media (max-width: 767.98px) {
