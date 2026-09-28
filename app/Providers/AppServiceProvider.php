@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFour();
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
@@ -32,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('totalVisitors', $totalVisitors);
             $view->with('todayVisitors', $todayVisitors);
         });
-
+        
     }
 }

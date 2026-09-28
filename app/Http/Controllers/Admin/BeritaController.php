@@ -13,7 +13,7 @@ class BeritaController extends Controller
     // LIST DATA
     public function index()
     {
-        $beritas = Berita::with('kategori')->latest()->paginate(10);
+        $beritas = Berita::with('kategori')->orderByDesc('tanggal')->paginate(10);
 
         return view('pages.backend.berita.index', compact('beritas'));
     }

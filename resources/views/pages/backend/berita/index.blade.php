@@ -39,7 +39,7 @@
                         <tbody>
                             @forelse ($beritas as $item)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $beritas->firstItem() + $loop->index }}</td>
                                     <td width= "30%" style="font-size: 12px;" >{{ $item->judul }}</td>
                                     <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
                                     <td>
@@ -69,11 +69,14 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">Belum ada data berita.</td>
+                                    <td colspan="7" class="text-center">Belum ada data berita.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    {{ $beritas->links() }}
                 </div>
             </div>
         </div>
