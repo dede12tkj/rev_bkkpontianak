@@ -73,27 +73,6 @@
         </div>
     </div>
 
-    <!-- Ikon Media Sosial yang akan terbang dari sebelah kanan -->
-    <div class="social-media-icons">
-        <a href="{{ $sosmed->fb }}" target="_blank" class="social-icon facebook btn-lg-square">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="{{ $sosmed->twitter }}" target="_blank" class="social-icon twitter btn-lg-square">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a href="{{ $sosmed->instagram }}" target="_blank" class="social-icon instagram btn-lg-square">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="{{ $sosmed->tiktok }}" target="_blank" class="social-icon tiktok btn-lg-square">
-            <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="{{ $sosmed->yt }}" target="_blank" class="social-icon youtube btn-lg-square">
-            <i class="fab fa-youtube"></i>
-        </a>
-        <a href="{{ $sosmed->wa }}" target="_blank" class="social-icon whatsapp btn-lg-square">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
 
     <div class="visitor-counter">
         <div class="counter-card">
