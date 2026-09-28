@@ -948,7 +948,7 @@
                                     <div class="layanan-icon-wrap">
                                         <i class="{{ $item->icon }}"></i>
                                     </div>
-                                    <h4>{{ $item->nama_tampilan ?? $item->nama }}</h4>
+                                    <h5>{{ $item->nama_tampilan ?? $item->nama }}</h5>
                                     <a href="{{ route('standar-pelayanan.show', $item->id) }}"
                                         class="btn btn-layanan-detail btn-sm mt-3">
                                         Detail
