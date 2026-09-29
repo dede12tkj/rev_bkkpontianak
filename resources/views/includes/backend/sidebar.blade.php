@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative text-center">
             <div class="align-items-center">
                 <div class="logo">
-                    <a href="index.html"><img src="{{ asset('frontend/img/logokemenkes.png') }}" alt="Logo"
+                    <a href="{{ route('beranda') }}"><img src="{{ asset('frontend/img/logokemenkes.png') }}" alt="Logo"
                             srcset="" /></a>
                 </div>
             </div>

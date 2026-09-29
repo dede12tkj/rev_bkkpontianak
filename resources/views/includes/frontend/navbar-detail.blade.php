@@ -25,7 +25,7 @@
 </style>
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center p-0">
+        <a href="{{ route('beranda') }}" class="navbar-brand d-flex align-items-center p-0">
             <img src="{{ asset('frontend/img/logokarantina.png') }}" alt="Logo BKK" class="navbar-logo">
             <h3 class="m-0 navbar-title">BKK Kelas I Pontianak</h3>
         </a>
