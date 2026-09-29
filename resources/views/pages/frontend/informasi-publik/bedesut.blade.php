@@ -27,7 +27,7 @@
 
                             'Sunmore' => asset('frontend/img/sunmore21.png'),
 
-                            'Buletin' => asset('frontend/img/buletincuy.png'),
+                            'Buletin' => asset('frontend/img/buletincuy.webp'),
 
                             default => asset('frontend/img/default.png'),
                         };

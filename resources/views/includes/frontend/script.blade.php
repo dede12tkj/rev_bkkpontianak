@@ -8,7 +8,7 @@
 <script src="{{ asset('frontend/lib/splide/splide.min.js') }}"></script>
 
 <!-- Template Javascript -->
-<script src="{{ asset('frontend/js/main.js') }}"></script>
+<script src="{{ asset('frontend/js/main.js') }}?v={{ @filemtime(public_path('frontend/js/main.js')) }}"></script>
 
 
 <script>
@@ -53,21 +53,10 @@
     // });
 
     var myCarousel = document.querySelector('#customNewsCarousel');
-    var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 2000, // Waktu untuk interval antar slide dalam milidetik
-        ride: 'carousel' // Menambahkan autoplay carousel
-    });
-</script>
-<script type="text/javascript">
-    /* curator-feed-default-feed-layout */
-    (function() {
-        var i, e, d = document,
-            s = "script";
-        i = d.createElement("script");
-        i.async = 1;
-        i.charset = "UTF-8";
-        i.src = "https://cdn.curator.io/published/a39ac412-2454-437d-b5f6-c00577ed26bb.js";
-        e = d.getElementsByTagName(s)[0];
-        e.parentNode.insertBefore(i, e);
-    })();
+    if (myCarousel && window.bootstrap) {
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 2000, // Waktu untuk interval antar slide dalam milidetik
+            ride: 'carousel' // Menambahkan autoplay carousel
+        });
+    }
 </script>

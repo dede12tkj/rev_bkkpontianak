@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\KategoriBerita;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -40,7 +41,7 @@ class BeritaController extends Controller
 
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnail', 'public');
+            $thumbnailPath = ImageOptimizer::store($request->file('thumbnail'), 'thumbnail', 1200);
         }
 
         Berita::create([
@@ -82,7 +83,7 @@ class BeritaController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('thumbnail', 'public');
+            $thumbnailPath = ImageOptimizer::store($request->file('thumbnail'), 'thumbnail', 1200);
             $berita->thumbnail = $thumbnailPath;
         }
 

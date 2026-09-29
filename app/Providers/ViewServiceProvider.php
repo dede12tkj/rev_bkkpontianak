@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Support\HomeCache;
 use Illuminate\Support\Facades\View;
-use App\Models\Footer;
-use App\Models\Sosmed;
+use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -22,10 +21,11 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Footer & sosmed dibaca dari cache (bukan query di tiap view/partial).
         View::composer('pages.frontend.*', function ($view) {
             $view->with([
-                'footer' => Footer::first(),
-                'sosmed' => Sosmed::first(),
+                'footer' => HomeCache::footer(),
+                'sosmed' => HomeCache::sosmed(),
             ]);
         });
     }

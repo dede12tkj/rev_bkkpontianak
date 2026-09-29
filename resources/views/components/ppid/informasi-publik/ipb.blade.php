@@ -56,7 +56,7 @@
                    data-universal-modal
                    data-type="image"
                    data-title="Profil Kepala Balai"
-                   data-src="{{ asset('/frontend/img/profil-pimpinan/profilkepalakantor.png') }}">
+                   data-src="{{ asset('/frontend/img/profil-pimpinan/profilkepalakantor.webp') }}">
                     Lihat Profil
                 </a>
             </div>
@@ -78,7 +78,7 @@
                    data-universal-modal
                    data-type="image"
                    data-title="Profil Kepala Sub Bagian Administrasi Umum"
-                   data-src="{{ asset('/frontend/img/profil-pimpinan/profilkepalasubbag.png') }}">
+                   data-src="{{ asset('/frontend/img/profil-pimpinan/profilkepalasubbag.webp') }}">
                     Lihat Profil
                 </a>
             </div>

@@ -382,7 +382,9 @@
                         <!-- Layer gambar -->
                         <div class="hero-image-wrapper">
                             <img src="{{ asset('storage/' . $item->path) }}"
-                                alt="{{ $item->text ?: 'Balai Kekarantinaan Kesehatan Kelas I Pontianak' }}">
+                                alt="{{ $item->text ?: 'Balai Kekarantinaan Kesehatan Kelas I Pontianak' }}"
+                                decoding="async"
+                                @if ($key == 0) fetchpriority="high" @else loading="lazy" @endif>
                         </div>
 
                         <!-- Layer gradient & glow -->

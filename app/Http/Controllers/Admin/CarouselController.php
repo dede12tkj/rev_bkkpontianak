@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +26,7 @@ class CarouselController extends Controller
     ]);
 
     if ($request->hasFile('path')) {
-        $data['path'] = $request->file('path')->store('carousel', 'public');
+        $data['path'] = ImageOptimizer::store($request->file('path'), 'carousel', 1920);
     }
 
     $carousel->update($data);
@@ -41,7 +42,7 @@ public function store(Request $request)
         ]);
 
         // Simpan gambar
-        $path = $request->file('path')->store('carousel', 'public');
+        $path = ImageOptimizer::store($request->file('path'), 'carousel', 1920);
 
         Carousel::create([
             'path' => $path,

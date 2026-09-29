@@ -127,46 +127,10 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i
             class="bi bi-arrow-up"></i></a>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @include('includes.frontend.script')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
-    <script>
-        // Menampilkan modal saat halaman selesai dimuat
-        $(document).ready(function() {
-            // Ganti dengan path gambar yang sesuai
-            var modalImageSrc = "frontend/img/maklumatpelayanan.png";
-            $('#announcementModal img').attr('src', modalImageSrc);
-            $('#announcementModal').modal('show');
-        });
-    </script>
-    <script>
-        (function(w, d, s, u, o) {
-            w._cyA11yConfig = {
-                "iconId": "default",
-                "position": {
-                    "mobile": "bottom-left",
-                    "desktop": "bottom-left"
-                },
-                "language": {
-                    "default": "id",
-                    "selected": []
-                }
-            };
-            var js = d.createElement(s),
-                fjs = d.getElementsByTagName(s)[0];
-            js.src = u;
-            js.async = true;
-            fjs.parentNode.insertBefore(js, fjs);
-        })(window, document, "script",
-            "https://cdn-cookieyes.com/widgets/accessibility.js?id=36f0a873-5bf8-489e-be57-93c20d7c392c");
-    </script>
+    @include('includes.frontend.script-footer', ['accessibility' => true])
 
 </body>
 

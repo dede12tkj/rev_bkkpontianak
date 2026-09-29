@@ -15,7 +15,7 @@
         body {
             font-family: "Poppins";
             min-height: 100vh;
-            background: url("{{ asset('frontend/img/kantor.png') }}") no-repeat center center;
+            background: url("{{ asset('frontend/img/kantor.webp') }}") no-repeat center center;
             background-size: cover;
             display: flex;
             align-items: center;

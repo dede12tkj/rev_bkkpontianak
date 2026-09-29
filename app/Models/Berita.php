@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Berita extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
 
     protected $table = 'beritas';

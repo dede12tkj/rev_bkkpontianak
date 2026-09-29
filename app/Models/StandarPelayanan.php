@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StandarPelayanan extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
 
     protected $table = 'standar_pelayanan';

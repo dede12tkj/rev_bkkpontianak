@@ -59,6 +59,7 @@ use App\Http\Controllers\Admin\UPGController;
 use App\Http\Controllers\Admin\VisiMisiController;
 use App\Http\Controllers\Admin\WilkerController;
 use App\Http\Controllers\BenturanKepentinganUserController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontakKamiController;
 use App\Http\Controllers\LayananPengaduanMasyarakatUserController;
 use App\Http\Controllers\ProfileController;
@@ -111,25 +112,7 @@ use App\Models\WilkerText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $berita = Berita::where('status', 'published')
-        ->orderBy('tanggal', 'desc')
-        ->take(5)
-        ->get();
-    $carousel = Carousel::all();
-    $gambar = GambarMaklumatPelayanan::first();
-    $sosmed = Sosmed::first();
-    $tentang_kami = TentangKami::first();
-    $fskm = FormSurveyKepuasanMasyarakat::first();
-    $footer = Footer::first();
-    $ikm = Survey::skm()
-        ->latest()
-        ->take(3)
-        ->get();
-    $layanan = StandarPelayanan::orderBy('id')->get();
-
-    return view('pages.frontend.welcome', compact('berita', 'gambar', 'carousel', 'tentang_kami', 'fskm', 'footer', 'sosmed', 'ikm', 'layanan'));
-})->name('beranda');
+Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
 Route::get('/layanan/{id}', [StandarPelayananController::class, 'show'])
     ->name('standar-pelayanan.show');

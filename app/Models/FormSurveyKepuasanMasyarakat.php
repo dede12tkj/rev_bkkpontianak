@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormSurveyKepuasanMasyarakat extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
     protected $table = 'form_survey_kepuasan_masyarakat';
     protected $fillable = [

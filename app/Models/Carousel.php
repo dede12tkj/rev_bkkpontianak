@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Carousel extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
     protected $table = 'carousel_table';
     protected $fillable = [

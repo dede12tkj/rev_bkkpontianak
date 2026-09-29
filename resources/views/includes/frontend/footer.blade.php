@@ -6,7 +6,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="d-flex flex-column align-items-center justify-content-center text-center p-4 h-100" style="background: rgba(0, 124, 133, 0.35); border-radius: 10px;">
                     <a href="#navbar" class="navbar-brand align-items-center p-0 mb-2">
-                        <img src="https://bkkpontianak.com/frontend/img/logokarantina.png" alt="Logo BKK" style="height: 120px; object-fit: contain;">
+                        <img src="{{ asset('frontend/img/logokarantina.png') }}" loading="lazy" decoding="async" alt="Logo BKK" style="height: 120px; object-fit: contain;">
                         <h1 style="margin-top: 10px; font-size: 20px;" class="text-light">BKK Kelas I Pontianak</h1>
                     </a>
                     <p class="mt-2 mb-0 text-white" style="font-size: 14px; line-height: 1.6;">

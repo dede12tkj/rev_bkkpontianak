@@ -77,25 +77,10 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i
             class="bi bi-arrow-up"></i></a>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @include('includes.frontend.script')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
-    <script>
-        // Menampilkan modal saat halaman selesai dimuat
-        $(document).ready(function() {
-            // Ganti dengan path gambar yang sesuai
-            var modalImageSrc = "frontend/img/maklumatpelayanan.png";
-            $('#announcementModal img').attr('src', modalImageSrc);
-            $('#announcementModal').modal('show');
-        });
-    </script>
+    @include('includes.frontend.script-footer')
 
 </body>
 

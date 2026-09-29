@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class GambarMaklumatPelayanan extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
     protected $table = 'gambarmaklumatpelayanan';
     protected $fillable = [

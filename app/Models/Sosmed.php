@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sosmed extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
     protected $table = 'sosmed';
     protected $fillable = [

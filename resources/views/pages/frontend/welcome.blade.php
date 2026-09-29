@@ -403,7 +403,7 @@
                                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                         <div class="card-body berita-body">
 
-                                            <img src="{{ asset('storage/' . $item->thumbnail) }}" class="berita-img">
+                                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $item->thumbnail) }}" class="berita-img">
 
                                             <h6 class="fw-bold">{{ $item->judul }}</h6>
 
@@ -453,7 +453,7 @@
                                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                                         <div class="news-box">
                                             <div class="thumbnail-container text-center">
-                                                <img class="thumbnail-img" src="{{ asset('storage/' . $b->thumbnail) }}"
+                                                <img loading="lazy" decoding="async" class="thumbnail-img" src="{{ asset('storage/' . $b->thumbnail) }}"
                                                     alt="{{ $b->judul }}">
                                             </div>
 
@@ -620,10 +620,8 @@
                             <div class="modal-body">
                                 <!-- Gambar yang akan ditampilkan dengan zoom -->
                                 <div class="image-container">
-                                    <img src="{{ asset('frontend/img/spvaksininternasional.png') }}"
+                                    <img loading="lazy" decoding="async" src="{{ asset('frontend/img/spvaksininternasional.png') }}"
                                         alt="Image Description" class="img-fluid">
-                                    <img class="zoom-image" src="{{ asset('frontend/img/.png') }}" alt="Image Description"
-                                        class="img-fluid">
                                 </div>
                             </div>
                             <div class="modal-footer ">
@@ -1000,7 +998,7 @@
 
                             <!-- Gambar -->
                             <div class="ikm-img mb-3">
-                                <img src="{{ $item->gambar_url }}" class="img-fluid rounded">
+                                <img loading="lazy" decoding="async" src="{{ $item->gambar_url }}" class="img-fluid rounded">
                             </div>
 
                             <!-- Judul -->
@@ -1066,7 +1064,7 @@
 
                                     <div class="card logo-card shadow-sm border-0">
                                         <div class="card-body p-3 d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('frontend/img/logowbs.png') }}" class="logo-side"
+                                            <img loading="lazy" decoding="async" src="{{ asset('frontend/img/logowbs.png') }}" class="logo-side"
                                                 alt="Logo 1">
                                         </div>
                                     </div>
@@ -1078,7 +1076,7 @@
 
                                     <div class="card logo-card shadow-sm border-0">
                                         <div class="card-body p-3 d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('frontend/img/logogolkpk.png') }}" class="logo-side"
+                                            <img loading="lazy" decoding="async" src="{{ asset('frontend/img/logogolkpk.png') }}" class="logo-side"
                                                 alt="Logo 2">
                                         </div>
                                     </div>
@@ -1090,7 +1088,7 @@
 
                                     <div class="card logo-card shadow-sm border-0">
                                         <div class="card-body p-3 d-flex justify-content-center align-items-center">
-                                            <img src="{{ asset('frontend/img/lapor.jpg') }}" class="logo-side"
+                                            <img loading="lazy" decoding="async" src="{{ asset('frontend/img/lapor.jpg') }}" class="logo-side"
                                                 alt="Logo 3">
                                         </div>
                                     </div>
@@ -1127,7 +1125,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-1.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/team-1.jpg" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i
                                         class="fab fa-twitter fw-normal"></i></a>
@@ -1148,7 +1146,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-2.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/team-2.jpg" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i
                                         class="fab fa-twitter fw-normal"></i></a>
@@ -1169,7 +1167,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/team-3.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/team-3.jpg" alt="">
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i
                                         class="fab fa-twitter fw-normal"></i></a>
@@ -1204,7 +1202,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid" src="img/blog-1.jpg" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4"
                                 href="">Web Design</a>
                         </div>
@@ -1222,7 +1220,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid" src="img/blog-2.jpg" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4"
                                 href="">Web Design</a>
                         </div>
@@ -1240,7 +1238,7 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
                     <div class="blog-item bg-light rounded overflow-hidden">
                         <div class="blog-img position-relative overflow-hidden">
-                            <img class="img-fluid" src="img/blog-3.jpg" alt="">
+                            <img loading="lazy" decoding="async" class="img-fluid" src="img/blog-3.jpg" alt="">
                             <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4"
                                 href="">Web Design</a>
                         </div>
@@ -1649,7 +1647,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <a href="https://youtu.be/ctvpbPE26Xw" target="_blank" class="card border-0 shadow-sm overflow-hidden text-decoration-none group-yt-item rounded-3">
                 <div class="position-relative overflow-hidden" style="aspect-ratio: 16/9; background: #000;">
                     <!-- Thumbnail YouTube Manual -->
-                    <img src="https://i.ytimg.com/an_webp/ctvpbPE26Xw/mqdefault_6s.webp?du=3000&sqp=CMDQ39UG&rs=AOn4CLAUrKC3PMHmx7b1gde-SMweEH7Rxw" alt="Takdir Milea Berubah di Pesawat! Tips Mudik Sehat & Nyaman ✈️💙" class="w-100 h-100 object-fit-cover opacity-90 transition-zoom">
+                    <img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/ctvpbPE26Xw/mqdefault.jpg" alt="Takdir Milea Berubah di Pesawat! Tips Mudik Sehat & Nyaman ✈️💙" class="w-100 h-100 object-fit-cover opacity-90 transition-zoom">
                     
                     <!-- Overlay Icon Play -->
                     <div class="position-absolute top-50 start-50 translate-middle bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 42px; height: 42px;">
@@ -1669,7 +1667,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <!-- Item Video 2 -->
             <a href="https://youtu.be/hDjwqIbx-qk" target="_blank" class="card border-0 shadow-sm overflow-hidden text-decoration-none group-yt-item rounded-3">
                 <div class="position-relative overflow-hidden" style="aspect-ratio: 16/9; background: #000;">
-                    <img src="https://i.ytimg.com/an_webp/hDjwqIbx-qk/mqdefault_6s.webp?du=3000&sqp=CKKe39UG&rs=AOn4CLBBDl5mKBRsZ--GXBHMOJL2ZmQh_A" alt="
+                    <img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/hDjwqIbx-qk/mqdefault.jpg" alt="
 Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝💙" class="w-100 h-100 object-fit-cover opacity-90 transition-zoom">
                     <div class="position-absolute top-50 start-50 translate-middle bg-danger text-white rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 42px; height: 42px;">
                         <i class="fa fa-play ms-1" style="font-size: 14px;"></i>
@@ -1745,6 +1743,39 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝�
 </script>
 
 <!-- Script External Platform Embeds -->
-<script async src="//platform.instagram.com/en_US/embeds.js"></script>
-<script async src="https://www.tiktok.com/embed.js"></script>
+<script>
+    // Embed Instagram & TikTok berat (banyak request + iframe). Muat hanya saat section-nya
+    // hampir terlihat, atau otomatis 6 detik setelah halaman selesai dimuat sebagai cadangan.
+    (function() {
+        var started = false;
+
+        function loadEmbeds() {
+            if (started) return;
+            started = true;
+            ['https://platform.instagram.com/en_US/embeds.js', 'https://www.tiktok.com/embed.js'].forEach(function(src) {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = src;
+                document.body.appendChild(s);
+            });
+        }
+
+        var target = document.querySelector('.social-splide');
+        if (target && 'IntersectionObserver' in window) {
+            new IntersectionObserver(function(entries, observer) {
+                if (entries.some(function(e) { return e.isIntersecting; })) {
+                    observer.disconnect();
+                    loadEmbeds();
+                }
+            }, {
+                rootMargin: '600px 0px'
+            }).observe(target);
+            window.addEventListener('load', function() {
+                setTimeout(loadEmbeds, 6000);
+            });
+        } else {
+            window.addEventListener('load', loadEmbeds);
+        }
+    })();
+</script>
 @endsection

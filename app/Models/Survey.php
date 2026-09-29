@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Survey extends Model
 {
+    use \App\Models\Concerns\FlushesHomeCache;
+
     use HasFactory;
 
     protected $table = 'survey';
