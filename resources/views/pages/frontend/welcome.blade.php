@@ -1586,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                                 <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 small">Instagram</span>
                             </div>
-                            <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto" style="height: 480px;">
+                            <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto position-relative social-embed-card" data-network="instagram" style="height: 480px;">
                                 <blockquote class="instagram-media w-100" data-instgrm-permalink="https://www.instagram.com/bkkpontianak/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:8px; box-shadow:none; margin: 0 auto; max-width:100%; width:100%;">
                                     <div style="padding:16px; text-align:center;">
                                         <a href="https://www.instagram.com/bkkpontianak/" style="color:#3897f0; font-family:Poppins,sans-serif; font-size:13px; font-weight:600; text-decoration:none;" target="_blank">
@@ -1594,6 +1594,15 @@ document.addEventListener('DOMContentLoaded', function () {
                                         </a>
                                     </div>
                                 </blockquote>
+
+                                {{-- Postingan baru dimuat setelah tombol ini diklik, supaya script Instagram
+                                     (berat + memanggil analitik sendiri) tidak ikut membebani load awal halaman. --}}
+                                <div class="social-embed-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center bg-light">
+                                    <i class="fab fa-instagram fa-2x text-danger mb-2"></i>
+                                    <button type="button" class="btn btn-sm btn-outline-danger rounded-pill social-embed-load-btn">
+                                        Tampilkan Postingan Instagram
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-footer bg-white border-top p-3 text-center">
                                 <a href="https://www.instagram.com/bkkpontianak/" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill w-100">
@@ -1613,12 +1622,22 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                                 <span class="badge bg-dark-subtle text-dark rounded-pill px-2 py-1 small">TikTok</span>
                             </div>
-                            <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto" style="height: 480px;">
+                            <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto position-relative social-embed-card" data-network="tiktok" style="height: 480px;">
                                 <blockquote class="tiktok-embed w-100" cite="https://www.tiktok.com/@bkkpontianak" data-unique-id="bkkpontianak" data-embed-type="creator" style="max-width: 100%; margin: 0 auto;">
                                     <section>
                                         <a target="_blank" href="https://www.tiktok.com/@bkkpontianak?refer=creator_embed">@bkkpontianak</a>
                                     </section>
                                 </blockquote>
+
+                                {{-- Sama seperti Instagram: baru dimuat setelah diklik. TikTok memanggil
+                                     analitiknya sendiri (sering di-block adblocker) begitu script-nya jalan,
+                                     jadi paling aman kalau script itu tidak otomatis jalan di semua pengunjung. --}}
+                                <div class="social-embed-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center bg-light">
+                                    <i class="fab fa-tiktok fa-2x text-dark mb-2"></i>
+                                    <button type="button" class="btn btn-sm btn-outline-dark rounded-pill social-embed-load-btn">
+                                        Tampilkan Video TikTok
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-footer bg-white border-top p-3 text-center">
                                 <a href="https://www.tiktok.com/@bkkpontianak" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill w-100">
@@ -1744,38 +1763,44 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝�
 
 <!-- Script External Platform Embeds -->
 <script>
-    // Embed Instagram & TikTok berat (banyak request + iframe). Muat hanya saat section-nya
-    // hampir terlihat, atau otomatis 6 detik setelah halaman selesai dimuat sebagai cadangan.
+    // Embed Instagram & TikTok sengaja TIDAK dimuat otomatis sama sekali — script bawaan mereka
+    // berat (bundle JS besar + memanggil analitik/beacon sendiri ke server TikTok/Meta) dan bisa
+    // membuat halaman terasa "masih memuat" walau konten utama sudah selesai. Baru dimuat kalau
+    // pengunjung klik tombol "Tampilkan..." di kartu masing-masing.
     (function() {
-        var started = false;
+        var loadedScripts = {};
 
-        function loadEmbeds() {
-            if (started) return;
-            started = true;
-            ['https://platform.instagram.com/en_US/embeds.js', 'https://www.tiktok.com/embed.js'].forEach(function(src) {
-                var s = document.createElement('script');
-                s.async = true;
-                s.src = src;
-                document.body.appendChild(s);
-            });
-        }
-
-        var target = document.querySelector('.social-splide');
-        if (target && 'IntersectionObserver' in window) {
-            new IntersectionObserver(function(entries, observer) {
-                if (entries.some(function(e) { return e.isIntersecting; })) {
-                    observer.disconnect();
-                    loadEmbeds();
+        function loadNetworkScript(network) {
+            if (loadedScripts[network]) {
+                // Sudah pernah dimuat (mis. ada 2 kartu jaringan yang sama): cukup proses ulang.
+                if (network === 'instagram' && window.instgrm) {
+                    window.instgrm.Embeds.process();
                 }
-            }, {
-                rootMargin: '600px 0px'
-            }).observe(target);
-            window.addEventListener('load', function() {
-                setTimeout(loadEmbeds, 6000);
-            });
-        } else {
-            window.addEventListener('load', loadEmbeds);
+                return;
+            }
+            loadedScripts[network] = true;
+
+            var src = network === 'instagram'
+                ? 'https://platform.instagram.com/en_US/embeds.js'
+                : 'https://www.tiktok.com/embed.js';
+
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = src;
+            document.body.appendChild(s);
         }
+
+        document.querySelectorAll('.social-embed-load-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var card = btn.closest('.social-embed-card');
+                if (!card) return;
+
+                loadNetworkScript(card.dataset.network);
+
+                var overlay = card.querySelector('.social-embed-overlay');
+                if (overlay) overlay.remove();
+            });
+        });
     })();
 </script>
 @endsection
