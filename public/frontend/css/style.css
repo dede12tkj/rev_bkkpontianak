@@ -22,6 +22,14 @@
     --font-heading: 'Poppins', sans-serif;
 }
 
+/* Amankan gambar besar dari konten admin (visi-misi, berita, infografis, dll) supaya tidak
+   pernah lebih lebar dari layar/kontainernya, terutama di HP. Selector klas/ID yang lebih
+   spesifik (mis. carousel, thumbnail object-fit) tetap menang di atas aturan dasar ini. */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Grid 6 Kolom */
 .grid-6 {
     display: grid;
@@ -314,14 +322,12 @@ i {
     background-color: #007C85;
 }
 
-#header-carousel .carousel-item {
-    height: 100vh;
-}
-
-#header-carousel .carousel-item img {
-    height: 100vh;
-    object-fit: cover;
-}
+/* Catatan: aturan tinggi/crop gambar hero SUDAH diatur oleh .hero-banner-container dan
+   .hero-image-wrapper img di includes/frontend/navbar.blade.php. Dulu di sini ada
+   "#header-carousel .carousel-item img { height: 100vh; }" (pakai ID, jadi lebih menang
+   daripada aturan yang lebih baru) yang memaksa gambar selalu setinggi 100% layar HP
+   walau container-nya sudah diatur lebih pas (70-85vh) — itu penyebab gambar carousel
+   terlihat "maksa"/terlalu ter-crop di HP. Sudah dihapus supaya tidak bentrok lagi. */
 
 /* KHUSUS BERITA */
 #beritaCarousel .carousel-item {
