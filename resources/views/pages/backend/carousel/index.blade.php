@@ -38,6 +38,7 @@
                                 <th width="20%">Foto</th>
                                 <th>Judul</th>
                                 <th>Subtitle</th>
+                                <th>Teks Tampil?</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -58,6 +59,14 @@
 
                                     <td class="text-muted">
                                         {{ $item->subtitle ?: '(pakai default)' }}
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if ($item->should_show_text)
+                                            <span class="badge bg-success">Ya</span>
+                                        @else
+                                            <span class="badge bg-secondary">Gambar saja</span>
+                                        @endif
                                     </td>
 
                                     <td class="text-center">
@@ -108,20 +117,33 @@
                                                 <input type="file" name="path" class="form-control">
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Judul (tampil besar di banner)</label>
-                                                <input type="text" name="text" class="form-control carousel-text-input" maxlength="70" required
-                                                    value="{{ $item->text }}"
-                                                    placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
-                                                <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                                            <div class="mb-3 form-check form-switch">
+                                                <input type="checkbox" class="form-check-input carousel-show-text"
+                                                    name="show_text" id="showTextEdit{{ $item->id }}" value="1"
+                                                    @checked($item->show_text)>
+                                                <label class="form-check-label" for="showTextEdit{{ $item->id }}">Tampilkan teks di atas gambar ini</label>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
-                                                <input type="text" name="subtitle" class="form-control" maxlength="80"
-                                                    value="{{ $item->subtitle }}"
-                                                    placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
-                                                <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
+                                            <div class="carousel-text-fields">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Judul (tampil besar di banner)</label>
+                                                    <input type="text" name="text" class="form-control carousel-text-input" maxlength="70"
+                                                        value="{{ $item->text }}"
+                                                        placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
+                                                    <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
+                                                    <input type="text" name="subtitle" class="form-control" maxlength="80"
+                                                        value="{{ $item->subtitle }}"
+                                                        placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
+                                                    <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-text carousel-image-only-hint" style="display:none;">
+                                                Gambar akan tampil polos tanpa overlay gelap untuk teks, hanya diberi gradient tipis di tepi.
                                             </div>
 
                                         </div>
@@ -187,18 +209,30 @@
                             <input type="file" name="path" class="form-control" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Judul (tampil besar di banner)</label>
-                            <input type="text" name="text" class="form-control carousel-text-input" maxlength="70" required
-                                placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
-                            <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                        <div class="mb-3 form-check form-switch">
+                            <input type="checkbox" class="form-check-input carousel-show-text" name="show_text"
+                                id="showTextCreate" value="1" checked>
+                            <label class="form-check-label" for="showTextCreate">Tampilkan teks di atas gambar ini</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
-                            <input type="text" name="subtitle" class="form-control" maxlength="80"
-                                placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
-                            <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
+                        <div class="carousel-text-fields">
+                            <div class="mb-3">
+                                <label class="form-label">Judul (tampil besar di banner)</label>
+                                <input type="text" name="text" class="form-control carousel-text-input" maxlength="70"
+                                    placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
+                                <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
+                                <input type="text" name="subtitle" class="form-control" maxlength="80"
+                                    placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
+                                <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
+                            </div>
+                        </div>
+
+                        <div class="form-text carousel-image-only-hint" style="display:none;">
+                            Gambar akan tampil polos tanpa overlay gelap untuk teks, hanya diberi gradient tipis di tepi.
                         </div>
                     </div>
 
@@ -220,6 +254,22 @@
             var update = function() { counter.textContent = input.value.length; };
             input.addEventListener('input', update);
             update();
+        });
+
+        // Tampil/sembunyikan field Judul & Subtitle sesuai checkbox "Tampilkan teks di atas gambar ini"
+        document.querySelectorAll('.carousel-show-text').forEach(function(checkbox) {
+            var modalBody = checkbox.closest('.modal-body');
+            var fields = modalBody.querySelector('.carousel-text-fields');
+            var hint = modalBody.querySelector('.carousel-image-only-hint');
+
+            var sync = function() {
+                var show = checkbox.checked;
+                fields.style.display = show ? '' : 'none';
+                if (hint) hint.style.display = show ? 'none' : '';
+            };
+
+            checkbox.addEventListener('change', sync);
+            sync();
         });
     </script>
 @endsection

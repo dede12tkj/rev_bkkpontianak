@@ -67,7 +67,8 @@
         transform: scale(1.06);
     }
 
-    .depth-mask-left {
+    /* ===== Mode "ada teks": overlay tebal supaya judul tetap terbaca ===== */
+    .hero-banner-container.has-text .depth-mask-left {
         position: absolute;
         top: 0;
         left: 0;
@@ -78,7 +79,7 @@
         pointer-events: none;
     }
 
-    .depth-mask-bottom {
+    .hero-banner-container.has-text .depth-mask-bottom {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -89,7 +90,7 @@
         pointer-events: none;
     }
 
-    .depth-mask-top {
+    .hero-banner-container.has-text .depth-mask-top {
         position: absolute;
         top: 0;
         left: 0;
@@ -100,7 +101,7 @@
         pointer-events: none;
     }
 
-    .depth-vignette-ambient {
+    .hero-banner-container.has-text .depth-vignette-ambient {
         position: absolute;
         inset: 0;
         z-index: 2;
@@ -109,7 +110,7 @@
         mix-blend-mode: screen;
     }
 
-    .ambient-glow-orb {
+    .hero-banner-container.has-text .ambient-glow-orb {
         position: absolute;
         left: -100px;
         top: 20%;
@@ -126,6 +127,16 @@
     @keyframes pulseGlow {
         0%   { opacity: .6; transform: scale(.95) translateY(0); }
         100% { opacity: 1;  transform: scale(1.1) translateY(-20px); }
+    }
+
+    /* ===== Mode "gambar saja": gambar tetap jelas, cuma frame gradient tipis di tepi ===== */
+    .hero-banner-container.image-only .depth-frame {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        box-shadow: inset 0 -70px 90px -60px rgba(6,17,19,.45),
+                    inset 0 70px 90px -60px rgba(6,17,19,.25);
     }
 
     /* Matikan overlay gelap bawaan template */
@@ -218,7 +229,7 @@
     }
 
     @media (max-width: 991.98px) {
-        .depth-mask-left {
+        .hero-banner-container.has-text .depth-mask-left {
             width: 100%;
             background: linear-gradient(180deg, rgba(6,17,19,.92) 0%, rgba(6,17,19,.85) 60%, rgba(6,17,19,.4) 100%);
         }
@@ -377,7 +388,7 @@
         <div class="carousel-inner">
             @foreach ($carousel as $key => $item)
                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                    <section class="hero-banner-container">
+                    <section class="hero-banner-container {{ $item->should_show_text ? 'has-text' : 'image-only' }}">
 
                         <!-- Layer gambar -->
                         <div class="hero-image-wrapper">
@@ -387,24 +398,28 @@
                                 @if ($key == 0) fetchpriority="high" @else loading="lazy" @endif>
                         </div>
 
-                        <!-- Layer gradient & glow -->
-                        <div class="depth-mask-left"></div>
-                        <div class="depth-mask-bottom"></div>
-                        <div class="depth-mask-top"></div>
-                        <div class="depth-vignette-ambient"></div>
-                        <div class="ambient-glow-orb"></div>
+                        @if ($item->should_show_text)
+                            {{-- Overlay tebal: gambar digelapkan di sisi kiri/atas/bawah supaya teks tetap terbaca --}}
+                            <div class="depth-mask-left"></div>
+                            <div class="depth-mask-bottom"></div>
+                            <div class="depth-mask-top"></div>
+                            <div class="depth-vignette-ambient"></div>
+                            <div class="ambient-glow-orb"></div>
+                        @else
+                            {{-- Gambar saja: tanpa overlay gelap, hanya frame gradient tipis di tepi --}}
+                            <div class="depth-frame"></div>
+                        @endif
 
+                        @if ($item->should_show_text)
                         <!-- Konten -->
                         <div class="container px-4 px-lg-5">
                             <div class="row align-items-center">
                                 <div class="col-lg-8 col-xl-7">
                                     <div class="hero-content-wrapper">
 
-                                        @if ($item->text)
                                         <h1 class="hero-heading speed-ramp-fade delay-1" style="font-size: 55px; line-height: 1.3; max-width: 600px;">
                                             {{ $item->text }}
                                         </h1>
-                                        @endif
 
                                         <p class="hero-subtitle speed-ramp-fade delay-2">
                                             {{ $item->subtitle_or_default }}
@@ -416,6 +431,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </section>
                 </div>
             @endforeach

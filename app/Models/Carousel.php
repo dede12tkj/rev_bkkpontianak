@@ -17,10 +17,21 @@ class Carousel extends Model
         'path',
         'text',
         'subtitle',
+        'show_text',
+    ];
+
+    protected $casts = [
+        'show_text' => 'boolean',
     ];
 
     /** Dipakai di tampilan depan bila admin belum mengisi subtitle sendiri. */
     public const DEFAULT_SUBTITLE = 'TANGGUH - TANGGUH - RESPONSIF.';
+
+    /** Teks & subtitle hanya tampil kalau show_text aktif DAN judulnya memang diisi. */
+    public function getShouldShowTextAttribute(): bool
+    {
+        return $this->show_text && filled($this->text);
+    }
 
     public function getSubtitleOrDefaultAttribute(): string
     {

@@ -26,6 +26,9 @@ class CarouselController extends Controller
         'subtitle' => 'nullable|string|max:80',
     ]);
 
+    // Checkbox HTML: tidak terkirim sama sekali kalau tidak dicentang.
+    $data['show_text'] = $request->boolean('show_text');
+
     if ($request->hasFile('path')) {
         $data['path'] = ImageOptimizer::store($request->file('path'), 'carousel', 1920);
     }
@@ -39,7 +42,7 @@ public function store(Request $request)
     {
         $request->validate([
             'path' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'text' => 'required|string|max:70',
+            'text' => 'nullable|string|max:70',
             'subtitle' => 'nullable|string|max:80',
         ]);
 
@@ -50,6 +53,7 @@ public function store(Request $request)
             'path' => $path,
             'text' => $request->text,
             'subtitle' => $request->subtitle,
+            'show_text' => $request->boolean('show_text'),
         ]);
 
         return redirect()->back()->with('success', 'Carousel berhasil ditambahkan');
