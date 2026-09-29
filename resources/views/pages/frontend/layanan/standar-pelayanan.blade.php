@@ -18,6 +18,7 @@
                         <div class="container-fluid wow fadeInUp" data-wow-delay="0.1s">
                             <div class="container">
                                 <div class="service-item rounded align-items-center justify-content-center text-center p-3">
+                                    <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
@@ -49,6 +50,7 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+                                    </div>
 
                                 </div>
                             </div>

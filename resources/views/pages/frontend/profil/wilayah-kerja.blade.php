@@ -26,7 +26,7 @@
                                 {!! $wilkerText->text !!}
                             </p>
                         @endif
-                        <div class="">
+                        <div class="table-responsive">
                             <table id="example" class="display table table-bordered">
                                 <thead class="bg-primary">
                                     <tr>
@@ -41,7 +41,14 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $item->tempat }}</td>
-                                            <td>{{ $item->alamat }}</td>
+                                            <td>
+                                                {{ $item->alamat }}
+                                                <br>
+                                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->tempat.', '.$item->alamat) }}"
+                                                    target="_blank" rel="noopener" class="small text-nowrap">
+                                                    <i class="fa fa-map-marker-alt me-1"></i>Lihat di Google Maps
+                                                </a>
+                                            </td>
                                             <td>{{ $item->nama_kepala }}</td>
                                         </tr>
                                     @endforeach

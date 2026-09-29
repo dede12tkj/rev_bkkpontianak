@@ -27,9 +27,9 @@
 
             <div class="row">
                 <!-- Misi Card -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card shadow">
-                        <div style="height: 350px" class="card-body">
+                <div class="col-lg-6 mb-4 d-flex">
+                    <div class="card shadow w-100">
+                        <div class="card-body">
                             <img class="d-block mx-auto mb-3" style="width: 20%;" src="{{ asset('frontend/img/goal.png') }}">
                             <h5 class="card-title text-center">Misi Kementerian Kesehatan</h5>
                              {!! $visi->misi !!}
@@ -38,9 +38,9 @@
                 </div>
 
                 <!-- Tujuan Strategis Card -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card shadow">
-                        <div style="height: 350px" class="card-body">
+                <div class="col-lg-6 mb-4 d-flex">
+                    <div class="card shadow w-100">
+                        <div class="card-body">
                             <img class="d-block mx-auto mb-3" style="width: 20%;" src="{{ asset('frontend/img/leadership.png') }}">
                             <h5 class="card-title text-center">Tujuan Strategis Kementerian Kesehatan</h5>
                              {!! $visi->tujuan !!}

@@ -22,43 +22,45 @@
                             alt="Logo Kemenkes">
                         <h3 class="section-title text-center position-relative pb-3 mb-4 mx-auto">Surat Keputusan</h3>
                         <div class="card">
-                            <table class="table table-bordered text-center align-middle">
-                                <thead class="bg-primary text-white">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Judul Surat Keputusan</th>
-                                        @foreach ($tahuns as $tahun)
-                                            <th>{{ $tahun }}</th>
-                                        @endforeach
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($dataSK as $item)
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center align-middle">
+                                    <thead class="bg-primary text-white">
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td class="text-start">{{ strtoupper($item['nama']) }}</td>
-
+                                            <th>No</th>
+                                            <th>Judul Surat Keputusan</th>
                                             @foreach ($tahuns as $tahun)
-                                                <td>
-                                                    @if (isset($item['data'][$tahun]))
-                                                        <a href="{{ route('sk-dan-sop.show', $item['data'][$tahun]->id) }}"
-                                                            target="_blank">
-                                                            <i class="fas fa-file-pdf text-danger"></i>
-                                                        </a>
-                                                    @else
-                                                        <span class="text-muted">-</span>
-                                                    @endif
-                                                </td>
+                                                <th>{{ $tahun }}</th>
                                             @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($dataSK as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td class="text-start">{{ strtoupper($item['nama']) }}</td>
 
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7">Data SK belum tersedia</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                                @foreach ($tahuns as $tahun)
+                                                    <td>
+                                                        @if (isset($item['data'][$tahun]))
+                                                            <a href="{{ route('sk-dan-sop.show', $item['data'][$tahun]->id) }}"
+                                                                target="_blank">
+                                                                <i class="fas fa-file-pdf text-danger"></i>
+                                                            </a>
+                                                        @else
+                                                            <span class="text-muted">-</span>
+                                                        @endif
+                                                    </td>
+                                                @endforeach
+
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="7">Data SK belum tersedia</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,6 +73,7 @@
                     <h3 class="section-title text-center position-relative pb-3 mb-4 mx-auto">Standar Operasional Prosedur
                     </h3>
                     <div class="card">
+                        <div class="table-responsive">
                         <table class="table-bordered text-center">
                             <thead class="bg-primary" style="color:white;">
                                 <tr>
@@ -97,6 +100,7 @@
 
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
