@@ -407,7 +407,7 @@
                                         @endif
 
                                         <p class="hero-subtitle speed-ramp-fade delay-2">
-                                            TANGGUH - TANGGUH - RESPONSIF.
+                                            {{ $item->subtitle_or_default }}
                                         </p>
 
                                         <div class="hero-accent-divider speed-ramp-fade delay-3"></div>

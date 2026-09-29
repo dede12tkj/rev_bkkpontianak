@@ -36,7 +36,8 @@
                             <tr>
                                 <th width="5%">No</th>
                                 <th width="20%">Foto</th>
-                                <th>Teks</th>
+                                <th>Judul</th>
+                                <th>Subtitle</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -53,6 +54,10 @@
 
                                     <td>
                                         {{ $item->text }}
+                                    </td>
+
+                                    <td class="text-muted">
+                                        {{ $item->subtitle ?: '(pakai default)' }}
                                     </td>
 
                                     <td class="text-center">
@@ -104,8 +109,19 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Teks</label>
-                                                <textarea name="text" class="form-control" rows="4" required>{{ $item->text }}</textarea>
+                                                <label class="form-label">Judul (tampil besar di banner)</label>
+                                                <input type="text" name="text" class="form-control carousel-text-input" maxlength="70" required
+                                                    value="{{ $item->text }}"
+                                                    placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
+                                                <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
+                                                <input type="text" name="subtitle" class="form-control" maxlength="80"
+                                                    value="{{ $item->subtitle }}"
+                                                    placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
+                                                <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
                                             </div>
 
                                         </div>
@@ -172,8 +188,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Teks</label>
-                            <textarea name="text" class="form-control" rows="4" required></textarea>
+                            <label class="form-label">Judul (tampil besar di banner)</label>
+                            <input type="text" name="text" class="form-control carousel-text-input" maxlength="70" required
+                                placeholder="Contoh: Layani Kesehatan, Lindungi Negeri">
+                            <div class="form-text">Kalimat singkat, 4-8 kata. <span class="carousel-text-count">0</span>/70 karakter.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Subtitle (baris kecil di bawah judul)</label>
+                            <input type="text" name="subtitle" class="form-control" maxlength="80"
+                                placeholder="{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}">
+                            <div class="form-text">Kosongkan untuk pakai tagline default: "{{ \App\Models\Carousel::DEFAULT_SUBTITLE }}"</div>
                         </div>
                     </div>
 
@@ -186,4 +211,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Penghitung karakter live untuk input judul carousel (batas 70)
+        document.querySelectorAll('.carousel-text-input').forEach(function(input) {
+            var counter = input.closest('.mb-3').querySelector('.carousel-text-count');
+            if (!counter) return;
+            var update = function() { counter.textContent = input.value.length; };
+            input.addEventListener('input', update);
+            update();
+        });
+    </script>
 @endsection

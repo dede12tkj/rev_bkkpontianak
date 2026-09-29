@@ -22,7 +22,8 @@ class CarouselController extends Controller
 
     $data = $request->validate([
         'path' => 'nullable|image',
-        'text' => 'nullable|string',
+        'text' => 'nullable|string|max:70',
+        'subtitle' => 'nullable|string|max:80',
     ]);
 
     if ($request->hasFile('path')) {
@@ -38,7 +39,8 @@ public function store(Request $request)
     {
         $request->validate([
             'path' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'text' => 'required|string'
+            'text' => 'required|string|max:70',
+            'subtitle' => 'nullable|string|max:80',
         ]);
 
         // Simpan gambar
@@ -47,6 +49,7 @@ public function store(Request $request)
         Carousel::create([
             'path' => $path,
             'text' => $request->text,
+            'subtitle' => $request->subtitle,
         ]);
 
         return redirect()->back()->with('success', 'Carousel berhasil ditambahkan');
