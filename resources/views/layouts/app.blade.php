@@ -7,6 +7,20 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Balai Kekarantinaan Kelas I Pontianak" name="keywords">
     <meta content="Balai Kekarantinaan Kelas 1 Pontianak" name="description">
+
+    {{-- CRITICAL CSS (anti-CLS): harus paling awal di <head>, SEBELUM stylesheet eksternal apa pun.
+         Base rule Bootstrap: .carousel-item { display:none } dan .modal { display:none }.
+         Kalau baru aktif setelah bootstrap.min.css selesai dimuat, semua slide carousel (15 buah,
+         masing-masing min-height 70-85vh) sempat tampil bertumpuk lalu menciut -> CLS besar.
+         Dengan aturan inline ini, hanya slide .active yang tampil sejak paint pertama. --}}
+    <style>
+        .carousel-item { display: none; }
+        .carousel-item.active,
+        .carousel-item-next,
+        .carousel-item-prev { display: block; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+
     @include('includes.frontend.style')
     <style>
         .visitor-counter {
