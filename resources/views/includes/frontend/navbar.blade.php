@@ -248,7 +248,28 @@
         .hero-heading { font-size: 1.5rem; }
         .hero-banner-container { min-height: 70vh; }
     }
+    @media (max-width: 991.98px) {
+    .hero-banner-container.image-only {
+        min-height: 0;
+        max-height: none;
+        aspect-ratio: 16 / 9;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .hero-banner-container.image-only .hero-image-wrapper img {
+        object-fit: contain;
+        object-position: center;
+        transform: none;
+    }
+
+    .hero-banner-container.has-text .hero-image-wrapper img {
+        object-position: center;
+    }
+}
 </style>
+
+
 
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
