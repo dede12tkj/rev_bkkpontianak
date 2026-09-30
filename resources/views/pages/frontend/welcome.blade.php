@@ -1744,20 +1744,27 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia ü§ù
 
 <!-- Inisialisasi Script Slider Splide -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new Splide('.social-splide', {
-            type        : 'loop',
-            perPage     : 3,
-            perMove     : 1,
-            gap         : '1.5rem',
-            autoplay    : false, // Diset false agar embed video/postingan tidak terganggu saat dibaca
-            pagination  : true,
-            arrows      : true,
-            breakpoints : {
-                1200: { perPage: 2 },
-                768 : { perPage: 1 }
+     document.addEventListener('DOMContentLoaded', function () {
+        var layananSplide = new Splide('.layanan-splide', {
+            type: 'loop',
+            perPage: 5,
+            focus: 'center',
+            gap: '1rem',
+            autoplay: true,
+            interval: 3500,
+            pagination: false,
+            arrows: true,
+            breakpoints: {
+                992: { perPage: 3 },
+                768: { perPage: 2 },
+                576: { perPage: 1 },
             }
         }).mount();
+
+        // Hitung ulang ukuran setelah font, gambar, dan layout selesai dimuat
+        window.addEventListener('load', function () {
+            layananSplide.refresh();
+        });
     });
 </script>
 
