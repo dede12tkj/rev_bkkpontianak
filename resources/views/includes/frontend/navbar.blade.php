@@ -248,6 +248,32 @@
         .hero-heading { font-size: 1.5rem; }
         .hero-banner-container { min-height: 70vh; }
     }
+
+    /* ===== HP/tablet: slide "gambar saja" tampil UTUH (tidak ke-crop) =====
+       Sebelumnya gambar dipaksa object-fit: cover di container 70-75vh (portrait), jadi foto
+       landscape terpotong kiri-kanan. Sekarang container mengikuti rasio gambar (16/9) dan
+       gambar di-contain: seluruh foto otomatis mengecil sesuai lebar layar. aspect-ratio
+       juga menjaga tinggi tetap stabil sebelum gambar dimuat (tidak menambah CLS). */
+    @media (max-width: 991.98px) {
+        .hero-banner-container.image-only {
+            min-height: 0;
+            max-height: none;
+            aspect-ratio: 16 / 9;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .hero-banner-container.image-only .hero-image-wrapper img {
+            object-fit: contain;
+            object-position: center;
+            transform: none;
+        }
+
+        /* Slide ber-teks tetap cover (teks menimpa gambar), tapi fokus ke tengah, bukan kanan */
+        .hero-banner-container.has-text .hero-image-wrapper img {
+            object-position: center;
+        }
+    }
 </style>
 
 <div class="container-fluid position-relative p-0">
@@ -434,6 +460,74 @@
                                         <p class="hero-subtitle speed-ramp-fade delay-2">
                                             {{ $item->subtitle_or_default }}
                                         </p>
+
+                                        <div class="hero-accent-divider speed-ramp-fade delay-3"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    </section>
+                </div>
+            @endforeach
+        </div>
+
+        <button class="carousel-control-prev d-none d-md-flex" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next d-none d-md-flex" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Script Triggers Re-animation + lazy-load gambar tiap perpindahan slide -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var heroCarousel = document.getElementById('header-carousel');
+        if (!heroCarousel) return;
+
+        var items = heroCarousel.querySelectorAll('.carousel-item');
+
+        // Isi src gambar dari data-src (dipanggil saat slide mau/lagi tampil).
+        function loadSlideImage(item) {
+            if (!item) return;
+            var img = item.querySelector('img[data-src]');
+            if (img) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            }
+        }
+
+        // Preload slide BERIKUTNYA di background, sedikit setelah slide sekarang tampil —
+        // supaya gambarnya sudah siap sebelum gilirannya, bukan baru mulai download pas
+        // transisi jalan (yang bisa kelihatan kosong sesaat kalau koneksi lambat).
+        heroCarousel.addEventListener('slid.bs.carousel', function (e) {
+            var nextIndex = (e.to + 1) % items.length;
+            setTimeout(function () { loadSlideImage(items[nextIndex]); }, 800);
+        });
+
+        // Jaring pengaman: kalau slide yang mau tampil ternyata belum sempat di-preload
+        // (mis. user klik panah "berikutnya" berkali-kali dengan cepat), muat saat itu juga.
+        heroCarousel.addEventListener('slide.bs.carousel', function (e) {
+            loadSlideImage(e.relatedTarget);
+
+            var nextElements = e.relatedTarget.querySelectorAll('.speed-ramp-fade');
+            nextElements.forEach(function (el) {
+                el.style.animation = 'none';
+                el.offsetHeight; /* Trigger reflow */
+                el.style.animation = '';
+            });
+        });
+
+        // Preload slide ke-2 lebih awal (di background, bukan blocking) supaya siap
+        // sebelum giliran pertamanya tampil di kunjungan pertama.
+        if (items[1]) {
+            setTimeout(function () { loadSlideImage(items[1]); }, 1500);
+        }
+    });
+</script>                                  </p>
 
                                         <div class="hero-accent-divider speed-ramp-fade delay-3"></div>
 
