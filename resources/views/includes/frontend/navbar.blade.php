@@ -248,32 +248,6 @@
         .hero-heading { font-size: 1.5rem; }
         .hero-banner-container { min-height: 70vh; }
     }
-
-    /* ===== HP/tablet: slide "gambar saja" tampil UTUH (tidak ke-crop) =====
-       Sebelumnya gambar dipaksa object-fit: cover di container 70-75vh (portrait), jadi foto
-       landscape terpotong kiri-kanan. Sekarang container mengikuti rasio gambar (16/9) dan
-       gambar di-contain: seluruh foto otomatis mengecil sesuai lebar layar. aspect-ratio
-       juga menjaga tinggi tetap stabil sebelum gambar dimuat (tidak menambah CLS). */
-    @media (max-width: 991.98px) {
-        .hero-banner-container.image-only {
-            min-height: 0;
-            max-height: none;
-            aspect-ratio: 16 / 9;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .hero-banner-container.image-only .hero-image-wrapper img {
-            object-fit: contain;
-            object-position: center;
-            transform: none;
-        }
-
-        /* Slide ber-teks tetap cover (teks menimpa gambar), tapi fokus ke tengah, bukan kanan */
-        .hero-banner-container.has-text .hero-image-wrapper img {
-            object-position: center;
-        }
-    }
 </style>
 
 <div class="container-fluid position-relative p-0">
