@@ -392,10 +392,20 @@
 
                         <!-- Layer gambar -->
                         <div class="hero-image-wrapper">
-                            <img src="{{ asset('storage/' . $item->path) }}"
-                                alt="{{ $item->text ?: 'Balai Kekarantinaan Kesehatan Kelas I Pontianak' }}"
-                                decoding="async"
-                                @if ($key == 0) fetchpriority="high" @else loading="lazy" @endif>
+                            @if ($key == 0)
+                                <img src="{{ asset('storage/' . $item->path) }}"
+                                    alt="{{ $item->text ?: 'Balai Kekarantinaan Kesehatan Kelas I Pontianak' }}"
+                                    decoding="async" fetchpriority="high">
+                            @else
+                                {{-- PENTING: pakai data-src, BUKAN src. Bootstrap carousel-fade menumpuk semua
+                                     slide di posisi yang sama (cuma beda opacity, bukan display:none), jadi
+                                     atribut loading="lazy" tidak mempan — browser tetap menganggap semua slide
+                                     "kelihatan" dan men-download semuanya sekaligus. src baru diisi oleh JS
+                                     tepat sebelum slide ini ditampilkan (lihat script di bawah). --}}
+                                <img data-src="{{ asset('storage/' . $item->path) }}"
+                                    alt="{{ $item->text ?: 'Balai Kekarantinaan Kesehatan Kelas I Pontianak' }}"
+                                    decoding="async" loading="lazy">
+                            @endif
                         </div>
 
                         @if ($item->should_show_text)
@@ -446,19 +456,49 @@
     </div>
 </div>
 
-<!-- Script Triggers Re-animation tiap perpindahan slide -->
+<!-- Script Triggers Re-animation + lazy-load gambar tiap perpindahan slide -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var heroCarousel = document.getElementById('header-carousel');
-        if (heroCarousel) {
-            heroCarousel.addEventListener('slide.bs.carousel', function (e) {
-                var nextElements = e.relatedTarget.querySelectorAll('.speed-ramp-fade');
-                nextElements.forEach(function (el) {
-                    el.style.animation = 'none';
-                    el.offsetHeight; /* Trigger reflow */
-                    el.style.animation = '';
-                });
+        if (!heroCarousel) return;
+
+        var items = heroCarousel.querySelectorAll('.carousel-item');
+
+        // Isi src gambar dari data-src (dipanggil saat slide mau/lagi tampil).
+        function loadSlideImage(item) {
+            if (!item) return;
+            var img = item.querySelector('img[data-src]');
+            if (img) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            }
+        }
+
+        // Preload slide BERIKUTNYA di background, sedikit setelah slide sekarang tampil —
+        // supaya gambarnya sudah siap sebelum gilirannya, bukan baru mulai download pas
+        // transisi jalan (yang bisa kelihatan kosong sesaat kalau koneksi lambat).
+        heroCarousel.addEventListener('slid.bs.carousel', function (e) {
+            var nextIndex = (e.to + 1) % items.length;
+            setTimeout(function () { loadSlideImage(items[nextIndex]); }, 800);
+        });
+
+        // Jaring pengaman: kalau slide yang mau tampil ternyata belum sempat di-preload
+        // (mis. user klik panah "berikutnya" berkali-kali dengan cepat), muat saat itu juga.
+        heroCarousel.addEventListener('slide.bs.carousel', function (e) {
+            loadSlideImage(e.relatedTarget);
+
+            var nextElements = e.relatedTarget.querySelectorAll('.speed-ramp-fade');
+            nextElements.forEach(function (el) {
+                el.style.animation = 'none';
+                el.offsetHeight; /* Trigger reflow */
+                el.style.animation = '';
             });
+        });
+
+        // Preload slide ke-2 lebih awal (di background, bukan blocking) supaya siap
+        // sebelum giliran pertamanya tampil di kunjungan pertama.
+        if (items[1]) {
+            setTimeout(function () { loadSlideImage(items[1]); }, 1500);
         }
     });
 </script>

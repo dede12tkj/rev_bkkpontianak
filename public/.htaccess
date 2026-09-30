@@ -59,5 +59,10 @@
     <FilesMatch "\.(?i:jpe?g|png|gif|webp|svg|ico|css|js|woff2?)$">
         Header append Cache-Control "public"
     </FilesMatch>
+
+    <!-- HSTS: setelah kunjungan pertama, browser otomatis langsung pakai https tanpa perlu
+         redirect 301 dari server lagi (hemat 1 round-trip ~200-300ms di kunjungan berikutnya).
+         Hanya aktifkan kalau seluruh situs memang selalu diakses via https. -->
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
