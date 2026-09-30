@@ -1431,7 +1431,7 @@
 
         <!-- Sync Footer Info -->
         <div class="text-center mt-4">
-            <span class="badge bg-light text-muted border py-2 px-3">
+            <span class="badge bg-light text-muted border py-2 px-3" style="white-space: normal; line-height: 1.5;">
                 <i class="fa fa-sync-alt me-1 text-primary"></i> Data terhubung secara otomatis via API | Terakhir diperbarui: <span id="stat-last-updated">-</span>
             </span>
         </div>
