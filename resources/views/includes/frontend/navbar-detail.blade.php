@@ -121,8 +121,8 @@
                             class="dropdown-item {{ request()->routeIs('artikel') ? 'active' : '' }}">Artikel</a>
                         <a href="{{ route('pengumuman') }}"
                             class="dropdown-item {{ request()->routeIs('pengumuman') ? 'active' : '' }}">Pengumuman</a>
-                        <a href="{{ route('survey-ikm') }}"
-                            class="dropdown-item {{ request()->routeIs('survey-ikm') ? 'active' : '' }}">Survey
+                        <a href="{{ route('survey-kepuasan-masyarakat') }}"
+                            class="dropdown-item {{ request()->routeIs('survey-kepuasan-masyarakat') ? 'active' : '' }}">Survey
                             Kepuasan Masyarakat</a>
                         <a href="{{ route('sop') }}"
                             class="dropdown-item {{ request()->routeIs('sop') ? 'active' : '' }}">SOP</a>
