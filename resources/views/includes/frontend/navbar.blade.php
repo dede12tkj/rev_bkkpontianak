@@ -248,7 +248,23 @@
         .hero-heading { font-size: 1.5rem; }
         .hero-banner-container { min-height: 70vh; }
     }
-    @media (max-width: 991.98px) {
+    /* Desktop: ukuran judul persis seperti sebelumnya (dulu inline) */
+@media (min-width: 992px) {
+    .hero-heading {
+        font-size: 55px;
+        line-height: 1.3;
+        max-width: 600px;
+    }
+}
+
+/* HP & tablet */
+@media (max-width: 991.98px) {
+    /* Hilangkan tinggi paksaan 100vh dari bootstrap.min.css */
+    #header-carousel .carousel-item {
+        height: auto;
+    }
+
+    /* Slide gambar saja: tampil utuh, tanpa crop, tanpa ruang kosong */
     .hero-banner-container.image-only {
         min-height: 0;
         max-height: none;
@@ -263,8 +279,33 @@
         transform: none;
     }
 
+    /* Slide dengan teks: lebih ringkas */
+    .hero-banner-container.has-text {
+        min-height: 380px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
     .hero-banner-container.has-text .hero-image-wrapper img {
         object-position: center;
+    }
+
+    .hero-content-wrapper {
+        padding: 5.5rem 0 1.5rem;
+    }
+
+    .hero-heading {
+        font-size: clamp(1.5rem, 6.5vw, 2.25rem);
+        line-height: 1.25;
+        margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-accent-divider {
+        margin-top: 1.25rem;
     }
 }
 </style>
@@ -448,7 +489,7 @@
                                 <div class="col-lg-8 col-xl-7">
                                     <div class="hero-content-wrapper">
 
-                                        <h1 class="hero-heading speed-ramp-fade delay-1" style="font-size: 55px; line-height: 1.3; max-width: 600px;">
+                                        <h1 class="hero-heading speed-ramp-fade delay-1">
                                             {{ $item->text }}
                                         </h1>
 
