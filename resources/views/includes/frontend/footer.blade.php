@@ -38,7 +38,11 @@
                         <div class="d-flex flex-wrap gap-2">
                             <a class="btn btn-primary btn-square" href="https://www.instagram.com/bkkpontianak/" target="_blank"><i class="fab fa-instagram fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.tiktok.com/@bkkpontianak?is_from_webapp=1&amp;sender_device=pc" target="_blank"><i class="fab fa-tiktok fw-normal"></i></a>
-                            <a class="btn btn-primary btn-square" href="https://x.com/bkkpontianak" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a class="btn btn-primary btn-square" href="https://x.com/bkkpontianak" target="_blank" style="display: inline-flex; align-items: center; justify-content: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                                </svg>
+                            </a>
                             <a class="btn btn-primary btn-square" href="https://www.facebook.com/karkes.pontianak" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.youtube.com/channel/UCXBSuR2BWc9FQ0xRa8G-1rQ/featured" target="_blank"><i class="fab fa-youtube fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://api.whatsapp.com/message/4ZTOZITFRHX5G1?autoload=1&amp;app_absent=0" target="_blank"><i class="fab fa-whatsapp fw-normal"></i></a>
