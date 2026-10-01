@@ -36,7 +36,7 @@
                             <p class="mb-0" style="font-size: 14px;">(0561) 6729032</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-primary btn-square" href="https://www.instagram.com/bkk.pontianak/" target="_blank"><i class="fab fa-instagram fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square" href="https://www.instagram.com/bkkpontianak/" target="_blank"><i class="fab fa-instagram fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.tiktok.com/@bkkpontianak?is_from_webapp=1&amp;sender_device=pc" target="_blank"><i class="fab fa-tiktok fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://x.com/kkp_pontianak" target="_blank"><i class="fab fa-twitter fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.facebook.com/Admin.KKP.Pontianak" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
