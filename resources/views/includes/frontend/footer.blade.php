@@ -38,8 +38,8 @@
                         <div class="d-flex flex-wrap gap-2">
                             <a class="btn btn-primary btn-square" href="https://www.instagram.com/bkkpontianak/" target="_blank"><i class="fab fa-instagram fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.tiktok.com/@bkkpontianak?is_from_webapp=1&amp;sender_device=pc" target="_blank"><i class="fab fa-tiktok fw-normal"></i></a>
-                            <a class="btn btn-primary btn-square" href="https://x.com/kkp_pontianak" target="_blank"><i class="fab fa-twitter fw-normal"></i></a>
-                            <a class="btn btn-primary btn-square" href="https://www.facebook.com/Admin.KKP.Pontianak" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square" href="https://x.com/bkkpontianak" target="_blank"><i class="fab fa-twitter fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square" href="https://www.facebook.com/karkes.pontianak" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://www.youtube.com/channel/UCXBSuR2BWc9FQ0xRa8G-1rQ/featured" target="_blank"><i class="fab fa-youtube fw-normal"></i></a>
                             <a class="btn btn-primary btn-square" href="https://api.whatsapp.com/message/4ZTOZITFRHX5G1?autoload=1&amp;app_absent=0" target="_blank"><i class="fab fa-whatsapp fw-normal"></i></a>
                         </div>
