@@ -1207,13 +1207,11 @@ h6,
 .layanan-splide .splide__slide {
     padding: 10px 8px 20px;
     opacity: 0.55;
-    transform: scale(0.9);
     transition: 0.4s;
 }
 
 .layanan-splide .splide__slide.is-active {
     opacity: 1;
-    transform: scale(1);
     z-index: 2;
 }
 
@@ -1229,10 +1227,12 @@ h6,
     min-height: 260px;
 }
 
+.layanan-splide .splide__slide .layanan-card {
+    transform: scale(0.9);
+}
+
 .layanan-splide .splide__slide.is-active .layanan-card {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(214, 223, 33, 0.45);
-    box-shadow: 0 0 45px rgba(0, 124, 133, 0.6), 0 0 90px rgba(214, 223, 33, 0.12);
+   transform: scale(1);
 }
 
 .layanan-icon-wrap {
