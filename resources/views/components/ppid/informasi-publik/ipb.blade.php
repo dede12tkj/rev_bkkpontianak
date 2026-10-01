@@ -423,13 +423,7 @@
             </h2>
             <div id="collapse13" class="accordion-collapse collapse" data-bs-parent="#accordion13">
                 <div class="accordion-body">
-                    {{-- <a href="#"
-                       data-universal-modal
-                       data-type="pdf"
-                       data-title="LAKIP Tahun 2025"
-                       data-src="{{ asset('/frontend/img/ppid/LAKIP 2025 PASCA REVIU TIM MARVEL.pdf') }}">
-                        1. LAPORAN AKUNTABILITAS KINERJA INSTANSI PEMERINTAH (LAKIP) TAHUN 2025
-                    </a> --}}
+                
                 </div>
             </div>
         </div>

@@ -140,16 +140,12 @@
                                     <a href="{{ route('admin-faq-wbk.index') }}" class="submenu-link">Tentang WBK &
                                         WBBM</a>
                                 </li>
-                                {{-- <li class="submenu-item {{ request()->routeIs('admin-sk-dan-sop.index') ? 'active' : '' }}">
-                                    <a href="#" class="submenu-link">Whistleblowing</a>
-                                </li> --}}
+                               
                                 <li class="submenu-item {{ request()->routeIs('admin-benturan-kepentingan.index') ? 'active' : '' }}">
                                     <a href="{{ route('admin-benturan-kepentingan.index') }}"
                                         class="submenu-link">Benturan Kepentingan</a>
                                 </li>
-                                {{-- <li class="submenu-item {{ request()->routeIs('admin-sk-dan-sop.index') ? 'active' : '' }}">
-                                    <a href="#" class="submenu-link">Pengaduan Layanan Masyarakat</a>
-                                </li> --}}
+                               
                                 <li class="submenu-item {{ request()->routeIs('lapor-span.index') ? 'active' : '' }}">
                                     <a href="{{ route('lapor-span.index') }}" class="submenu-link">Lapor SP4N</a>
                                 </li>

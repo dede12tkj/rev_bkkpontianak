@@ -43,13 +43,6 @@
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">Edit</button>
 
-                                    {{-- <form action="{{ route('admin-infografis.destroy', $item->id) }}"
-                                    method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Hapus data?')">Hapus</button>
-                                </form> --}}
                                 </td>
                             </tr>
 

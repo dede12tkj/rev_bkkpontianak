@@ -41,16 +41,6 @@
         });
     });
 
-    // // Tombol untuk membuka media sosial
-    // const socialBtn = document.getElementById('socialBtn');
-    // const socialIcons = document.querySelector('.social-media-icons');
-
-    // // Menambahkan event listener untuk klik tombol
-    // socialBtn.addEventListener('click', () => {
-    //     // Toggle kelas 'active' pada tombol dan ikon
-    //     socialBtn.classList.toggle('active');
-    //     socialIcons.classList.toggle('active');
-    // });
 
     var myCarousel = document.querySelector('#customNewsCarousel');
     if (myCarousel && window.bootstrap) {
