@@ -46,47 +46,6 @@
                     </ol>
                 </div>
 
-                <!-- Tujuan Strategis Card -->
-                {{-- <div class="col-lg-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h3 class="card-title text-center mt-3 mb-3">Form Layanan Pengaduan Masyarakat</h3>
-                            <p>Pengaduan Anda akan menyempurnakan pelayanan kami.
-                                Jika ada pertanyaan anda bisa menghubungi kami pada Form Kontak Kami.</p>
-                            <form action="{{ route('layanan-pengaduan-masyarakat.store') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label">Nama / Inisial</label>
-                                    <input type="text" name="nama" class="form-control"
-                                        placeholder="Masukkan nama / inisial" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Jenis Kelamin</label><br>
-                                    <label>
-                                        <input type="radio" name="jenis_kelamin" value="Laki-laki" required>
-                                        Laki-laki
-                                    </label>
-                                    <label style="margin-left: 20px;">
-                                        <input type="radio" name="jenis_kelamin" value="Perempuan" required>
-                                        Perempuan
-                                    </label>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label class="form-label" for="umur">Umur</label>
-                                    <input type="number" name="umur" id="umur" class="form-control" min="1"
-                                        max="120" placeholder="Masukkan umur" required>
-                                </div>
-                                <div class="form-group mb-3 mt-3">
-                                    <label class="form-label" for="permasalahan">Permasalahan / Pengaduan</label>
-                                    <textarea name="permasalahan" class="form-control" rows="8" placeholder="Masukkan permasalahan / pengaduan"></textarea>
-                                </div>
-                                <div class="g-recaptcha mb-3" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </form>
-                        </div>
-                    </div>
-                </div> --}}
 
                 {{-- Form --}}
                 <div class="col-lg-6 mb-4">

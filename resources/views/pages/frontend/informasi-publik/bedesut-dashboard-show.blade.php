@@ -19,15 +19,6 @@
         @endif
 
 
-        {{-- THUMBNAIL --}}
-        {{-- @if ($dashboard->thumbnail)
-        <div class="text-center mb-4">
-            <img src="{{ asset('storage/'.$dashboard->thumbnail) }}"
-                 class="img-fluid rounded shadow"
-                 style="max-height:400px">
-        </div>
-    @endif --}}
-
         {{-- ISI KONTEN --}}
         <div class="content">
             {!! $dashboard->text !!}

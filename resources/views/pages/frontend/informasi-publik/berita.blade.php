@@ -8,10 +8,6 @@
 @section('content')
     <div class="container-fluid wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
-            {{-- <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                <h1 class="mb-0">Berita</h1>
-                <h5 class="fw-bold text-primary text-uppercase">Berita dan Diseminasi Surveilans di Pintu Masuk</h5>
-            </div> --}}
             <div class="row">
                 <!-- Blog Start -->
                 <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">

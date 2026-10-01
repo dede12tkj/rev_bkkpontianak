@@ -34,7 +34,7 @@
                         <p class="mb-0"> (0561) 6729032</p>
                     </div>
                     <div class="d-flex">
-                        <a class="btn btn-primary btn-square me-2" href="https://www.instagram.com/bkk.pontianak/"
+                        <a class="btn btn-primary btn-square me-2" href="https://www.instagram.com/bkkpontianak/"
                             target="blank"><i class="fab fa-instagram fw-normal"></i></a>
                         <a class="btn btn-primary btn-square me-2"
                             href="https://www.tiktok.com/@bkkpontianak?is_from_webapp=1&sender_device=pc" target="blank"><i
@@ -125,62 +125,7 @@
             </div>
         </div>
     </div>
-    {{-- <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h3 class="fw-bold text-primary text-uppercase">
-                    Jika ada pertanyaan anda bisa menghubungi kami dengan cara
-                    mengisi form dibawah ini
-                </h3>
-            </div>
-
-            <div class="row g-5">
-
-                <!-- GOOGLE FORM -->
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-
-                    <div class="card shadow h-100">
-                        <div class="card-body p-2">
-
-                            <form action="{{ route('kontak.store') }}" method="POST">
-                                @csrf
-
-                                <div class="mb-3 ">
-                                    <label>Nama</label>
-                                    <input type="text" name="nama" class="form-control ">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Email</label>
-                                    <input type="email" name="email" class="form-control">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Pesan</label>
-                                    <textarea name="pesan" class="form-control"></textarea>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">
-                                    Kirim
-                                </button>
-                            </form>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- GOOGLE MAP -->
-                <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
-                    <iframe class="position-relative rounded w-100 h-100"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7979.615126851328!2d109.39814519357907!3d-0.1330469999999918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d50235e926d8f%3A0xb360d28cf24e43ac!2sBalai%20Kekarantinaan%20Kesehatan%20Kelas%20I%20Pontianak!5e0!3m2!1sid!2sid!4v1764179846444!5m2!1sid!2sid"
-                        frameborder="0" style="min-height: 600px; border:0;" allowfullscreen="">
-                    </iframe>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('success'))
         <script>

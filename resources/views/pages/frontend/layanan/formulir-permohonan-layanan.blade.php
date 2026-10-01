@@ -43,39 +43,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="text-center mt-5 shadow">
-                <a href="https://www.bkkpontianak.id/layanan/sinkarkes/formulir-permohonan-vaksinasi" target="_blank"
-                    class="btn btn-kemenkes btn-lg text-white w-100" style="max-width: 100%; display: inline-block;">
-                    Formulir Permohonan Dan Persetujuan Vaksinasi
-                </a>
-            </div>
-
-            <div class="accordion shadow mt-3" id="kemenkesAccordion">
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading1">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                            <i class="fa fa-scale me-2"></i> Data Pelayanan Vaksinasi
-                        </button>
-                    </h2>
-                    <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1"
-                        data-bs-parent="#kemenkesAccordion">
-                        <div class="accordion-body">
-                            <ol>
-                                <a href="">
-                                    <li>DATA PELAYANAN VAKSINASI MENINGITIS MENINGOKOKUS & YELLOW FEVER</li>
-                                </a>
-                                <a href="">
-                                    <li>DATA PELAYANAN VAKSINASI COVID 19</li>
-                                </a>
-
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 @endsection

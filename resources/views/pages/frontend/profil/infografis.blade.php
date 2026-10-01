@@ -28,14 +28,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="mb-4">
-                <div class="card shadow">
-                    <div class="card-body text-center">
-                        <iframe id="googleMap" src="https://www.google.com/maps/d/embed?mid=118NmmtW-hcRa1YNvFqeVD7zeqXvPmQKx&ehbc=2E312F"
-                                width="100%" height="480"></iframe>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 @endsection

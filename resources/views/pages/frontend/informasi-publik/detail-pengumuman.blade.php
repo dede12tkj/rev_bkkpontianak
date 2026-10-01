@@ -23,21 +23,6 @@
                 {{-- JUDUL --}}
                 <h1 class="mb-2">{{ $item->judul }}</h1>
 
-                {{-- STATUS & PENTING --}}
-                {{-- <p class="text-muted">
-                    @if($item->is_penting)
-                        <span class="badge bg-danger">Pengumuman Penting</span>
-                    @endif
-
-                    &nbsp;
-
-                    @if($item->status == 'published')
-                        <span class="badge bg-success">Published</span>
-                    @else
-                        <span class="badge bg-secondary">Draft</span>
-                    @endif
-                </p> --}}
-
             </div>
 
             {{-- KONTEN --}}

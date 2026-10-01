@@ -8,9 +8,6 @@
 @section('content')
     <div class="container-fluid wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
-            {{-- <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                <h1 class="mb-0">Artikel</h1>
-            </div> --}}
             <div class="row">
 
                 @forelse ($pengumuman as $item)
