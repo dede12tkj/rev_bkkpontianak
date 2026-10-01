@@ -1749,7 +1749,6 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia ğŸ¤ğ
             type: 'loop',
             perPage: 5,
             focus: 'center',
-            gap: '1rem',
             autoplay: true,
             interval: 3500,
             pagination: false,
