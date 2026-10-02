@@ -61,7 +61,7 @@
                                     <form action="{{ route('pengumuman.destroy', $item->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button onclick="return confirm('Hapus data?')"
+                                        <button data-confirm="Hapus data?"
                                             class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
                                 </td>
@@ -203,9 +203,7 @@
     </div>
 
     {{-- SUMMERNOTE --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
 <script>
     $(document).ready(function() {
@@ -235,7 +233,7 @@
                 $('#editStatus').val($(this).data('status'));
                 $('#editPenting').val($(this).data('penting'));
 
-                $('#summernoteEdit').summernote('code', $(this).data('isi'));
+                $('#summernoteEdit').summernote('code', $(this).attr('data-isi'));
 
                 $('#modalEdit').modal('show');
             });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artikel;
+use App\Support\EditorUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -103,11 +104,6 @@ class ArtikelController extends Controller
 
     public function uploadImage(Request $request)
     {
-        $file = $request->file('file');
-        $path = $file->store('summernote', 'public');
-
-        return response()->json([
-            'url' => asset('storage/'.$path),
-        ]);
+        return EditorUpload::store($request, 'summernote');
     }
 }

@@ -57,7 +57,7 @@
 
                                 <td>
                                     <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $item->id }}"
-                                        data-judul="{{ $item->judul }}" data-isi="{{ e($item->isi) }}"
+                                        data-judul="{{ $item->judul }}" data-isi="{{ $item->isi }}"
                                         data-kategori="{{ $item->kategori }}" data-tahun="{{ $item->tahun }}">
                                         Edit
                                     </button>
@@ -65,7 +65,7 @@
                                     <form action="{{ route('survey-admin.destroy', $item->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
+                                        <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
                                             Hapus
                                         </button>
                                     </form>
@@ -191,9 +191,7 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -222,7 +220,7 @@
                 $('#editTahun').val($(this).data('tahun'));
 
                 // SET ISI KE SUMMERNOTE
-                $('#summernoteEdit').summernote('code', $(this).data('isi'));
+                $('#summernoteEdit').summernote('code', $(this).attr('data-isi'));
 
                 let modal = new bootstrap.Modal(document.getElementById('modalEdit'));
                 modal.show();

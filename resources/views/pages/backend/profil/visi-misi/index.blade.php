@@ -38,9 +38,9 @@
                     <tbody>
                         @forelse($data as $item)
                             <tr>
-                                <td>{!! Str::limit(strip_tags($item->visi), 100) !!}</td>
-                                <td>{!! Str::limit(strip_tags($item->misi), 100) !!}</td>
-                                <td>{!! Str::limit(strip_tags($item->tujuan), 100) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->visi), ENT_QUOTES | ENT_HTML5), 100) }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->misi), ENT_QUOTES | ENT_HTML5), 100) }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->tujuan), ENT_QUOTES | ENT_HTML5), 100) }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">
@@ -65,17 +65,17 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">Visi</label>
-                                                    <textarea class="summernote" name="visi">{!! $item->visi !!}</textarea>
+                                                    <textarea class="summernote" name="visi">{{ $item->visi }}</textarea>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Misi</label>
-                                                    <textarea class="summernote" name="misi">{!! $item->misi !!}</textarea>
+                                                    <textarea class="summernote" name="misi">{{ $item->misi }}</textarea>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Tujuan</label>
-                                                    <textarea class="summernote" name="tujuan">{!! $item->tujuan !!}</textarea>
+                                                    <textarea class="summernote" name="tujuan">{{ $item->tujuan }}</textarea>
                                                 </div>
                                             </div>
 
@@ -147,7 +147,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

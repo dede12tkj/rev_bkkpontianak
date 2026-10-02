@@ -75,7 +75,7 @@
                                     <form action="{{ route('admin-sk-dan-sop.destroy', $item->id) }}"
                                         method="POST"
                                         class="d-inline"
-                                        onsubmit="return confirm('Yakin hapus data?')">
+                                        data-confirm="Yakin hapus data?">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm">Hapus</button>

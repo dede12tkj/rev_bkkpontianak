@@ -39,7 +39,7 @@
                     <tbody>
                         @forelse($footer as $item)
                             <tr>
-                                <td>{!! Str::limit(strip_tags($item->text), 100) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 100) }}</td>
                                 <td>{{ $item->alamat }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->no_telp }}</td>

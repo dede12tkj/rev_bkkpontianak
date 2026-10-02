@@ -51,7 +51,7 @@
                                     </button>
 
                                     <form action="{{ route('admin-bedesut-infografis.destroy', $item->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -90,7 +90,7 @@
                                                     @endforeach
                                                 </select>
 
-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
+                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
 
                                                 <input type="url" name="link_looker" class="form-control mt-3"
                                                     value="{{ $item->link_looker }}" placeholder="Link Looker">
@@ -151,7 +151,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
     <script>
         $('.summernote, .summernote-edit').summernote({
             height: 250

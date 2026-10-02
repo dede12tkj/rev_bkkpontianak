@@ -212,7 +212,6 @@
 
 
     {{-- JQuery --}}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     {{-- DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">

@@ -113,7 +113,7 @@
                             + Pertanyaan
                         </button>
                         <form method="POST" action="{{ route('admin-skm-section.destroy', $section->id) }}" class="d-inline"
-                            onsubmit="return confirm('Hapus section ini beserta seluruh pertanyaannya?');">
+                            data-confirm="Hapus section ini beserta seluruh pertanyaannya?">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger">Hapus</button>
@@ -165,7 +165,7 @@
                                                 Edit
                                             </button>
                                             <form method="POST" action="{{ route('admin-skm-question.destroy', $question->id) }}"
-                                                onsubmit="return confirm('Hapus pertanyaan ini?');">
+                                                data-confirm="Hapus pertanyaan ini?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-outline-danger">Hapus</button>

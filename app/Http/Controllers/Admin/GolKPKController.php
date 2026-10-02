@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GolKPK;
+use App\Support\EditorUpload;
 use Illuminate\Http\Request;
 
 class GolKPKController extends Controller
@@ -50,11 +51,6 @@ class GolKPKController extends Controller
     // upload gambar Summernote
     public function uploadImage(Request $request)
     {
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('gol-kpk', 'public');
-            return response()->json([
-                'url' => asset('storage/' . $path)
-            ]);
-        }
+        return EditorUpload::store($request, 'gol-kpk');
     }
 }

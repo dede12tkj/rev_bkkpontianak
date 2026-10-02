@@ -1,5 +1,4 @@
-  <!-- 1. JQUERY HARUS PALING ATAS -->
-<script src="{{ asset('backend/assets/extensions/jquery/jquery.min.js') }}"></script>
+  <!-- 1. jQuery & Summernote sekarang dimuat di <head> layouts/back.blade.php -->
 
 <!-- 2. BOOTSTRAP / CORE APP -->
 <script src="{{ asset('backend/assets/static/js/components/dark.js') }}"></script>
@@ -15,8 +14,7 @@
 <script src="{{ asset('backend/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('backend/assets/static/js/pages/datatables.js') }}"></script>
 
-<!-- 5. SUMMERNOTE -->
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+<!-- 5. SUMMERNOTE: dimuat di <head> layouts/back.blade.php -->
 
 
 

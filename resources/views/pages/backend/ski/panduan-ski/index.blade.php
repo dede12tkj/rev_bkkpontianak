@@ -49,7 +49,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Yakin hapus data?')">
+                                        data-confirm="Yakin hapus data?">
                                         Hapus
                                     </button>
                                 </form>

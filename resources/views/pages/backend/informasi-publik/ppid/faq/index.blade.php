@@ -33,7 +33,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $item->judul }}</td>
-                                <td>{!! $item->deskripsi !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->deskripsi), ENT_QUOTES | ENT_HTML5), 150) }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#edit{{ $item->id }}">

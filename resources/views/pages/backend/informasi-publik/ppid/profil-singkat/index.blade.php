@@ -33,7 +33,7 @@
                         @forelse ($data as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td>{!! Str::limit(strip_tags($item->text), 150) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">
@@ -60,7 +60,7 @@
                                         </div>
 
                                         <div class="modal-body">
-                                            <textarea name="text" class="form-control summernote" required>{!! $item->text !!}</textarea>
+                                            <textarea name="text" class="form-control summernote" required>{{ $item->text }}</textarea>
                                         </div>
 
                                             <div class="modal-footer">
@@ -104,7 +104,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

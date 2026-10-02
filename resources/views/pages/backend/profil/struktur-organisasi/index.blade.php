@@ -34,7 +34,7 @@
                     <tbody>
                         @forelse ($data as $item)
                             <tr>
-                                <td>{!! $item->text !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">
@@ -58,7 +58,7 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
+                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
                                             </div>
 
                                             <div class="modal-footer">
@@ -110,7 +110,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

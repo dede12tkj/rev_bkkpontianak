@@ -48,7 +48,6 @@
     </div>
 </div>
 
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,1537 @@
+diff --git a/app/Http/Controllers/Admin/ArtikelController.php b/app/Http/Controllers/Admin/ArtikelController.php
+index 5d0f325..b59aad3 100644
+--- a/app/Http/Controllers/Admin/ArtikelController.php
++++ b/app/Http/Controllers/Admin/ArtikelController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ use App\Models\Artikel;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Str;
+ 
+@@ -103,11 +104,6 @@ public function destroy($id)
+ 
+     public function uploadImage(Request $request)
+     {
+-        $file = $request->file('file');
+-        $path = $file->store('summernote', 'public');
+-
+-        return response()->json([
+-            'url' => asset('storage/'.$path),
+-        ]);
++        return EditorUpload::store($request, 'summernote');
+     }
+ }
+diff --git a/app/Http/Controllers/Admin/GolKPKController.php b/app/Http/Controllers/Admin/GolKPKController.php
+index 19f857b..b516bde 100644
+--- a/app/Http/Controllers/Admin/GolKPKController.php
++++ b/app/Http/Controllers/Admin/GolKPKController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ use App\Models\GolKPK;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ 
+ class GolKPKController extends Controller
+@@ -50,11 +51,6 @@ public function destroy($id)
+     // upload gambar Summernote
+     public function uploadImage(Request $request)
+     {
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('gol-kpk', 'public');
+-            return response()->json([
+-                'url' => asset('storage/' . $path)
+-            ]);
+-        }
++        return EditorUpload::store($request, 'gol-kpk');
+     }
+ }
+diff --git a/app/Http/Controllers/Admin/LaporSpanController.php b/app/Http/Controllers/Admin/LaporSpanController.php
+index f760bdf..8ae36a1 100644
+--- a/app/Http/Controllers/Admin/LaporSpanController.php
++++ b/app/Http/Controllers/Admin/LaporSpanController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ use App\Models\LaporSpan;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ 
+ class LaporSpanController extends Controller
+@@ -50,11 +51,6 @@ public function destroy($id)
+     // upload gambar Summernote
+     public function uploadImage(Request $request)
+     {
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('lapor_span', 'public');
+-            return response()->json([
+-                'url' => asset('storage/' . $path)
+-            ]);
+-        }
++        return EditorUpload::store($request, 'lapor_span');
+     }
+ }
+diff --git a/app/Http/Controllers/Admin/PoseinController.php b/app/Http/Controllers/Admin/PoseinController.php
+index e1ff6ae..133083b 100644
+--- a/app/Http/Controllers/Admin/PoseinController.php
++++ b/app/Http/Controllers/Admin/PoseinController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ 
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ use App\Models\Posein;
+ 
+@@ -50,14 +51,6 @@ public function destroy($id)
+ 
+     public function uploadImage(Request $request)
+     {
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('summernote', 'public');
+-
+-            return response()->json([
+-                'url' => asset('storage/' . $path)
+-            ]);
+-        }
+-
+-        return response()->json(['error' => 'Upload gagal'], 400);
++        return EditorUpload::store($request, 'summernote');
+     }
+ }
+diff --git a/app/Http/Controllers/Admin/SummernoteController.php b/app/Http/Controllers/Admin/SummernoteController.php
+index fc0fec6..54d917d 100644
+--- a/app/Http/Controllers/Admin/SummernoteController.php
++++ b/app/Http/Controllers/Admin/SummernoteController.php
+@@ -1,23 +1,15 @@
+ <?php
++
+ namespace App\Http\Controllers\Admin;
+ 
+ use App\Http\Controllers\Controller;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+-use Illuminate\Support\Facades\Storage;
++
+ class SummernoteController extends Controller
+ {
+     public function upload(Request $request)
+     {
+-        if (!$request->hasFile('file')) {
+-            return response()->json(['error' => 'No file uploaded'], 400);
+-        }
+-
+-        $file = $request->file('file');
+-        $path = $file->store('summernote', 'public');
+-
+-        return response()->json([
+-            'url' => asset('storage/' . $path)
+-        ]);
++        return EditorUpload::store($request, 'summernote');
+     }
+-
+ }
+diff --git a/app/Http/Controllers/Admin/TugasPokokDanFungsiController.php b/app/Http/Controllers/Admin/TugasPokokDanFungsiController.php
+index 61c3596..ecaef0d 100644
+--- a/app/Http/Controllers/Admin/TugasPokokDanFungsiController.php
++++ b/app/Http/Controllers/Admin/TugasPokokDanFungsiController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ use App\Models\TugasDanFungsi;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ use Illuminate\Support\Facades\Storage;
+ 
+@@ -51,11 +52,6 @@ public function destroy($id)
+     // upload gambar Summernote
+     public function uploadImage(Request $request)
+     {
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('tugas-fungsi', 'public');
+-            return response()->json([
+-                'url' => asset('storage/' . $path)
+-            ]);
+-        }
++        return EditorUpload::store($request, 'tugas-fungsi');
+     }
+ }
+diff --git a/app/Http/Controllers/Admin/UPGController.php b/app/Http/Controllers/Admin/UPGController.php
+index 18a1516..614567e 100644
+--- a/app/Http/Controllers/Admin/UPGController.php
++++ b/app/Http/Controllers/Admin/UPGController.php
+@@ -4,6 +4,7 @@
+ 
+ use App\Http\Controllers\Controller;
+ use App\Models\UPG;
++use App\Support\EditorUpload;
+ use Illuminate\Http\Request;
+ 
+ class UPGController extends Controller
+@@ -50,11 +51,6 @@ public function destroy($id)
+     // upload gambar Summernote
+     public function uploadImage(Request $request)
+     {
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('upg', 'public');
+-            return response()->json([
+-                'url' => asset('storage/' . $path)
+-            ]);
+-        }
++        return EditorUpload::store($request, 'upg');
+     }
+ }
+diff --git a/app/Providers/AppServiceProvider.php b/app/Providers/AppServiceProvider.php
+index b5b4992..84434eb 100644
+--- a/app/Providers/AppServiceProvider.php
++++ b/app/Providers/AppServiceProvider.php
+@@ -3,6 +3,9 @@
+ namespace App\Providers;
+ 
+ use App\Support\HomeCache;
++use App\Support\HtmlSanitizer;
++use Illuminate\Database\Eloquent\Model;
++use Illuminate\Support\Facades\Event;
+ use Illuminate\Pagination\Paginator;
+ use Illuminate\Support\Facades\URL;
+ use Illuminate\Support\Facades\View;
+@@ -31,6 +34,26 @@ public function boot(): void
+ 
+         // Counter pengunjung hanya dipakai di layout publik ini. Sebelumnya composer
+         // dipasang di '*' sehingga 2 query COUNT dijalankan untuk SETIAP view/partial.
++        // Saring HTML dari editor admin sebelum disimpan (daftar model/kolom: config/richtext.php).
++        Event::listen('eloquent.saving: *', function (string $eventName, array $payload) {
++            if (! config('richtext.enabled', true)) {
++                return;
++            }
++
++            $model = $payload[0] ?? null;
++            if (! $model instanceof Model) {
++                return;
++            }
++
++            $fields = config('richtext.fields', [])[$model::class] ?? [];
++            foreach ($fields as $field) {
++                $value = $model->getAttribute($field);
++                if ($model->isDirty($field) && is_string($value)) {
++                    $model->setAttribute($field, HtmlSanitizer::clean($value));
++                }
++            }
++        });
++
+         View::composer(['layouts.app', 'layouts.detail'], function ($view) {
+             $view->with(HomeCache::visitorCounts());
+         });
+diff --git a/resources/views/includes/backend/script.blade.php b/resources/views/includes/backend/script.blade.php
+index c381dbf..9822b10 100644
+--- a/resources/views/includes/backend/script.blade.php
++++ b/resources/views/includes/backend/script.blade.php
+@@ -1,5 +1,4 @@
+-  <!-- 1. JQUERY HARUS PALING ATAS -->
+-<script src="{{ asset('backend/assets/extensions/jquery/jquery.min.js') }}"></script>
++  <!-- 1. jQuery & Summernote sekarang dimuat di <head> layouts/back.blade.php -->
+ 
+ <!-- 2. BOOTSTRAP / CORE APP -->
+ <script src="{{ asset('backend/assets/static/js/components/dark.js') }}"></script>
+@@ -15,8 +14,7 @@
+ <script src="{{ asset('backend/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+ <script src="{{ asset('backend/assets/static/js/pages/datatables.js') }}"></script>
+ 
+-<!-- 5. SUMMERNOTE -->
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
++<!-- 5. SUMMERNOTE: dimuat di <head> layouts/back.blade.php -->
+ 
+ 
+ 
+diff --git a/resources/views/layouts/back.blade.php b/resources/views/layouts/back.blade.php
+index 88133eb..d3c061a 100644
+--- a/resources/views/layouts/back.blade.php
++++ b/resources/views/layouts/back.blade.php
+@@ -7,6 +7,17 @@
+     <title>Dashboard</title>
+ 
+     @include('includes.backend.style')
++
++    {{-- jQuery + Summernote + perilaku editor dimuat SEKALI di sini; view tidak perlu memuatnya lagi --}}
++    <script>
++        window.ADMIN_CONFIG = {
++            csrf: @json(csrf_token()),
++            uploadUrl: @json(route('summernote.upload'))
++        };
++    </script>
++    <script src="{{ asset('backend/assets/extensions/jquery/jquery.min.js') }}"></script>
++    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
++    <script src="{{ asset('backend/assets/js/admin-editor.js') }}?v={{ is_file($__ae = public_path('backend/assets/js/admin-editor.js')) ? filemtime($__ae) : 1 }}"></script>
+ </head>
+ 
+ <body>
+@@ -27,12 +38,13 @@
+         </div>
+     </div>
+     @include('includes.backend.script')
++    @stack('scripts')
+     <script>
+         @if (session('success'))
+             Swal.fire({
+                 icon: 'success',
+                 title: 'Berhasil',
+-                text: "{{ session('success') }}",
++                text: @json(session('success')),
+                 timer: 2500,
+                 showConfirmButton: false
+             });
+@@ -42,7 +54,7 @@
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Gagal',
+-                text: "{{ session('error') }}",
++                text: @json(session('error')),
+             });
+         @endif
+ 
+@@ -50,7 +62,7 @@
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Terjadi Kesalahan',
+-                html: `{!! implode('<br>', $errors->all()) !!}`,
++                html: @json(implode('<br>', array_map('e', $errors->all()))),
+             });
+         @endif
+     </script>
+diff --git a/resources/views/pages/backend/berita/index.blade.php b/resources/views/pages/backend/berita/index.blade.php
+index 32d1cbb..c75e762 100644
+--- a/resources/views/pages/backend/berita/index.blade.php
++++ b/resources/views/pages/backend/berita/index.blade.php
+@@ -58,7 +58,7 @@ class="img-thumbnail">
+                                             Edit
+                                         </a>
+                                         <form action="{{ route('berita.destroy', $item->id) }}" method="POST"
+-                                            class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
++                                            class="d-inline" data-confirm="Yakin ingin menghapus?">
+                                             @csrf
+                                             @method('DELETE')
+                                             <button class="btn btn-danger btn-sm">
+diff --git a/resources/views/pages/backend/footer/index.blade.php b/resources/views/pages/backend/footer/index.blade.php
+index 877127b..92ad7f0 100644
+--- a/resources/views/pages/backend/footer/index.blade.php
++++ b/resources/views/pages/backend/footer/index.blade.php
+@@ -39,7 +39,7 @@
+                     <tbody>
+                         @forelse($footer as $item)
+                             <tr>
+-                                <td>{!! Str::limit(strip_tags($item->text), 100) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 100) }}</td>
+                                 <td>{{ $item->alamat }}</td>
+                                 <td>{{ $item->email }}</td>
+                                 <td>{{ $item->no_telp }}</td>
+diff --git a/resources/views/pages/backend/form-benturan-kepentingan/index.blade.php b/resources/views/pages/backend/form-benturan-kepentingan/index.blade.php
+index d419666..772aa5a 100644
+--- a/resources/views/pages/backend/form-benturan-kepentingan/index.blade.php
++++ b/resources/views/pages/backend/form-benturan-kepentingan/index.blade.php
+@@ -212,7 +212,6 @@ class="btn btn-danger btn-sm">
+ 
+ 
+     {{-- JQuery --}}
+-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ 
+     {{-- DataTables --}}
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+diff --git a/resources/views/pages/backend/form-layanan-pengaduan-masyarakat/index.blade.php b/resources/views/pages/backend/form-layanan-pengaduan-masyarakat/index.blade.php
+index 7384aa1..3ff9537 100644
+--- a/resources/views/pages/backend/form-layanan-pengaduan-masyarakat/index.blade.php
++++ b/resources/views/pages/backend/form-layanan-pengaduan-masyarakat/index.blade.php
+@@ -197,7 +197,6 @@
+     @endforeach
+ 
+     {{-- JQuery --}}
+-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ 
+     {{-- DataTables --}}
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+diff --git a/resources/views/pages/backend/form-survey-kepuasan-masyarakat/index.blade.php b/resources/views/pages/backend/form-survey-kepuasan-masyarakat/index.blade.php
+index 2001227..ca10679 100644
+--- a/resources/views/pages/backend/form-survey-kepuasan-masyarakat/index.blade.php
++++ b/resources/views/pages/backend/form-survey-kepuasan-masyarakat/index.blade.php
+@@ -36,7 +36,7 @@
+                     <tbody>
+                         @forelse ($data as $item)
+                             <tr>
+-                                <td>{!! Str::limit(strip_tags($item->text), 150) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td>
+                                     @if ($item->link)
+                                         <a href="{{ $item->link }}" target="_blank">{{ $item->link }}</a>
+@@ -54,7 +54,7 @@
+                                         method="POST" class="d-inline">
+                                         @csrf
+                                         @method('DELETE')
+-                                        <button onclick="return confirm('Hapus data?')" class="btn btn-danger btn-sm">
++                                        <button data-confirm="Hapus data?" class="btn btn-danger btn-sm">
+                                             Hapus
+                                         </button>
+                                     </form>
+diff --git a/resources/views/pages/backend/informasi-publik/akuntabilitas/index.blade.php b/resources/views/pages/backend/informasi-publik/akuntabilitas/index.blade.php
+index f18c237..c15f6c9 100644
+--- a/resources/views/pages/backend/informasi-publik/akuntabilitas/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/akuntabilitas/index.blade.php
+@@ -55,7 +55,7 @@ class="btn btn-sm btn-success">
+ 
+                             <form action="{{ route('admin-akuntabilitas.destroy', $item->id) }}" method="POST" class="d-inline">
+                                 @csrf @method('DELETE')
+-                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
++                                <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
+                                     Hapus
+                                 </button>
+                             </form>
+diff --git a/resources/views/pages/backend/informasi-publik/artikel/index.blade.php b/resources/views/pages/backend/informasi-publik/artikel/index.blade.php
+index 57dac82..70f451f 100644
+--- a/resources/views/pages/backend/informasi-publik/artikel/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/artikel/index.blade.php
+@@ -69,7 +69,7 @@
+                                     @csrf
+                                     @method('DELETE')
+                                     <button class="btn btn-danger btn-sm"
+-                                            onclick="return confirm('Hapus data?')">
++                                            data-confirm="Hapus data?">
+                                         Hapus
+                                     </button>
+                                 </form>
+@@ -129,7 +129,7 @@ class="form-control mb-3"
+                 @endif
+ 
+                 <textarea name="konten"
+-                          class="form-control summernote">{!! $item->konten !!}</textarea>
++                          class="form-control summernote">{{ $item->konten }}</textarea>
+ 
+             </div>
+ 
+@@ -183,7 +183,6 @@ class="modal-content">
+ 
+ {{-- SUMMERNOTE --}}
+ <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/bedesut-dashboard/index.blade.php b/resources/views/pages/backend/informasi-publik/bedesut-dashboard/index.blade.php
+index d606956..54f83c5 100644
+--- a/resources/views/pages/backend/informasi-publik/bedesut-dashboard/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/bedesut-dashboard/index.blade.php
+@@ -40,7 +40,7 @@
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">Edit</button>
+                                     <form action="{{ route('admin-dashboard-interaktif.destroy', $item->id) }}" method="POST"
+-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
++                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button type="submit" class="btn btn-danger btn-sm">
+@@ -94,7 +94,7 @@ class="img-fluid mb-3" style="max-height:150px">
+ 
+                                             {{-- Summernote --}}
+                                             <textarea name="text" class="form-control summernote">
+-                                                {!! $item->text !!}
++                                                {{ $item->text }}
+                                                 </textarea>
+                                         </div>
+ 
+@@ -152,7 +152,6 @@ class="img-fluid mb-3" style="max-height:150px">
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/bedesut-infografis/index.blade.php b/resources/views/pages/backend/informasi-publik/bedesut-infografis/index.blade.php
+index 4d024c6..56288cf 100644
+--- a/resources/views/pages/backend/informasi-publik/bedesut-infografis/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/bedesut-infografis/index.blade.php
+@@ -51,7 +51,7 @@
+                                     </button>
+ 
+                                     <form action="{{ route('admin-bedesut-infografis.destroy', $item->id) }}" method="POST"
+-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
++                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button type="submit" class="btn btn-danger btn-sm">
+@@ -90,7 +90,7 @@ class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                                     @endforeach
+                                                 </select>
+ 
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+ 
+                                                 <input type="url" name="link_looker" class="form-control mt-3"
+                                                     value="{{ $item->link_looker }}" placeholder="Link Looker">
+@@ -151,7 +151,6 @@ class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+     <script>
+         $('.summernote, .summernote-edit').summernote({
+             height: 250
+diff --git a/resources/views/pages/backend/informasi-publik/bedesut/index.blade.php b/resources/views/pages/backend/informasi-publik/bedesut/index.blade.php
+index 2ca2564..cbb9f76 100644
+--- a/resources/views/pages/backend/informasi-publik/bedesut/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/bedesut/index.blade.php
+@@ -47,7 +47,7 @@
+                                 </button>
+                                 <form action="{{ route('admin-bedesut.destroy', $item->id) }}"
+                                     method="POST" class="d-inline"
+-                                    onsubmit="return confirm('Yakin hapus data?')">
++                                    data-confirm="Yakin hapus data?">
+                                     @csrf
+                                     @method('DELETE')
+                                     <button class="btn btn-danger btn-sm">Hapus</button>
+diff --git a/resources/views/pages/backend/informasi-publik/bedesut/judul_bedesut/index.blade.php b/resources/views/pages/backend/informasi-publik/bedesut/judul_bedesut/index.blade.php
+index 70454c5..d9436cc 100644
+--- a/resources/views/pages/backend/informasi-publik/bedesut/judul_bedesut/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/bedesut/judul_bedesut/index.blade.php
+@@ -60,7 +60,7 @@
+                                 <form action="{{ route('admin.judul-bedesut.destroy', $item->id) }}"
+                                     method="POST"
+                                     class="d-inline"
+-                                    onsubmit="return confirm('Yakin ingin menghapus?')">
++                                    data-confirm="Yakin ingin menghapus?">
+                                     @csrf
+                                     @method('DELETE')
+                                     <button class="btn btn-danger btn-sm">
+diff --git a/resources/views/pages/backend/informasi-publik/bedesut/sub-judul/index.blade.php b/resources/views/pages/backend/informasi-publik/bedesut/sub-judul/index.blade.php
+index e8aa310..a339ec9 100644
+--- a/resources/views/pages/backend/informasi-publik/bedesut/sub-judul/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/bedesut/sub-judul/index.blade.php
+@@ -46,7 +46,7 @@
+                                     </button>
+ 
+                                     <form action="{{ route('admin.sub-judul.destroy', $item->id) }}" method="POST"
+-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
++                                        class="d-inline" data-confirm="Yakin ingin menghapus?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button type="submit" class="btn btn-danger btn-sm">
+@@ -176,10 +176,7 @@ class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+             </div>
+         </div>
+     </div>
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+ 
+ <script>
+     console.log('jQuery:', typeof $);
+diff --git a/resources/views/pages/backend/informasi-publik/e-library/index.blade.php b/resources/views/pages/backend/informasi-publik/e-library/index.blade.php
+index 81bdf8a..4aae6a6 100644
+--- a/resources/views/pages/backend/informasi-publik/e-library/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/e-library/index.blade.php
+@@ -48,7 +48,7 @@ class="btn btn-sm btn-success">
+ 
+                             <form action="{{ route('admin-elibrary.destroy', $item->id) }}" method="POST" class="d-inline">
+                                 @csrf @method('DELETE')
+-                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
++                                <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
+                                     Hapus
+                                 </button>
+                             </form>
+@@ -129,7 +129,6 @@ class="btn btn-sm btn-success">
+         </form>
+     </div>
+ </div>
+-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+ <!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+diff --git a/resources/views/pages/backend/informasi-publik/pengumuman/index.blade.php b/resources/views/pages/backend/informasi-publik/pengumuman/index.blade.php
+index d54db37..c33cd8e 100644
+--- a/resources/views/pages/backend/informasi-publik/pengumuman/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/pengumuman/index.blade.php
+@@ -61,7 +61,7 @@
+                                     <form action="{{ route('pengumuman.destroy', $item->id) }}" method="POST"
+                                         class="d-inline">
+                                         @csrf @method('DELETE')
+-                                        <button onclick="return confirm('Hapus data?')"
++                                        <button data-confirm="Hapus data?"
+                                             class="btn btn-sm btn-danger">Hapus</button>
+                                     </form>
+                                 </td>
+@@ -203,9 +203,7 @@ class="btn btn-sm btn-danger">Hapus</button>
+     </div>
+ 
+     {{-- SUMMERNOTE --}}
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+     $(document).ready(function() {
+@@ -235,7 +233,7 @@ class="btn btn-sm btn-danger">Hapus</button>
+                 $('#editStatus').val($(this).data('status'));
+                 $('#editPenting').val($(this).data('penting'));
+ 
+-                $('#summernoteEdit').summernote('code', $(this).data('isi'));
++                $('#summernoteEdit').summernote('code', $(this).attr('data-isi'));
+ 
+                 $('#modalEdit').modal('show');
+             });
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/faq/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/faq/index.blade.php
+index 4043569..7e402d5 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/faq/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/faq/index.blade.php
+@@ -33,7 +33,7 @@
+                             <tr>
+                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                 <td>{{ $item->judul }}</td>
+-                                <td>{!! $item->deskripsi !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->deskripsi), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#edit{{ $item->id }}">
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/informasi-berkala/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/informasi-berkala/index.blade.php
+index 43e698b..4851245 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/informasi-berkala/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/informasi-berkala/index.blade.php
+@@ -257,7 +257,6 @@ class="form-control"
+ 
+ });
+ </script>
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         // isi ID parent ke modal sub
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/informasi-setiap-saat/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/informasi-setiap-saat/index.blade.php
+index f7e1a0b..5bf044c 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/informasi-setiap-saat/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/informasi-setiap-saat/index.blade.php
+@@ -54,7 +54,7 @@
+                 @csrf
+                 @method('DELETE')
+                 <button class="btn btn-danger btn-sm"
+-                    onclick="return confirm('Hapus data ini?')">
++                    data-confirm="Hapus data ini?">
+                     Hapus
+                 </button>
+             </form>
+@@ -70,7 +70,7 @@
+                     <li>
+                         <strong>{{ $sub->judul }}</strong><br>
+ 
+-                        {!! \Illuminate\Support\Str::limit(strip_tags($sub->deskripsi), 100) !!}
++                        {{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($sub->deskripsi), ENT_QUOTES | ENT_HTML5), 100) }}
+ 
+                         <button class="btn btn-sm btn-warning"
+                             data-bs-toggle="modal"
+@@ -83,7 +83,7 @@
+                             @csrf
+                             @method('DELETE')
+                             <button class="btn btn-sm btn-danger"
+-                                onclick="return confirm('Hapus sub?')">
++                                data-confirm="Hapus sub?">
+                                 Hapus
+                             </button>
+                         </form>
+@@ -154,7 +154,7 @@ class="form-control mb-3"
+ 
+                         <textarea name="deskripsi"
+                             class="form-control summernote">
+-                            {!! $sub->deskripsi !!}
++                            {{ $sub->deskripsi }}
+                         </textarea>
+                     </div>
+ 
+@@ -193,7 +193,6 @@ class="form-control"
+     </div>
+ </div>
+ 
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/profil-singkat/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/profil-singkat/index.blade.php
+index e71aa00..9b551b8 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/profil-singkat/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/profil-singkat/index.blade.php
+@@ -33,7 +33,7 @@
+                         @forelse ($data as $item)
+                             <tr>
+                                 <td class="text-center">{{ $loop->iteration }}</td>
+-                                <td>{!! Str::limit(strip_tags($item->text), 150) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">
+@@ -60,7 +60,7 @@
+                                         </div>
+ 
+                                         <div class="modal-body">
+-                                            <textarea name="text" class="form-control summernote" required>{!! $item->text !!}</textarea>
++                                            <textarea name="text" class="form-control summernote" required>{{ $item->text }}</textarea>
+                                         </div>
+ 
+                                             <div class="modal-footer">
+@@ -104,7 +104,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/tugas-fungsi/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/tugas-fungsi/index.blade.php
+index 4a8d7fe..f3ebb93 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/tugas-fungsi/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/tugas-fungsi/index.blade.php
+@@ -33,7 +33,7 @@
+                     @forelse ($data as $item)
+                         <tr>
+                             <td class="text-center">{{ $loop->iteration }}</td>
+-                            <td>{!! \Illuminate\Support\Str::limit(strip_tags($item->text), 150) !!}</td>
++                            <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                             <td class="text-center">
+                                 <button class="btn btn-warning btn-sm"
+                                     data-bs-toggle="modal"
+@@ -66,7 +66,7 @@ class="btn-close"
+                                         <div class="modal-body">
+                                             <textarea name="text"
+                                                       class="form-control summernote"
+-                                                      required>{!! $item->text !!}</textarea>
++                                                      required>{{ $item->text }}</textarea>
+                                         </div>
+ 
+                                         <div class="modal-footer">
+@@ -114,7 +114,6 @@ class="form-control summernote"
+     </div>
+ </div>
+ 
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/ppid/visi-misi/index.blade.php b/resources/views/pages/backend/informasi-publik/ppid/visi-misi/index.blade.php
+index f9ebf04..f2fe05b 100644
+--- a/resources/views/pages/backend/informasi-publik/ppid/visi-misi/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/ppid/visi-misi/index.blade.php
+@@ -48,7 +48,6 @@ class="form-control summernote"
+     </div>
+ </div>
+ 
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/informasi-publik/sop/index.blade.php b/resources/views/pages/backend/informasi-publik/sop/index.blade.php
+index e1f56c0..a7925c2 100644
+--- a/resources/views/pages/backend/informasi-publik/sop/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/sop/index.blade.php
+@@ -55,7 +55,7 @@ class="btn btn-sm btn-success">
+ 
+                             <form action="{{ route('admin-sop.destroy', $item->id) }}" method="POST" class="d-inline">
+                                 @csrf @method('DELETE')
+-                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
++                                <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
+                                     Hapus
+                                 </button>
+                             </form>
+@@ -161,7 +161,6 @@ class="btn btn-sm btn-success">
+     </div>
+ </div>
+ <!-- jQuery -->
+-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+ <!-- Bootstrap JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+diff --git a/resources/views/pages/backend/informasi-publik/sunmore/index.blade.php b/resources/views/pages/backend/informasi-publik/sunmore/index.blade.php
+index 25790cd..484068a 100644
+--- a/resources/views/pages/backend/informasi-publik/sunmore/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/sunmore/index.blade.php
+@@ -43,7 +43,7 @@ class="btn btn-success btn-sm">Lihat</a>
+                                         data-bs-target="#edit{{ $item->id }}">Edit</button>
+ 
+                                     <form action="{{ route('sunmore.destroy', $item->id) }}" method="POST"
+-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
++                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button type="submit" class="btn btn-danger btn-sm">
+diff --git a/resources/views/pages/backend/informasi-publik/survey/index.blade.php b/resources/views/pages/backend/informasi-publik/survey/index.blade.php
+index 00a09fc..2766780 100644
+--- a/resources/views/pages/backend/informasi-publik/survey/index.blade.php
++++ b/resources/views/pages/backend/informasi-publik/survey/index.blade.php
+@@ -57,7 +57,7 @@ class="btn btn-success text-white">
+ 
+                                 <td>
+                                     <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $item->id }}"
+-                                        data-judul="{{ $item->judul }}" data-isi="{{ e($item->isi) }}"
++                                        data-judul="{{ $item->judul }}" data-isi="{{ $item->isi }}"
+                                         data-kategori="{{ $item->kategori }}" data-tahun="{{ $item->tahun }}">
+                                         Edit
+                                     </button>
+@@ -65,7 +65,7 @@ class="btn btn-success text-white">
+                                     <form action="{{ route('survey-admin.destroy', $item->id) }}" method="POST"
+                                         class="d-inline">
+                                         @csrf @method('DELETE')
+-                                        <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
++                                        <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
+                                             Hapus
+                                         </button>
+                                     </form>
+@@ -191,9 +191,7 @@ class="d-inline">
+     </div>
+ 
+ 
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         $(document).ready(function() {
+@@ -222,7 +220,7 @@ class="d-inline">
+                 $('#editTahun').val($(this).data('tahun'));
+ 
+                 // SET ISI KE SUMMERNOTE
+-                $('#summernoteEdit').summernote('code', $(this).data('isi'));
++                $('#summernoteEdit').summernote('code', $(this).attr('data-isi'));
+ 
+                 let modal = new bootstrap.Modal(document.getElementById('modalEdit'));
+                 modal.show();
+diff --git a/resources/views/pages/backend/kategori-berita/index.blade.php b/resources/views/pages/backend/kategori-berita/index.blade.php
+index 3c8b056..051c4b6 100644
+--- a/resources/views/pages/backend/kategori-berita/index.blade.php
++++ b/resources/views/pages/backend/kategori-berita/index.blade.php
+@@ -53,7 +53,7 @@
+ 
+                                         <!-- Tombol Delete -->
+                                         <form action="{{ route('kategori-berita.destroy', $row->id) }}" method="POST"
+-                                            class="d-inline" onsubmit="return confirm('Hapus kategori ini?');">
++                                            class="d-inline" data-confirm="Hapus kategori ini?">
+                                             @csrf
+                                             @method('DELETE')
+                                             <button class="btn btn-danger">
+diff --git a/resources/views/pages/backend/kontak-kami/index.blade.php b/resources/views/pages/backend/kontak-kami/index.blade.php
+index 0dd57f8..804b5d4 100644
+--- a/resources/views/pages/backend/kontak-kami/index.blade.php
++++ b/resources/views/pages/backend/kontak-kami/index.blade.php
+@@ -88,7 +88,6 @@ class="btn btn-success btn-sm">
+     </div>
+ 
+     {{-- JQuery --}}
+-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ 
+     {{-- DataTables --}}
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+diff --git a/resources/views/pages/backend/layanan/standar-pelayanan/index.blade.php b/resources/views/pages/backend/layanan/standar-pelayanan/index.blade.php
+index 4f24859..233ed90 100644
+--- a/resources/views/pages/backend/layanan/standar-pelayanan/index.blade.php
++++ b/resources/views/pages/backend/layanan/standar-pelayanan/index.blade.php
+@@ -4,31 +4,25 @@
+ 
+ @section('content')
+ 
+-<link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+-
+ <div class="container-fluid">
+     <h1 class="h3 mb-3">Standar Pelayanan</h1>
+ 
+-    @if (session('success'))
+-        <div class="alert alert-success">{{ session('success') }}</div>
+-    @endif
+-
+     <div class="card shadow">
+-        <div class="card-header d-flex justify-content-between">
+-            <h6>Data Standar Pelayanan</h6>
++        <div class="card-header d-flex justify-content-between align-items-center">
++            <h6 class="mb-0">Data Standar Pelayanan</h6>
+             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createModal">
+                 Tambah Data
+             </button>
+         </div>
+ 
+         <div class="card-body">
+-            <table class="table table-bordered">
++            <table class="table table-bordered align-middle">
+                 <thead class="text-center">
+                     <tr>
+-                        <th>No</th>
++                        <th width="5%">No</th>
+                         <th>Nama</th>
+                         <th>Nama Tampilan</th>
+-                        <th width="15%">Aksi</th>
++                        <th width="22%">Aksi</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+@@ -38,13 +32,26 @@
+                             <td>{{ $item->nama }}</td>
+                             <td>{{ $item->nama_tampilan }}</td>
+                             <td class="text-center">
+-                                <button class="btn btn-warning btn-sm btn-edit"
++                                <a href="{{ route('standar-pelayanan.show', $item->id) }}" target="_blank"
++                                    class="btn btn-info btn-sm">Lihat</a>
++
++                                {{-- Isi disimpan di textarea tersembunyi: di-escape SEKALI oleh Blade,
++                                     dan .val() mengembalikan HTML aslinya. Jangan pakai htmlentities(). --}}
++                                <textarea id="text-{{ $item->id }}" class="d-none" hidden>{{ $item->text }}</textarea>
++
++                                <button type="button" class="btn btn-warning btn-sm btn-edit"
+                                     data-id="{{ $item->id }}"
+                                     data-nama="{{ $item->nama }}"
+-                                    data-nama_tampilan="{{ $item->nama_tampilan }}"
+-                                    data-text="{{ htmlentities($item->text) }}">
++                                    data-nama_tampilan="{{ $item->nama_tampilan }}">
+                                     Edit
+                                 </button>
++
++                                <form action="{{ route('admin-standar-pelayanan.destroy', $item->id) }}" method="POST"
++                                    class="d-inline">
++                                    @csrf
++                                    @method('DELETE')
++                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
++                                </form>
+                             </td>
+                         </tr>
+                     @empty
+@@ -61,24 +68,29 @@
+ </div>
+ 
+ {{-- ================= CREATE MODAL ================= --}}
+-<div class="modal fade" id="createModal">
+-    <div class="modal-dialog modal-lg">
++<div class="modal fade" id="createModal" tabindex="-1">
++    <div class="modal-dialog modal-xl">
+         <form method="POST" action="{{ route('admin-standar-pelayanan.store') }}">
+             @csrf
+             <div class="modal-content">
+                 <div class="modal-header">
+-                    <h5>Tambah Data</h5>
++                    <h5 class="modal-title">Tambah Data</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                 </div>
+ 
+                 <div class="modal-body">
+-                    <input type="text" name="nama" class="form-control mb-3" placeholder="Nama" required>
+-                    <input type="text" name="nama_tampilan" class="form-control mb-3" placeholder="Nama Tampilan">
++                    <label class="form-label">Nama (judul halaman)</label>
++                    <input type="text" name="nama" class="form-control mb-3" value="{{ old('nama') }}" required>
+ 
+-                    <textarea class="form-control summernote" name="text"></textarea>
++                    <label class="form-label">Nama Tampilan (judul di kartu beranda, opsional)</label>
++                    <input type="text" name="nama_tampilan" class="form-control mb-3" value="{{ old('nama_tampilan') }}">
++
++                    <label class="form-label">Isi</label>
++                    <textarea class="form-control summernote" name="text">{{ old('text') }}</textarea>
+                 </div>
+ 
+                 <div class="modal-footer">
++                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                     <button class="btn btn-primary">Simpan</button>
+                 </div>
+             </div>
+@@ -87,26 +99,31 @@
+ </div>
+ 
+ {{-- ================= EDIT MODAL ================= --}}
+-<div class="modal fade" id="editModal">
+-    <div class="modal-dialog modal-lg">
++<div class="modal fade" id="editModal" tabindex="-1">
++    <div class="modal-dialog modal-xl">
+         <form method="POST" id="formEdit">
+             @csrf
+             @method('PUT')
+ 
+             <div class="modal-content">
+                 <div class="modal-header">
+-                    <h5>Edit Data</h5>
++                    <h5 class="modal-title">Edit Data</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                 </div>
+ 
+                 <div class="modal-body">
+-                    <input type="text" name="nama" id="editNama" class="form-control mb-3">
++                    <label class="form-label">Nama (judul halaman)</label>
++                    <input type="text" name="nama" id="editNama" class="form-control mb-3" required>
++
++                    <label class="form-label">Nama Tampilan (judul di kartu beranda, opsional)</label>
+                     <input type="text" name="nama_tampilan" id="editNamaTampilan" class="form-control mb-3">
+ 
++                    <label class="form-label">Isi</label>
+                     <textarea id="summernoteEdit" name="text"></textarea>
+                 </div>
+ 
+                 <div class="modal-footer">
++                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                     <button class="btn btn-success">Update</button>
+                 </div>
+             </div>
+@@ -115,71 +132,30 @@
+ </div>
+ 
+ {{-- ================= SCRIPT ================= --}}
+-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+-
++{{-- jQuery, Summernote, upload gambar, konfirmasi hapus: dikelola layouts/back + admin-editor.js --}}
+ <script>
+-$(document).ready(function() {
+-
+-    // INIT SUMMERNOTE CREATE
+-    $('.summernote').summernote({
+-        height: 250,
+-        callbacks: {
+-            onImageUpload: function(files) {
+-                uploadImage(files[0], this);
+-            }
+-        }
+-    });
++$(function () {
++    // Editor dibuat SEKALI saat halaman dimuat
++    $('.summernote, #summernoteEdit').summernote({ height: 350 });
+ 
+-    // INIT EDIT (IMPORTANT)
+-    $('#editModal').on('shown.bs.modal', function () {
+-        $('#summernoteEdit').summernote({
+-            height: 250,
+-            callbacks: {
+-                onImageUpload: function(files) {
+-                    uploadImage(files[0], this);
+-                }
+-            }
+-        });
+-    });
+-
+-    // BUTTON EDIT
+-    $('.btn-edit').click(function() {
+-
+-        let id = $(this).data('id');
+-
+-        $('#formEdit').attr('action', '/admin-standar-pelayanan/' + id);
+-        $('#editNama').val($(this).data('nama'));
+-        $('#editNamaTampilan').val($(this).data('nama_tampilan'));
++    // Tombol Edit: isi form dari textarea tersembunyi
++    $('.btn-edit').on('click', function () {
++        const id = $(this).data('id');
+ 
+-        // SET ISI
+-        $('#editModal').modal('show');
+-
+-        setTimeout(() => {
+-            $('#summernoteEdit').summernote('code', $(this).data('text'));
+-        }, 300);
++        $('#formEdit').attr('action', '{{ url('admin-standar-pelayanan') }}/' + id);
++        $('#editNama').val($(this).attr('data-nama'));
++        $('#editNamaTampilan').val($(this).attr('data-nama_tampilan'));
++        $('#summernoteEdit').summernote('code', $('#text-' + id).val());
+ 
++        bootstrap.Modal.getOrCreateInstance(document.getElementById('editModal')).show();
+     });
+ 
+-});
+-
+-// UPLOAD IMAGE
+-function uploadImage(file, editor) {
+-    let data = new FormData();
+-    data.append("file", file);
+-    data.append("_token", "{{ csrf_token() }}");
+-
+-    $.ajax({
+-        url: "{{ route('standar-pelayanan.upload-image') }}",
+-        type: "POST",
+-        data: data,
+-        contentType: false,
+-        processData: false,
+-        success: function(res) {
+-            $(editor).summernote('insertImage', res.url);
+-        }
++    // Kosongkan form tambah setelah ditutup
++    $('#createModal').on('hidden.bs.modal', function () {
++        $(this).find('input[name=nama], input[name=nama_tampilan]').val('');
++        $('.summernote').summernote('code', '');
+     });
+-}
++});
+ </script>
+ 
+ @endsection
+diff --git a/resources/views/pages/backend/pengaduan/benturan-kepentingan/index.blade.php b/resources/views/pages/backend/pengaduan/benturan-kepentingan/index.blade.php
+index 95fe620..b522163 100644
+--- a/resources/views/pages/backend/pengaduan/benturan-kepentingan/index.blade.php
++++ b/resources/views/pages/backend/pengaduan/benturan-kepentingan/index.blade.php
+@@ -68,7 +68,7 @@ class="form-control" required>
+                                             </div>
+ 
+                                             <textarea class="form-control summernote-edit"
+-                                                name="text">{!! $item->text !!}</textarea>
++                                                name="text">{{ $item->text }}</textarea>
+                                         </div>
+ 
+                                         <div class="modal-footer">
+@@ -125,7 +125,6 @@ class="form-control" required>
+     </div>
+ </div>
+ 
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+ document.addEventListener('DOMContentLoaded', function () {
+diff --git a/resources/views/pages/backend/pengaduan/gol-kpk/index.blade.php b/resources/views/pages/backend/pengaduan/gol-kpk/index.blade.php
+index 47bb85c..7de110f 100644
+--- a/resources/views/pages/backend/pengaduan/gol-kpk/index.blade.php
++++ b/resources/views/pages/backend/pengaduan/gol-kpk/index.blade.php
+@@ -61,7 +61,7 @@
+                                             </div>
+ 
+                                             <div class="modal-body">
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+                                             </div>
+ 
+                                             <div class="modal-footer">
+@@ -108,7 +108,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ 
+     <script>
+diff --git a/resources/views/pages/backend/pengaduan/lapor_span/index.blade.php b/resources/views/pages/backend/pengaduan/lapor_span/index.blade.php
+index a28a742..8829a2c 100644
+--- a/resources/views/pages/backend/pengaduan/lapor_span/index.blade.php
++++ b/resources/views/pages/backend/pengaduan/lapor_span/index.blade.php
+@@ -61,7 +61,7 @@
+                                             </div>
+ 
+                                             <div class="modal-body">
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+                                             </div>
+ 
+                                             <div class="modal-footer">
+@@ -108,7 +108,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ 
+     <script>
+diff --git a/resources/views/pages/backend/pengaduan/tentang-wbk/index.blade.php b/resources/views/pages/backend/pengaduan/tentang-wbk/index.blade.php
+index fe056d9..a6f78a8 100644
+--- a/resources/views/pages/backend/pengaduan/tentang-wbk/index.blade.php
++++ b/resources/views/pages/backend/pengaduan/tentang-wbk/index.blade.php
+@@ -33,7 +33,7 @@
+                             <tr>
+                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                 <td>{{ $item->nama }}</td>
+-                                <td>{!! $item->deskripsi !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->deskripsi), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">
+@@ -44,7 +44,7 @@
+                                         class="d-inline">
+                                         @csrf
+                                         @method('DELETE')
+-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
++                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data ini?">
+                                             Hapus
+                                         </button>
+                                     </form>
+@@ -132,11 +132,9 @@ class="form-control" required>
+         </div>
+     </div>
+     <!-- Summernote CSS -->
+-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" rel="stylesheet"><!-- jQuery (dibutuhkan oleh Summernote) -->
+-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
++<!-- jQuery (dibutuhkan oleh Summernote) -->
+ 
+ <!-- Summernote JS -->
+-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             $('.summernote').summernote({
+diff --git a/resources/views/pages/backend/pengaduan/upg/index.blade.php b/resources/views/pages/backend/pengaduan/upg/index.blade.php
+index 85eb12f..2faf312 100644
+--- a/resources/views/pages/backend/pengaduan/upg/index.blade.php
++++ b/resources/views/pages/backend/pengaduan/upg/index.blade.php
+@@ -61,7 +61,7 @@
+                                             </div>
+ 
+                                             <div class="modal-body">
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+                                             </div>
+ 
+                                             <div class="modal-footer">
+@@ -108,7 +108,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ 
+     <script>
+diff --git a/resources/views/pages/backend/posein/index.blade.php b/resources/views/pages/backend/posein/index.blade.php
+index fc76480..767a1df 100644
+--- a/resources/views/pages/backend/posein/index.blade.php
++++ b/resources/views/pages/backend/posein/index.blade.php
+@@ -28,18 +28,19 @@
+                     <tbody>
+                         @forelse($poseins as $item)
+                             <tr>
+-                                <td>{!! Str::limit(strip_tags($item->content), 100) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->content), ENT_QUOTES | ENT_HTML5), 100) }}</td>
+                                 <td>
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal"
+-                                        onclick="setEdit({{ $item->id }}, `{{ addslashes($item->content) }}`)">
++                                        data-content="{{ $item->content }}"
++                                        onclick="setEdit({{ $item->id }}, this.getAttribute('data-content'))">
+                                         Edit
+                                     </button>
+ 
+                                     <form action="{{ route('posein.destroy', $item->id) }}" method="POST" class="d-inline">
+                                         @csrf
+                                         @method('DELETE')
+-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
++                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data?">
+                                             Hapus
+                                         </button>
+                                     </form>
+@@ -105,12 +106,9 @@
+         </div>
+     </div>
+     <!-- JQUERY (WAJIB PALING ATAS) -->
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+     <!-- SUMMERNOTE -->
+-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
+-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+-    <script>
++        <script>
+         $(document).ready(function() {
+ 
+             $('.summernote').summernote({
+diff --git a/resources/views/pages/backend/profil/sejarah-dan-latar-belakang/index.blade.php b/resources/views/pages/backend/profil/sejarah-dan-latar-belakang/index.blade.php
+index 9fd299f..0c2fe45 100644
+--- a/resources/views/pages/backend/profil/sejarah-dan-latar-belakang/index.blade.php
++++ b/resources/views/pages/backend/profil/sejarah-dan-latar-belakang/index.blade.php
+@@ -4,8 +4,7 @@
+ 
+ @section('content')
+ 
+-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.css" rel="stylesheet">
+-
++    
+     <div class="container-fluid">
+ 
+         <h1 class="h3 mb-3 text-gray-800">Sejarah & Latar Belakang</h1>
+@@ -37,7 +36,7 @@
+                     <tbody>
+                         @forelse ($data as $item)
+                             <tr>
+-                                <td>{!! Str::limit(strip_tags($item->text), 200) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 200) }}</td>
+                                 <td class="text-center">
+                                     @if ($item->path)
+                                         <img src="{{ asset('storage/' . $item->path) }}" width="120">
+@@ -71,7 +70,7 @@
+                                             <div class="modal-body">
+                                                 <label class="form-label">Teks</label>
+                                                 <textarea name="text" class="form-control summernote" required>
+-                                                {!! $item->text !!}
++                                                {{ $item->text }}
+                                             </textarea>
+ 
+                                                 <label class="form-label mt-3">Gambar</label>
+@@ -137,7 +136,6 @@
+     </div>
+ 
+     {{-- Summernote JS --}}
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/profil/struktur-organisasi/index.blade.php b/resources/views/pages/backend/profil/struktur-organisasi/index.blade.php
+index 68a16fe..3198a70 100644
+--- a/resources/views/pages/backend/profil/struktur-organisasi/index.blade.php
++++ b/resources/views/pages/backend/profil/struktur-organisasi/index.blade.php
+@@ -34,7 +34,7 @@
+                     <tbody>
+                         @forelse ($data as $item)
+                             <tr>
+-                                <td>{!! $item->text !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">
+@@ -58,7 +58,7 @@
+                                             </div>
+ 
+                                             <div class="modal-body">
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+                                             </div>
+ 
+                                             <div class="modal-footer">
+@@ -110,7 +110,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/profil/tugas-dan-fungsi/index.blade.php b/resources/views/pages/backend/profil/tugas-dan-fungsi/index.blade.php
+index 84b718c..9dd7a19 100644
+--- a/resources/views/pages/backend/profil/tugas-dan-fungsi/index.blade.php
++++ b/resources/views/pages/backend/profil/tugas-dan-fungsi/index.blade.php
+@@ -35,7 +35,7 @@
+                     <tbody>
+                         @forelse($data as $item)
+                             <tr>
+-                                <td>{!! $item->text !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">
+@@ -58,7 +58,7 @@
+                                             </div>
+ 
+                                             <div class="modal-body">
+-                                                <textarea class="form-control summernote-edit" name="text">{!! $item->text !!}</textarea>
++                                                <textarea class="form-control summernote-edit" name="text">{{ $item->text }}</textarea>
+                                             </div>
+ 
+                                             <div class="modal-footer">
+@@ -105,7 +105,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ 
+     <script>
+diff --git a/resources/views/pages/backend/profil/visi-misi/index.blade.php b/resources/views/pages/backend/profil/visi-misi/index.blade.php
+index 2fe9cec..7bdd704 100644
+--- a/resources/views/pages/backend/profil/visi-misi/index.blade.php
++++ b/resources/views/pages/backend/profil/visi-misi/index.blade.php
+@@ -38,9 +38,9 @@
+                     <tbody>
+                         @forelse($data as $item)
+                             <tr>
+-                                <td>{!! Str::limit(strip_tags($item->visi), 100) !!}</td>
+-                                <td>{!! Str::limit(strip_tags($item->misi), 100) !!}</td>
+-                                <td>{!! Str::limit(strip_tags($item->tujuan), 100) !!}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->visi), ENT_QUOTES | ENT_HTML5), 100) }}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->misi), ENT_QUOTES | ENT_HTML5), 100) }}</td>
++                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->tujuan), ENT_QUOTES | ENT_HTML5), 100) }}</td>
+                                 <td class="text-center">
+                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                         data-bs-target="#editModal{{ $item->id }}">
+@@ -65,17 +65,17 @@
+                                             <div class="modal-body">
+                                                 <div class="mb-3">
+                                                     <label class="form-label">Visi</label>
+-                                                    <textarea class="summernote" name="visi">{!! $item->visi !!}</textarea>
++                                                    <textarea class="summernote" name="visi">{{ $item->visi }}</textarea>
+                                                 </div>
+ 
+                                                 <div class="mb-3">
+                                                     <label class="form-label">Misi</label>
+-                                                    <textarea class="summernote" name="misi">{!! $item->misi !!}</textarea>
++                                                    <textarea class="summernote" name="misi">{{ $item->misi }}</textarea>
+                                                 </div>
+ 
+                                                 <div class="mb-3">
+                                                     <label class="form-label">Tujuan</label>
+-                                                    <textarea class="summernote" name="tujuan">{!! $item->tujuan !!}</textarea>
++                                                    <textarea class="summernote" name="tujuan">{{ $item->tujuan }}</textarea>
+                                                 </div>
+                                             </div>
+ 
+@@ -147,7 +147,6 @@
+         </div>
+     </div>
+ 
+-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+diff --git a/resources/views/pages/backend/profil/wilker/index.blade.php b/resources/views/pages/backend/profil/wilker/index.blade.php
+index 0799a2d..d8cb231 100644
+--- a/resources/views/pages/backend/profil/wilker/index.blade.php
++++ b/resources/views/pages/backend/profil/wilker/index.blade.php
+@@ -71,7 +71,7 @@
+                                         class="d-inline">
+                                         @csrf
+                                         @method('DELETE')
+-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
++                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data?">
+                                             Hapus
+                                         </button>
+                                     </form>
+diff --git a/resources/views/pages/backend/ski/laporan/flipbook.blade.php b/resources/views/pages/backend/ski/laporan/flipbook.blade.php
+index e0bf7f1..3d2456a 100644
+--- a/resources/views/pages/backend/ski/laporan/flipbook.blade.php
++++ b/resources/views/pages/backend/ski/laporan/flipbook.blade.php
+@@ -3,9 +3,6 @@
+ @section('title', 'Flipbook Laporan SKI')
+ 
+ @section('content')
+-    <!-- JQUERY (WAJIB) -->
+-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+-
+     <!-- DEARFLIP CSS -->
+     <link rel="stylesheet" href="{{ asset('dearflip/assets/css/dflip.min.css') }}">
+ 
+diff --git a/resources/views/pages/backend/ski/panduan-ski/index.blade.php b/resources/views/pages/backend/ski/panduan-ski/index.blade.php
+index 264a86e..c58dbcd 100644
+--- a/resources/views/pages/backend/ski/panduan-ski/index.blade.php
++++ b/resources/views/pages/backend/ski/panduan-ski/index.blade.php
+@@ -49,7 +49,7 @@
+                                     @csrf
+                                     @method('DELETE')
+                                     <button class="btn btn-danger btn-sm"
+-                                        onclick="return confirm('Yakin hapus data?')">
++                                        data-confirm="Yakin hapus data?">
+                                         Hapus
+                                     </button>
+                                 </form>
+diff --git a/resources/views/pages/backend/ski/profil-ski/index.blade.php b/resources/views/pages/backend/ski/profil-ski/index.blade.php
+index f6a1221..31c3771 100644
+--- a/resources/views/pages/backend/ski/profil-ski/index.blade.php
++++ b/resources/views/pages/backend/ski/profil-ski/index.blade.php
+@@ -35,7 +35,7 @@
+                 <tbody>
+                     @forelse ($data as $item)
+                         <tr>
+-                            <td>{!! $item->text !!}</td>
++                            <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
+                             <td class="text-center">
+                                 <button class="btn btn-warning btn-sm"
+                                     data-bs-toggle="modal"
+@@ -61,7 +61,7 @@
+ 
+                                         <div class="modal-body">
+                                             <textarea class="form-control summernote-edit"
+-                                                name="text">{!! $item->text !!}</textarea>
++                                                name="text">{{ $item->text }}</textarea>
+                                         </div>
+ 
+                                         <div class="modal-footer">
+@@ -115,7 +115,6 @@
+     </div>
+ </div>
+ 
+-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+ 
+ <script>
+ document.addEventListener('DOMContentLoaded', function () {
+diff --git a/resources/views/pages/backend/ski/skdansop/index.blade.php b/resources/views/pages/backend/ski/skdansop/index.blade.php
+index 5129472..621c836 100644
+--- a/resources/views/pages/backend/ski/skdansop/index.blade.php
++++ b/resources/views/pages/backend/ski/skdansop/index.blade.php
+@@ -75,7 +75,7 @@ class="btn btn-success btn-sm">
+                                     <form action="{{ route('admin-sk-dan-sop.destroy', $item->id) }}"
+                                         method="POST"
+                                         class="d-inline"
+-                                        onsubmit="return confirm('Yakin hapus data?')">
++                                        data-confirm="Yakin hapus data?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button class="btn btn-danger btn-sm">Hapus</button>
+diff --git a/resources/views/pages/backend/skm-survey/index.blade.php b/resources/views/pages/backend/skm-survey/index.blade.php
+index fb8a860..caa0b2a 100644
+--- a/resources/views/pages/backend/skm-survey/index.blade.php
++++ b/resources/views/pages/backend/skm-survey/index.blade.php
+@@ -113,7 +113,7 @@
+                             + Pertanyaan
+                         </button>
+                         <form method="POST" action="{{ route('admin-skm-section.destroy', $section->id) }}" class="d-inline"
+-                            onsubmit="return confirm('Hapus section ini beserta seluruh pertanyaannya?');">
++                            data-confirm="Hapus section ini beserta seluruh pertanyaannya?">
+                             @csrf
+                             @method('DELETE')
+                             <button class="btn btn-sm btn-outline-danger">Hapus</button>
+@@ -165,7 +165,7 @@
+                                                 Edit
+                                             </button>
+                                             <form method="POST" action="{{ route('admin-skm-question.destroy', $question->id) }}"
+-                                                onsubmit="return confirm('Hapus pertanyaan ini?');">
++                                                data-confirm="Hapus pertanyaan ini?">
+                                                 @csrf
+                                                 @method('DELETE')
+                                                 <button class="btn btn-sm btn-outline-danger">Hapus</button>
+diff --git a/resources/views/pages/backend/skm-survey/responses.blade.php b/resources/views/pages/backend/skm-survey/responses.blade.php
+index e4fa400..ca3b980 100644
+--- a/resources/views/pages/backend/skm-survey/responses.blade.php
++++ b/resources/views/pages/backend/skm-survey/responses.blade.php
+@@ -88,7 +88,7 @@
+                                     <a href="{{ route('admin-skm-survey.response.show', $response->id) }}"
+                                         class="btn btn-sm btn-outline-primary">Detail</a>
+                                     <form method="POST" action="{{ route('admin-skm-survey.response.destroy', $response->id) }}"
+-                                        class="d-inline" onsubmit="return confirm('Hapus data response ini?');">
++                                        class="d-inline" data-confirm="Hapus data response ini?">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button class="btn btn-sm btn-outline-danger">Hapus</button>
+diff --git a/resources/views/pages/frontend/layanan/standar-pelayanan-show.blade.php b/resources/views/pages/frontend/layanan/standar-pelayanan-show.blade.php
+index 106875e..feee564 100644
+--- a/resources/views/pages/frontend/layanan/standar-pelayanan-show.blade.php
++++ b/resources/views/pages/frontend/layanan/standar-pelayanan-show.blade.php
+@@ -6,17 +6,25 @@
+     Detail Pelayanan
+ @endsection
+ @section('content')
++    <style>
++        .konten-layanan { text-align: left; overflow-wrap: anywhere; }
++        .konten-layanan img { max-width: 100%; height: auto; }
++        .konten-layanan table { width: 100%; }
++        .konten-layanan h3 { margin-top: 1.5rem; }
++        .konten-layanan h4 { margin-top: 1.25rem; }
++        .konten-layanan .table-responsive, .konten-layanan table { display: block; overflow-x: auto; }
++    </style>
+     <div class="container-fluid">
+         <a href="{{ route('standar-pelayanan') }}" class="btn btn-secondary btn-sm mt-4 mb-4">
+                 ← Kembali
+             </a>
+         <div class="d-flex justify-content-between align-items-center mb-3">
+-            <h1 class="h3" class="text-center">{{ $data->nama }}</h1>
++            <h1 class="h3">{{ $data->nama }}</h1>
+ 
+         </div>
+ 
+         <div class="card shadow">
+-            <div class="card-body d-flex justify-content-center align-items-center text-center">
++            <div class="card-body konten-layanan">
+                 {!! $data->text !!}
+             </div>
+         </div>
+diff --git a/routes/web.php b/routes/web.php
+index 54d1a4e..7d073ca 100644
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -744,18 +744,7 @@
+     Route::put('/sub/update/{id}', [InformasiPublikSetiapSaatController::class, 'updateSub'])->name('informasi-setiap-saat-sub.update');
+     Route::delete('/sub/delete/{id}', [InformasiPublikSetiapSaatController::class, 'destroySub'])->name('informasi-setiap-saat-sub.delete');
+ 
+-    Route::post('/upload-image', function (Request $request) {
+-
+-        if ($request->hasFile('file')) {
+-            $path = $request->file('file')->store('summernote', 'public');
+-
+-            return response()->json([
+-                'url' => asset('storage/'.$path),
+-            ]);
+-        }
+-
+-        return response()->json(['error' => 'Upload gagal'], 400);
+-    })->name('upload.image');
++    Route::post('/upload-image', [SummernoteController::class, 'upload'])->name('upload.image');
+ 
+     Route::delete('/kontak/delete/{id}', [KontakKamiController::class, 'destroy'])
+         ->name('kontak.delete');

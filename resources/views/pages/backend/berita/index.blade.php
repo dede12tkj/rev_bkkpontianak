@@ -58,7 +58,7 @@
                                             Edit
                                         </a>
                                         <form action="{{ route('berita.destroy', $item->id) }}" method="POST"
-                                            class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            class="d-inline" data-confirm="Yakin ingin menghapus?">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm">

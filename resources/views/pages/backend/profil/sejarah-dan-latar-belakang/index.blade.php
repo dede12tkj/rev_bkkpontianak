@@ -4,8 +4,7 @@
 
 @section('content')
 
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.css" rel="stylesheet">
-
+    
     <div class="container-fluid">
 
         <h1 class="h3 mb-3 text-gray-800">Sejarah & Latar Belakang</h1>
@@ -37,7 +36,7 @@
                     <tbody>
                         @forelse ($data as $item)
                             <tr>
-                                <td>{!! Str::limit(strip_tags($item->text), 200) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 200) }}</td>
                                 <td class="text-center">
                                     @if ($item->path)
                                         <img src="{{ asset('storage/' . $item->path) }}" width="120">
@@ -71,7 +70,7 @@
                                             <div class="modal-body">
                                                 <label class="form-label">Teks</label>
                                                 <textarea name="text" class="form-control summernote" required>
-                                                {!! $item->text !!}
+                                                {{ $item->text }}
                                             </textarea>
 
                                                 <label class="form-label mt-3">Gambar</label>
@@ -137,7 +136,6 @@
     </div>
 
     {{-- Summernote JS --}}
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

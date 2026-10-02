@@ -43,7 +43,7 @@
                                         data-bs-target="#edit{{ $item->id }}">Edit</button>
 
                                     <form action="{{ route('sunmore.destroy', $item->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">

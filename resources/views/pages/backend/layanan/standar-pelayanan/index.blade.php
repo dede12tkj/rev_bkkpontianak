@@ -4,31 +4,25 @@
 
 @section('content')
 
-<link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
-
 <div class="container-fluid">
     <h1 class="h3 mb-3">Standar Pelayanan</h1>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="card shadow">
-        <div class="card-header d-flex justify-content-between">
-            <h6>Data Standar Pelayanan</h6>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">Data Standar Pelayanan</h6>
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createModal">
                 Tambah Data
             </button>
         </div>
 
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered align-middle">
                 <thead class="text-center">
                     <tr>
-                        <th>No</th>
+                        <th width="5%">No</th>
                         <th>Nama</th>
                         <th>Nama Tampilan</th>
-                        <th width="15%">Aksi</th>
+                        <th width="22%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,13 +32,26 @@
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->nama_tampilan }}</td>
                             <td class="text-center">
-                                <button class="btn btn-warning btn-sm btn-edit"
+                                <a href="{{ route('standar-pelayanan.show', $item->id) }}" target="_blank"
+                                    class="btn btn-info btn-sm">Lihat</a>
+
+                                {{-- Isi disimpan di textarea tersembunyi: di-escape SEKALI oleh Blade,
+                                     dan .val() mengembalikan HTML aslinya. Jangan pakai htmlentities(). --}}
+                                <textarea id="text-{{ $item->id }}" class="d-none" hidden>{{ $item->text }}</textarea>
+
+                                <button type="button" class="btn btn-warning btn-sm btn-edit"
                                     data-id="{{ $item->id }}"
                                     data-nama="{{ $item->nama }}"
-                                    data-nama_tampilan="{{ $item->nama_tampilan }}"
-                                    data-text="{{ htmlentities($item->text) }}">
+                                    data-nama_tampilan="{{ $item->nama_tampilan }}">
                                     Edit
                                 </button>
+
+                                <form action="{{ route('admin-standar-pelayanan.destroy', $item->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @empty
@@ -61,24 +68,29 @@
 </div>
 
 {{-- ================= CREATE MODAL ================= --}}
-<div class="modal fade" id="createModal">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
         <form method="POST" action="{{ route('admin-standar-pelayanan.store') }}">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Tambah Data</h5>
+                    <h5 class="modal-title">Tambah Data</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control mb-3" placeholder="Nama" required>
-                    <input type="text" name="nama_tampilan" class="form-control mb-3" placeholder="Nama Tampilan">
+                    <label class="form-label">Nama (judul halaman)</label>
+                    <input type="text" name="nama" class="form-control mb-3" value="{{ old('nama') }}" required>
 
-                    <textarea class="form-control summernote" name="text"></textarea>
+                    <label class="form-label">Nama Tampilan (judul di kartu beranda, opsional)</label>
+                    <input type="text" name="nama_tampilan" class="form-control mb-3" value="{{ old('nama_tampilan') }}">
+
+                    <label class="form-label">Isi</label>
+                    <textarea class="form-control summernote" name="text">{{ old('text') }}</textarea>
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -87,26 +99,31 @@
 </div>
 
 {{-- ================= EDIT MODAL ================= --}}
-<div class="modal fade" id="editModal">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
         <form method="POST" id="formEdit">
             @csrf
             @method('PUT')
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Edit Data</h5>
+                    <h5 class="modal-title">Edit Data</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-                    <input type="text" name="nama" id="editNama" class="form-control mb-3">
+                    <label class="form-label">Nama (judul halaman)</label>
+                    <input type="text" name="nama" id="editNama" class="form-control mb-3" required>
+
+                    <label class="form-label">Nama Tampilan (judul di kartu beranda, opsional)</label>
                     <input type="text" name="nama_tampilan" id="editNamaTampilan" class="form-control mb-3">
 
+                    <label class="form-label">Isi</label>
                     <textarea id="summernoteEdit" name="text"></textarea>
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button class="btn btn-success">Update</button>
                 </div>
             </div>
@@ -115,71 +132,30 @@
 </div>
 
 {{-- ================= SCRIPT ================= --}}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
-
+{{-- jQuery, Summernote, upload gambar, konfirmasi hapus: dikelola layouts/back + admin-editor.js --}}
 <script>
-$(document).ready(function() {
+$(function () {
+    // Editor dibuat SEKALI saat halaman dimuat
+    $('.summernote, #summernoteEdit').summernote({ height: 350 });
 
-    // INIT SUMMERNOTE CREATE
-    $('.summernote').summernote({
-        height: 250,
-        callbacks: {
-            onImageUpload: function(files) {
-                uploadImage(files[0], this);
-            }
-        }
+    // Tombol Edit: isi form dari textarea tersembunyi
+    $('.btn-edit').on('click', function () {
+        const id = $(this).data('id');
+
+        $('#formEdit').attr('action', '{{ url('admin-standar-pelayanan') }}/' + id);
+        $('#editNama').val($(this).attr('data-nama'));
+        $('#editNamaTampilan').val($(this).attr('data-nama_tampilan'));
+        $('#summernoteEdit').summernote('code', $('#text-' + id).val());
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('editModal')).show();
     });
 
-    // INIT EDIT (IMPORTANT)
-    $('#editModal').on('shown.bs.modal', function () {
-        $('#summernoteEdit').summernote({
-            height: 250,
-            callbacks: {
-                onImageUpload: function(files) {
-                    uploadImage(files[0], this);
-                }
-            }
-        });
+    // Kosongkan form tambah setelah ditutup
+    $('#createModal').on('hidden.bs.modal', function () {
+        $(this).find('input[name=nama], input[name=nama_tampilan]').val('');
+        $('.summernote').summernote('code', '');
     });
-
-    // BUTTON EDIT
-    $('.btn-edit').click(function() {
-
-        let id = $(this).data('id');
-
-        $('#formEdit').attr('action', '/admin-standar-pelayanan/' + id);
-        $('#editNama').val($(this).data('nama'));
-        $('#editNamaTampilan').val($(this).data('nama_tampilan'));
-
-        // SET ISI
-        $('#editModal').modal('show');
-
-        setTimeout(() => {
-            $('#summernoteEdit').summernote('code', $(this).data('text'));
-        }, 300);
-
-    });
-
 });
-
-// UPLOAD IMAGE
-function uploadImage(file, editor) {
-    let data = new FormData();
-    data.append("file", file);
-    data.append("_token", "{{ csrf_token() }}");
-
-    $.ajax({
-        url: "{{ route('standar-pelayanan.upload-image') }}",
-        type: "POST",
-        data: data,
-        contentType: false,
-        processData: false,
-        success: function(res) {
-            $(editor).summernote('insertImage', res.url);
-        }
-    });
-}
 </script>
 
 @endsection

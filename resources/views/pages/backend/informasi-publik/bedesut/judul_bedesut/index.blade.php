@@ -60,7 +60,7 @@
                                 <form action="{{ route('admin.judul-bedesut.destroy', $item->id) }}"
                                     method="POST"
                                     class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    data-confirm="Yakin ingin menghapus?">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">

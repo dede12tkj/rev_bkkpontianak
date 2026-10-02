@@ -48,7 +48,7 @@
 
                             <form action="{{ route('admin-elibrary.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
+                                <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
                                     Hapus
                                 </button>
                             </form>
@@ -129,7 +129,6 @@
         </form>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

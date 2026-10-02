@@ -68,7 +68,7 @@
                                             </div>
 
                                             <textarea class="form-control summernote-edit"
-                                                name="text">{!! $item->text !!}</textarea>
+                                                name="text">{{ $item->text }}</textarea>
                                         </div>
 
                                         <div class="modal-footer">
@@ -125,7 +125,6 @@
     </div>
 </div>
 
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

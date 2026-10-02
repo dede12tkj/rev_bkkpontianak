@@ -3,9 +3,6 @@
 @section('title', 'Flipbook Laporan SKI')
 
 @section('content')
-    <!-- JQUERY (WAJIB) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- DEARFLIP CSS -->
     <link rel="stylesheet" href="{{ asset('dearflip/assets/css/dflip.min.css') }}">
 

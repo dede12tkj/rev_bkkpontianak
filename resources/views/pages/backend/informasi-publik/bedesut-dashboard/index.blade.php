@@ -40,7 +40,7 @@
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">Edit</button>
                                     <form action="{{ route('admin-dashboard-interaktif.destroy', $item->id) }}" method="POST"
-                                        class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        class="d-inline" data-confirm="Yakin ingin menghapus data ini?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -94,7 +94,7 @@
 
                                             {{-- Summernote --}}
                                             <textarea name="text" class="form-control summernote">
-                                                {!! $item->text !!}
+                                                {{ $item->text }}
                                                 </textarea>
                                         </div>
 
@@ -152,7 +152,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

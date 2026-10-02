@@ -257,7 +257,6 @@ document.querySelectorAll('.btnEditParent').forEach(btn => {
 
 });
 </script>
-    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
     <script>
         // isi ID parent ke modal sub

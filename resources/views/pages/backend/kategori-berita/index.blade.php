@@ -53,7 +53,7 @@
 
                                         <!-- Tombol Delete -->
                                         <form action="{{ route('kategori-berita.destroy', $row->id) }}" method="POST"
-                                            class="d-inline" onsubmit="return confirm('Hapus kategori ini?');">
+                                            class="d-inline" data-confirm="Hapus kategori ini?">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger">

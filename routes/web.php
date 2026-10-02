@@ -744,18 +744,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/sub/update/{id}', [InformasiPublikSetiapSaatController::class, 'updateSub'])->name('informasi-setiap-saat-sub.update');
     Route::delete('/sub/delete/{id}', [InformasiPublikSetiapSaatController::class, 'destroySub'])->name('informasi-setiap-saat-sub.delete');
 
-    Route::post('/upload-image', function (Request $request) {
-
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('summernote', 'public');
-
-            return response()->json([
-                'url' => asset('storage/'.$path),
-            ]);
-        }
-
-        return response()->json(['error' => 'Upload gagal'], 400);
-    })->name('upload.image');
+    Route::post('/upload-image', [SummernoteController::class, 'upload'])->name('upload.image');
 
     Route::delete('/kontak/delete/{id}', [KontakKamiController::class, 'destroy'])
         ->name('kontak.delete');

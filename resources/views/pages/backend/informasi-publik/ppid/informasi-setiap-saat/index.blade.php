@@ -54,7 +54,7 @@
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger btn-sm"
-                    onclick="return confirm('Hapus data ini?')">
+                    data-confirm="Hapus data ini?">
                     Hapus
                 </button>
             </form>
@@ -70,7 +70,7 @@
                     <li>
                         <strong>{{ $sub->judul }}</strong><br>
 
-                        {!! \Illuminate\Support\Str::limit(strip_tags($sub->deskripsi), 100) !!}
+                        {{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($sub->deskripsi), ENT_QUOTES | ENT_HTML5), 100) }}
 
                         <button class="btn btn-sm btn-warning"
                             data-bs-toggle="modal"
@@ -83,7 +83,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"
-                                onclick="return confirm('Hapus sub?')">
+                                data-confirm="Hapus sub?">
                                 Hapus
                             </button>
                         </form>
@@ -154,7 +154,7 @@
 
                         <textarea name="deskripsi"
                             class="form-control summernote">
-                            {!! $sub->deskripsi !!}
+                            {{ $sub->deskripsi }}
                         </textarea>
                     </div>
 
@@ -193,7 +193,6 @@
     </div>
 </div>
 
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -69,7 +69,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Hapus data?')">
+                                            data-confirm="Hapus data?">
                                         Hapus
                                     </button>
                                 </form>
@@ -129,7 +129,7 @@
                 @endif
 
                 <textarea name="konten"
-                          class="form-control summernote">{!! $item->konten !!}</textarea>
+                          class="form-control summernote">{{ $item->konten }}</textarea>
 
             </div>
 
@@ -183,7 +183,6 @@
 
 {{-- SUMMERNOTE --}}
 <link href="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.css') }}" rel="stylesheet">
-<script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -28,18 +28,19 @@
                     <tbody>
                         @forelse($poseins as $item)
                             <tr>
-                                <td>{!! Str::limit(strip_tags($item->content), 100) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->content), ENT_QUOTES | ENT_HTML5), 100) }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal"
-                                        onclick="setEdit({{ $item->id }}, `{{ addslashes($item->content) }}`)">
+                                        data-content="{{ $item->content }}"
+                                        onclick="setEdit({{ $item->id }}, this.getAttribute('data-content'))">
                                         Edit
                                     </button>
 
                                     <form action="{{ route('posein.destroy', $item->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data?">
                                             Hapus
                                         </button>
                                     </form>
@@ -105,12 +106,9 @@
         </div>
     </div>
     <!-- JQUERY (WAJIB PALING ATAS) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- SUMMERNOTE -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
-    <script>
+        <script>
         $(document).ready(function() {
 
             $('.summernote').summernote({

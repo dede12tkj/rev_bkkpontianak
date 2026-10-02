@@ -33,7 +33,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td>{!! $item->deskripsi !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->deskripsi), ENT_QUOTES | ENT_HTML5), 150) }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editModal{{ $item->id }}">
@@ -44,7 +44,7 @@
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">
+                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data ini?">
                                             Hapus
                                         </button>
                                     </form>
@@ -132,11 +132,9 @@
         </div>
     </div>
     <!-- Summernote CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" rel="stylesheet"><!-- jQuery (dibutuhkan oleh Summernote) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery (dibutuhkan oleh Summernote) -->
 
 <!-- Summernote JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.summernote').summernote({

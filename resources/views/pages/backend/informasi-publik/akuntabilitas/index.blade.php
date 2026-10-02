@@ -55,7 +55,7 @@
 
                             <form action="{{ route('admin-akuntabilitas.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button onclick="return confirm('Hapus data?')" class="btn btn-sm btn-danger">
+                                <button data-confirm="Hapus data?" class="btn btn-sm btn-danger">
                                     Hapus
                                 </button>
                             </form>

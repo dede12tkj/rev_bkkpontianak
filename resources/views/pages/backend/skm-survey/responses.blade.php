@@ -88,7 +88,7 @@
                                     <a href="{{ route('admin-skm-survey.response.show', $response->id) }}"
                                         class="btn btn-sm btn-outline-primary">Detail</a>
                                     <form method="POST" action="{{ route('admin-skm-survey.response.destroy', $response->id) }}"
-                                        class="d-inline" onsubmit="return confirm('Hapus data response ini?');">
+                                        class="d-inline" data-confirm="Hapus data response ini?">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-outline-danger">Hapus</button>

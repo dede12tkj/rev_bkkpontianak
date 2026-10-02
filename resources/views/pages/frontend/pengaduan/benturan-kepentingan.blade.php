@@ -48,17 +48,6 @@
                 </div>
             @endif
 
-            {{-- @if (session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: '{{ session('success') }}',
-                        confirmButtonColor: '#007C85',
-                        confirmButtonText: 'OK'
-                    });
-                </script>
-            @endif --}}
 
             {{-- Form --}}
             <div class="card border-0 shadow-sm mt-8">

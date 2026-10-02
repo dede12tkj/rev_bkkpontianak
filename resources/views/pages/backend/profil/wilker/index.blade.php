@@ -71,7 +71,7 @@
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data?')">
+                                        <button class="btn btn-danger btn-sm" data-confirm="Hapus data?">
                                             Hapus
                                         </button>
                                     </form>

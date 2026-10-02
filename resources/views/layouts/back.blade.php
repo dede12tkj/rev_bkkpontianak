@@ -7,6 +7,17 @@
     <title>Dashboard</title>
 
     @include('includes.backend.style')
+
+    {{-- jQuery + Summernote + perilaku editor dimuat SEKALI di sini; view tidak perlu memuatnya lagi --}}
+    <script>
+        window.ADMIN_CONFIG = {
+            csrf: @json(csrf_token()),
+            uploadUrl: @json(route('summernote.upload'))
+        };
+    </script>
+    <script src="{{ asset('backend/assets/extensions/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/extensions/summernote/summernote-lite.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/admin-editor.js') }}?v={{ is_file($__ae = public_path('backend/assets/js/admin-editor.js')) ? filemtime($__ae) : 1 }}"></script>
 </head>
 
 <body>
@@ -27,12 +38,13 @@
         </div>
     </div>
     @include('includes.backend.script')
+    @stack('scripts')
     <script>
         @if (session('success'))
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
-                text: "{{ session('success') }}",
+                text: @json(session('success')),
                 timer: 2500,
                 showConfirmButton: false
             });
@@ -42,7 +54,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
-                text: "{{ session('error') }}",
+                text: @json(session('error')),
             });
         @endif
 
@@ -50,7 +62,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Terjadi Kesalahan',
-                html: `{!! implode('<br>', $errors->all()) !!}`,
+                html: @json(implode('<br>', array_map('e', $errors->all()))),
             });
         @endif
     </script>

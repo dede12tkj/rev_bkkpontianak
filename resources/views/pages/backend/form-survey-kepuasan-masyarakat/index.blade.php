@@ -36,7 +36,7 @@
                     <tbody>
                         @forelse ($data as $item)
                             <tr>
-                                <td>{!! Str::limit(strip_tags($item->text), 150) !!}</td>
+                                <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($item->text), ENT_QUOTES | ENT_HTML5), 150) }}</td>
                                 <td>
                                     @if ($item->link)
                                         <a href="{{ $item->link }}" target="_blank">{{ $item->link }}</a>
@@ -54,7 +54,7 @@
                                         method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button onclick="return confirm('Hapus data?')" class="btn btn-danger btn-sm">
+                                        <button data-confirm="Hapus data?" class="btn btn-danger btn-sm">
                                             Hapus
                                         </button>
                                     </form>
