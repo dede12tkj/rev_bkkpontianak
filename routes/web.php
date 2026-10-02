@@ -409,7 +409,7 @@ Route::get('/informasi-publik/survey-kepuasan-masyarakat', function () {
 })->name('survey-kepuasan-masyarakat');
 
 Route::get('informasi-publik/survey-kepuasan-masyarakat/{id}', [SurveyController::class, 'show'])
-    ->name('survey-admin.show');
+    ->name('admin.show');
 
 Route::get('/informasi-publik/ppid', function () {
     $faq = PPIDFaq::latest()->get();
