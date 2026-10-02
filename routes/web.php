@@ -115,7 +115,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
 Route::get('/layanan/{id}', [StandarPelayananController::class, 'show'])
-    ->name('standar-pelayanan.show');
+    ->name('layanan.show');
 
 Route::get('/detail', function () {
     return view('pages.frontend.detail');
