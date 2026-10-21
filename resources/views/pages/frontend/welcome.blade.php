@@ -667,13 +667,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 small">Instagram</span>
                             </div>
                             <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto position-relative social-embed-card" data-network="instagram" style="height: 480px;">
-                                <blockquote class="instagram-media w-100" data-instgrm-permalink="https://www.instagram.com/bkkpontianak/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:8px; box-shadow:none; margin: 0 auto; max-width:100%; width:100%;">
-                                    <div style="padding:16px; text-align:center;">
-                                        <a href="https://www.instagram.com/bkkpontianak/" style="color:#3897f0; font-family:Poppins,sans-serif; font-size:13px; font-weight:600; text-decoration:none;" target="_blank">
-                                            Memuat Instagram...
-                                        </a>
-                                    </div>
-                                </blockquote>
+                                <iframe class="instagram-profile-embed"
+                                    data-src="https://www.instagram.com/bkkpontianak/embed"
+                                     title="Instagram @bkkpontianak"
+                                     width="100%" height="100%"
+                                        style="border:0; border-radius:8px; background:#fff; min-height:456px;"
+                                        loading="lazy" allowtransparency="true" scrolling="yes"></iframe>
 
                                 {{-- Postingan baru dimuat setelah tombol ini diklik, supaya script Instagram
                                      (berat + memanggil analitik sendiri) tidak ikut membebani load awal halaman. --}}
