@@ -56,13 +56,15 @@
 </IfModule>
 
 <IfModule mod_headers.c>
+    # Hentikan server mengiklankan HTTP/3 (QUIC) ke browser
+    Header always unset Alt-Svc
+
     <FilesMatch "\.(?i:jpe?g|png|gif|webp|svg|ico|css|js|woff2?)$">
         Header append Cache-Control "public"
     </FilesMatch>
 
-    <!-- HSTS: setelah kunjungan pertama, browser otomatis langsung pakai https tanpa perlu
-         redirect 301 dari server lagi (hemat 1 round-trip ~200-300ms di kunjungan berikutnya).
-         Hanya aktifkan kalau seluruh situs memang selalu diakses via https. -->
+    # HSTS: setelah kunjungan pertama, browser langsung pakai https tanpa redirect 301
+    # dari server (hemat 1 round-trip di kunjungan berikutnya).
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
