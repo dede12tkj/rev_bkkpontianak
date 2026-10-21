@@ -667,12 +667,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 small">Instagram</span>
                             </div>
                             <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto position-relative social-embed-card" data-network="instagram" style="height: 480px;">
-                                <iframe class="instagram-profile-embed"
-                                    data-src="https://www.instagram.com/bkkpontianak/embed"
-                                     title="Instagram @bkkpontianak"
-                                     width="100%" height="100%"
-                                        style="border:0; border-radius:8px; background:#fff; min-height:456px;"
-                                        loading="lazy" allowtransparency="true" scrolling="yes"></iframe>
+                                <div class="elfsight-app-0c08cbbb-d468-455d-877b-292ed57e9abc w-100" data-elfsight-app-lazy></div>
 
                                 {{-- Postingan baru dimuat setelah tombol ini diklik, supaya script Instagram
                                      (berat + memanggil analitik sendiri) tidak ikut membebani load awal halaman. --}}
@@ -868,31 +863,25 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝�
 </script>
 
 <!-- Script External Platform Embeds -->
+<!-- Script External Platform Embeds -->
 <script>
-    // Embed Instagram & TikTok sengaja TIDAK dimuat otomatis sama sekali — script bawaan mereka
-    // berat (bundle JS besar + memanggil analitik/beacon sendiri ke server TikTok/Meta) dan bisa
-    // membuat halaman terasa "masih memuat" walau konten utama sudah selesai. Baru dimuat kalau
-    // pengunjung klik tombol "Tampilkan..." di kartu masing-masing.
+    // Embed Instagram (Elfsight) & TikTok tidak dimuat otomatis, supaya load awal halaman ringan.
+    // Script baru diunduh kalau pengunjung klik tombol "Tampilkan..." di kartu masing-masing.
     (function() {
         var loadedScripts = {};
 
-        function loadNetworkScript(network) {
-            if (loadedScripts[network]) {
-                // Sudah pernah dimuat (mis. ada 2 kartu jaringan yang sama): cukup proses ulang.
-                if (network === 'instagram' && window.instgrm) {
-                    window.instgrm.Embeds.process();
-                }
-                return;
-            }
-            loadedScripts[network] = true;
+        var SCRIPT_SRC = {
+            instagram: 'https://elfsightcdn.com/platform.js',
+            tiktok: 'https://www.tiktok.com/embed.js'
+        };
 
-            var src = network === 'instagram'
-                ? 'https://platform.instagram.com/en_US/embeds.js'
-                : 'https://www.tiktok.com/embed.js';
+        function loadNetworkScript(network) {
+            if (loadedScripts[network]) return;
+            loadedScripts[network] = true;
 
             var s = document.createElement('script');
             s.async = true;
-            s.src = src;
+            s.src = SCRIPT_SRC[network];
             document.body.appendChild(s);
         }
 
