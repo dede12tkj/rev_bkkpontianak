@@ -847,6 +847,27 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝�
     });
 </script>
 
+<!-- Inisialisasi Slider Media Sosial -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var socialSplide = new Splide('.social-splide', {
+            type: 'slide',
+            perPage: 3,
+            gap: '1.5rem',
+            pagination: true,
+            arrows: true,
+            breakpoints: {
+                992: { perPage: 2 },
+                576: { perPage: 1 },
+            }
+        }).mount();
+
+        window.addEventListener('load', function () {
+            socialSplide.refresh();
+        });
+    });
+</script>
+
 <!-- Script External Platform Embeds -->
 <script>
     // Embed Instagram & TikTok sengaja TIDAK dimuat otomatis sama sekali — script bawaan mereka
