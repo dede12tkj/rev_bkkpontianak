@@ -7,7 +7,6 @@ use App\Models\Akuntabilitas;
 use App\Models\Artikel;
 use App\Models\Berita;
 use App\Models\KategoriBerita;
-use App\Models\LaporanPPID;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +24,6 @@ class DashboardController extends Controller
         $totalArtikel = Artikel::count();
         $totalBerita = Berita::count();
         $totalKategori = KategoriBerita::count();
-        $totalLaporan = LaporanPPID::count();
 
         // ======================
         // STATUS ARTIKEL
@@ -52,7 +50,6 @@ class DashboardController extends Controller
             'totalArtikel',
             'totalBerita',
             'totalKategori',
-            'totalLaporan',
             'artikelPublished',
             'artikelDraft',
             'totalViews',

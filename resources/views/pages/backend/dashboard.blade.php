@@ -39,16 +39,6 @@
             </div>
         </div>
 
-        {{-- LAPORAN --}}
-        <div class="col-md-3 mb-3">
-            <div class="card shadow border-left-warning">
-                <div class="card-body">
-                    <h6><i class="fas fa-file"></i> Laporan</h6>
-                    <h3>{{ $totalLaporan }}</h3>
-                </div>
-            </div>
-        </div>
-
         {{-- TOTAL VIEW --}}
         <div class="col-md-3 mb-3">
             <div class="card shadow border-left-dark">

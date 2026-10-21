@@ -57,3 +57,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## PPID dipindah ke website sendiri
+Kode PPID (publik + admin) sudah dihapus dari project ini dan dipindah ke project terpisah (`ppid.bkkpontianak.com`).
+- URL lama `/informasi-publik/ppid/...` dan `/admin-ppid-*` di-redirect 301 ke subdomain baru (lihat blok "PPID sudah dipindah" di `routes/web.php`).
+- Alamat PPID diatur lewat `PPID_URL` di `.env` (default `https://ppid.bkkpontianak.com`), dipakai menu PPID di navbar dan sidebar admin.
+- Tabel PPID di database lama sengaja TIDAK dihapus. Hapus manual hanya setelah PPID baru berjalan dan datanya terverifikasi.

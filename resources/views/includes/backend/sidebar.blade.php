@@ -217,97 +217,12 @@
                     </ul>
                 </li>
 
-                {{-- PPID --}}
-                <li class="sidebar-item has-sub">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-collection-fill"></i>
-                        <span>PPID</span>
+                {{-- PPID (website terpisah) --}}
+                <li class="sidebar-item">
+                    <a href="{{ config('ppid.url') }}/login" target="_blank" rel="noopener" class="sidebar-link">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                        <span>Admin PPID</span>
                     </a>
-
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-form.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-form.index') }}" class="submenu-link">Formulir</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-faq.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-faq.index') }}" class="submenu-link">Frequently Asked
-                                Question</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-profil.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-profil.index') }}" class="submenu-link">Profil Singkat</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-tugas-fungsi.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-tugas-fungsi.index') }}" class="submenu-link">Tugas
-                                Fungsi</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-struktur-organisasi.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-struktur-organisasi.index') }}"
-                                class="submenu-link">Struktur Organisasi</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-visi-misi.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-visi-misi.index') }}" class="submenu-link">Visi Misi</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-standar-layanan.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-standar-layanan.index') }}" class="submenu-link">Standar
-                                Layanan</a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <li class="sidebar-item has-sub">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-collection-fill"></i>
-                        <span>PPID Regulasi</span>
-                    </a>
-
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-regulasi-kip.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-regulasi-kip.index') }}" class="submenu-link">Regulasi
-                                KIP</a>
-                        </li>
-
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-regulasi-kemenkes.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-regulasi-kemenkes.index') }}" class="submenu-link">Regulasi
-                                Kemenkes</a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-regulasi-sop-ki.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-regulasi-sop-ki.index') }}" class="submenu-link">SOP
-                                Keterbukaan Informasi</a>
-                        </li>
-
-                    </ul>
-                </li>
-
-
-
-
-                {{-- PPID Informasi Publik --}}
-                <li class="sidebar-item has-sub">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-collection-fill"></i>
-                        <span>PPID Informasi Publik</span>
-                    </a>
-
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->routeIs('admin-ppid-laporan.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin-ppid-laporan.index') }}" class="submenu-link">Laporan PPID</a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('informasi-berkala.index') ? 'active' : '' }}">
-                            <a href="{{ route('informasi-berkala.index') }}" class="submenu-link">Informasi
-                                Berkala</a>
-                        </li>
-                        <li class="submenu-item {{ request()->routeIs('informasi-setiap-saat.index') ? 'active' : '' }}">
-                            <a href="{{ route('informasi-setiap-saat.index') }}" class="submenu-link">Informasi
-                                Setiap Saat</a>
-                        </li>
-
-                    </ul>
                 </li>
 
                 {{-- Berita --}}

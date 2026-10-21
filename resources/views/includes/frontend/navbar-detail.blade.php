@@ -115,8 +115,7 @@
                             class="dropdown-item {{ request()->routeIs('bedesut') ? 'active' : '' }}">BEDESUT</a>
                         <a href="{{ route('berita') }}"
                             class="dropdown-item {{ request()->routeIs('berita') ? 'active' : '' }}">Berita</a>
-                        <a href="{{ route('ppid') }}"
-                            class="dropdown-item {{ request()->routeIs('ppid') ? 'active' : '' }}">PPID</a>
+                        <a href="{{ config('ppid.url') }}" class="dropdown-item">PPID</a>
                         <a href="{{ route('artikel') }}"
                             class="dropdown-item {{ request()->routeIs('artikel') ? 'active' : '' }}">Artikel</a>
                         <a href="{{ route('pengumuman') }}"

@@ -15,8 +15,6 @@ use App\Http\Controllers\Admin\FormSurveyKepuasanMasyarakatController;
 use App\Http\Controllers\Admin\GambarMaklumatPelayananController;
 use App\Http\Controllers\Admin\GolKPKController;
 use App\Http\Controllers\Admin\InfografisController;
-use App\Http\Controllers\Admin\InformasiPublikBerkalaController;
-use App\Http\Controllers\Admin\InformasiPublikSetiapSaatController;
 use App\Http\Controllers\Admin\JudulBedesutController;
 use App\Http\Controllers\Admin\KategoriBeritaController;
 use App\Http\Controllers\Admin\LaporanSKIController;
@@ -25,17 +23,6 @@ use App\Http\Controllers\Admin\LayananPengaduanController;
 use App\Http\Controllers\Admin\PanduanSKIController;
 use App\Http\Controllers\Admin\PengumumanController;
 use App\Http\Controllers\Admin\PoseinController;
-use App\Http\Controllers\Admin\PPIDFaqController;
-use App\Http\Controllers\Admin\PPIDFormController;
-use App\Http\Controllers\Admin\PPIDLaporanController;
-use App\Http\Controllers\Admin\PPIDProfilController;
-use App\Http\Controllers\Admin\PPIDRegulasiKemenkesController;
-use App\Http\Controllers\Admin\PPIDRegulasiKIPController;
-use App\Http\Controllers\Admin\PPIDSopKIController;
-use App\Http\Controllers\Admin\PPIDStandarLayananController;
-use App\Http\Controllers\Admin\PPIDStrukturOrganisasiController;
-use App\Http\Controllers\Admin\PPIDTugasFungsiController;
-use App\Http\Controllers\Admin\PPIDVisiMisiController;
 use App\Http\Controllers\Admin\ProfilSKIController;
 use App\Http\Controllers\Admin\SejarahDanLatarBelakangController;
 use App\Http\Controllers\Admin\SkmSurveyController as AdminSkmSurveyController;
@@ -47,7 +34,6 @@ use App\Http\Controllers\Admin\SopController;
 use App\Http\Controllers\Admin\SosmedController;
 use App\Http\Controllers\Admin\StandarPelayananController;
 use App\Http\Controllers\Admin\StrukturOrganisasiController;
-use App\Http\Controllers\Admin\SubInformasiPublikBerkalaController;
 use App\Http\Controllers\Admin\SubJudulBedesutController;
 use App\Http\Controllers\Admin\SummernoteController;
 use App\Http\Controllers\Admin\SunmoreController;
@@ -78,23 +64,10 @@ use App\Models\Footer;
 use App\Models\FormSurveyKepuasanMasyarakat;
 use App\Models\GambarMaklumatPelayanan;
 use App\Models\Infografis;
-use App\Models\InformasiPublikBerkala;
-use App\Models\InformasiPublikSetiapSaat;
 use App\Models\KategoriBerita;
-use App\Models\LaporanPPID;
 use App\Models\PanduanSKI;
 use App\Models\Pengumuman;
 use App\Models\Posein;
-use App\Models\PPIDFaq;
-use App\Models\PPIDForm;
-use App\Models\PPIDProfil;
-use App\Models\PPIDStandarLayanan;
-use App\Models\PPIDStrukturOrganisasi;
-use App\Models\PPIDTugasFungsi;
-use App\Models\PPIDVisiMisi;
-use App\Models\RegulasiKemenkes;
-use App\Models\RegulasiKIP;
-use App\Models\RegulasiSopKI;
 use App\Models\SejarahDanLatarBelakang;
 use App\Models\SKDanSOP;
 use App\Models\Sop;
@@ -411,145 +384,52 @@ Route::get('/informasi-publik/survey-kepuasan-masyarakat', function () {
 Route::get('informasi-publik/survey-kepuasan-masyarakat/{id}', [SurveyController::class, 'show'])
     ->name('admin.show');
 
-Route::get('/informasi-publik/ppid', function () {
-    $faq = PPIDFaq::latest()->get();
-    $form = PPIDForm::latest()->first(); // ambil 1 data saja
+// ===== PPID sudah dipindah ke website sendiri (subdomain) =====
+// Semua URL lama diarahkan permanen (301) ke alamat baru. Alamat diatur di config/ppid.php / .env (PPID_URL).
+$ppidUrl = config('ppid.url');
 
-    return view('pages.frontend.informasi-publik.ppid', compact('faq', 'form'));
-})->name('ppid');
+$ppidPublik = [
+    '' => '/',
+    'profil' => '/profil',
+    'profil-singkat' => '/profil/singkat',
+    'tugas-fungsi' => '/profil/tugas-fungsi',
+    'struktur-organisasi' => '/profil/struktur-organisasi',
+    'visi-misi' => '/profil/visi-misi',
+    'regulasi' => '/regulasi',
+    'regulasi/kip' => '/regulasi/kip',
+    'regulasi/kemenkes' => '/regulasi/kemenkes',
+    'regulasi/ski' => '/regulasi/sop-ki',
+    'standar-layanan' => '/standar-layanan',
+    'standar-layanan/prosedur-permintaan-informasi' => '/standar-layanan/prosedur-permintaan-informasi',
+    'standar-layanan/prosedur-pengajuan-keberatan' => '/standar-layanan/prosedur-pengajuan-keberatan',
+    'standar-layanan/prosedur-pemohonan-penyelesaian-sengketa-informasi-publik' => '/standar-layanan/prosedur-pemohonan-penyelesaian-sengketa-informasi-publik',
+    'standar-layanan/prosedur-waktu-layanan-informasi' => '/standar-layanan/prosedur-waktu-layanan-informasi',
+    'standar-layanan/standar-biaya-perolehan-informasi' => '/standar-layanan/standar-biaya-perolehan-informasi',
+    'informasi-publik' => '/informasi-publik',
+    'informasi-publik/informasi-publik-berkala' => '/informasi-publik/berkala',
+    'informasi-publik/informasi-publik-tersedia-setiap-saat' => '/informasi-publik/tersedia-setiap-saat',
+    'informasi-publik/informasi-publik-serta-merta' => '/informasi-publik/serta-merta',
+    'laporan' => '/laporan',
+    'laporan/laporan-tahunan-layanan-ppid' => '/laporan/tahunan-layanan-ppid',
+    'laporan/ringkasan-akses-informasi-publik' => '/laporan/ringkasan-akses-informasi-publik',
+];
 
-// END INFORMASI PUBLIK
+foreach ($ppidPublik as $lama => $baru) {
+    Route::permanentRedirect('informasi-publik/ppid'.($lama === '' ? '' : '/'.$lama), $ppidUrl.$baru);
+}
 
-// START PPID
-Route::get('/informasi-publik/ppid/profil', function () {
-    return view('pages.frontend.ppid.profil');
-})->name('ppid.profil');
+Route::get('informasi-publik/ppid/standar-layanan/{id}', fn ($id) => redirect($ppidUrl.'/standar-layanan/'.$id, 301))
+    ->whereNumber('id');
 
-Route::get('/informasi-publik/ppid/profil-singkat', function () {
-
-    $profil = PPIDProfil::latest()->first();
-    // ambil 1 data terbaru
-
-    return view('components.ppid.profil-singkat', compact('profil'));
-
-})->name('ppid.profil-singkat');
-
-Route::get('/informasi-publik/ppid/tugas-fungsi', function () {
-    $profil = PPIDTugasFungsi::latest()->first();
-
-    return view('components.ppid.tugas-fungsi', compact('profil'));
-})->name('ppid.tugas-fungsi');
-
-Route::get('/informasi-publik/ppid/struktur-organisasi', function () {
-    $struktur = PPIDStrukturOrganisasi::latest()->get();
-
-    return view('components.ppid.struktur-organisasi', compact('struktur'));
-})->name('ppid.struktur-organisasi');
-
-Route::get('/informasi-publik/ppid/visi-misi', function () {
-
-    $data = PPIDVisiMisi::latest()->first();
-
-    return view('components.ppid.visi-misi', compact('data'));
-
-})->name('ppid.visi-misi');
-
-Route::get('/informasi-publik/ppid/regulasi', function () {
-    return view('pages.frontend.ppid.regulasi');
-})->name('ppid.regulasi');
-
-Route::get('/informasi-publik/ppid/regulasi/kip', function () {
-
-    $data = RegulasiKIP::latest()->get();
-
-    return view('components.ppid.regulasi.kip', compact('data'));
-
-})->name('ppid.regulasi.kip');
-
-Route::get('/informasi-publik/ppid/regulasi/kemenkes', function () {
-    $data = RegulasiKemenkes::latest()->get();
-
-    return view('components.ppid.regulasi.kemenkes', compact('data'));
-})->name('ppid.regulasi.kemenkes');
-
-Route::get('/informasi-publik/ppid/regulasi/ski', function () {
-    $data = RegulasiSopKI::latest()->get();
-
-    return view('components.ppid.regulasi.sop', compact('data'));
-})->name('ppid.regulasi.sop');
-
-Route::get('/informasi-publik/ppid/standar-layanan', function () {
-    $standarLayanan = PPIDStandarLayanan::all();
-
-    return view('pages.frontend.ppid.standar-layanan', compact('standarLayanan'));
-})->name('ppid.standar-layanan');
-
-Route::get('/informasi-publik/ppid/informasi-publik', function () {
-    return view('pages.frontend.ppid.informasi-publik');
-})->name('ppid.informasi-publik');
-
-Route::get('/informasi-publik/ppid/laporan', function () {
-    return view('pages.frontend.ppid.laporan');
-})->name('ppid.laporan');
-
-Route::get('/informasi-publik/ppid/standar-layanan/prosedur-permintaan-informasi', function () {
-    return view('components.ppid.standar-layanan.prosedur-permintaan-informasi');
-})->name('ppid.standar-layanan.prosedur-permintaan-informasi');
-
-Route::get('informasi-publik/ppid/standar-layanan/{id}', function ($id) {
-
-    $data = PPIDStandarLayanan::findOrFail($id);
-
-    return view('components.ppid.standar-layanan.detail', compact('data'));
-
-});
-
-Route::get('/informasi-publik/ppid/standar-layanan/prosedur-pengajuan-keberatan', function () {
-    return view('components.ppid.standar-layanan.prosedur-pengajuan-keberatan');
-})->name('ppid.standar-layanan.prosedur-pengajuan-keberatan');
-
-Route::get('/informasi-publik/ppid/standar-layanan/prosedur-pemohonan-penyelesaian-sengketa-informasi-publik', function () {
-    return view('components.ppid.standar-layanan.prosedur-pemohonan-penyelesaian-sengketa-informasi-publik');
-})->name('ppid.standar-layanan.prosedur-pemohonan-penyelesaian-sengketa-informasi-publik');
-
-Route::get('/informasi-publik/ppid/standar-layanan/prosedur-waktu-layanan-informasi', function () {
-    return view('components.ppid.standar-layanan.waktu-layanan-informasi');
-})->name('ppid.standar-layanan.prosedur-waktu-layanan-informasi');
-
-Route::get('/informasi-publik/ppid/standar-layanan/standar-biaya-perolehan-informasi', function () {
-    return view('components.ppid.standar-layanan.standar-biaya-perolehan-informasi');
-})->name('ppid.standar-layanan.standar-biaya-perolehan-informasi');
-
-Route::get('/informasi-publik/ppid/informasi-publik/informasi-publik-berkala', function () {
-    $data = InformasiPublikBerkala::with('sub')->get();
-
-    return view('components.ppid.informasi-publik.ipb', compact('data'));
-
-})->name('ppid.informasi-publik.ipb');
-
-Route::get('/informasi-publik/ppid/informasi-publik/informasi-publik-tersedia-setiap-saat', function () {
-    $data = InformasiPublikSetiapSaat::with('sub')->get();
-
-    return view('components.ppid.informasi-publik.iptss', compact('data'));
-})->name('ppid.informasi-publik.iptss');
-
-Route::get('/informasi-publik/ppid/informasi-publik/informasi-publik-serta-merta', function () {
-    return view('components.ppid.informasi-publik.ipsm');
-})->name('ppid.informasi-publik.ipsm');
-
-Route::get('/informasi-publik/ppid/laporan/laporan-tahunan-layanan-ppid', function () {
-    $data = LaporanPPID::orderBy('tahun', 'desc')
-        ->orderBy('semester', 'desc')
-        ->get();
-
-    return view('components.ppid.laporan.ltlp', compact('data'));
-})->name('ppid.laporan.ltlp');
-
-Route::get('/informasi-publik/ppid/laporan/ringkasan-akses-informasi-publik', function () {
-    return view('components.ppid.laporan.raip');
-})->name('ppid.laporan.raip');
-
-// END PPID
+// Halaman admin PPID lama (daftar saja) -> admin di website PPID. Perlu login ulang di sana.
+foreach ([
+    'admin-ppid-form', 'admin-ppid-faq', 'admin-ppid-profil', 'admin-ppid-tugas-fungsi',
+    'admin-ppid-struktur-organisasi', 'admin-ppid-visi-misi', 'admin-ppid-regulasi-kip',
+    'admin-ppid-regulasi-kemenkes', 'admin-ppid-regulasi-sop-ki', 'admin-ppid-standar-layanan',
+    'admin-ppid-laporan', 'admin/informasi-berkala', 'admin/informasi-setiap-saat',
+] as $adminPpid) {
+    Route::permanentRedirect($adminPpid, $ppidUrl.'/'.$adminPpid);
+}
 
 Route::get('/kontak-kami', function () {
     return view('pages.frontend.kontak-kami');
@@ -649,24 +529,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('admin-dashboard-interaktif', BedesutDashboardController::class);
 
-    Route::resource('admin-ppid-form', PPIDFormController::class);
-
-    Route::resource('admin-ppid-faq', PPIDFaqController::class);
-
-    Route::resource('admin-ppid-profil', PPIDProfilController::class);
-
-    Route::resource('admin-ppid-tugas-fungsi', PPIDTugasFungsiController::class);
-
-    Route::resource('admin-ppid-struktur-organisasi', PPIDStrukturOrganisasiController::class);
-
-    Route::resource('admin-ppid-visi-misi', PPIDVisiMisiController::class);
-
-    Route::resource('admin-ppid-regulasi-kip', PPIDRegulasiKIPController::class);
-
-    Route::resource('admin-ppid-regulasi-kemenkes', PPIDRegulasiKemenkesController::class);
-
-    Route::resource('admin-ppid-regulasi-sop-ki', PPIDSopKIController::class);
-
     Route::resource('admin-sop', SopController::class)
         ->except(['create', 'edit']);
 
@@ -702,20 +564,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('admin-sk-dan-sop', SKDanSOPController::class);
 
-    Route::resource('admin-ppid-standar-layanan', PPIDStandarLayananController::class);
-
     // admin
     Route::resource('admin-artikel', ArtikelController::class);
 
-    Route::resource('admin-ppid-laporan', PPIDLaporanController::class);
-
     Route::resource('sunmore', SunmoreController::class);
-
-    // Parent
-    Route::get('/admin/informasi-berkala', [InformasiPublikBerkalaController::class, 'index'])->name('informasi-berkala.index');
-    Route::post('/admin/informasi-berkala/store', [InformasiPublikBerkalaController::class, 'store'])->name('informasi-berkala.store');
-    Route::put('/admin/informasi-berkala/{id}', [InformasiPublikBerkalaController::class, 'update'])->name('informasi-berkala.update');
-    Route::delete('/admin/informasi-berkala/{id}', [InformasiPublikBerkalaController::class, 'destroy'])->name('informasi-berkala.destroy');
 
     // Judul Bedesut
     Route::get('/judul-bedesut', [JudulBedesutController::class, 'index'])->name('admin.judul-bedesut.index');
@@ -728,21 +580,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/sub-judul/{id}', [SubJudulBedesutController::class, 'update'])->name('admin.sub-judul.update');
     Route::delete('/sub-judul/{id}', [SubJudulBedesutController::class, 'destroy'])->name('admin.sub-judul.destroy');
 
-    // Sub
-    Route::post('/admin/informasi-berkala/sub/store', [SubInformasiPublikBerkalaController::class, 'store'])->name('informasi-berkala.sub.store');
-    Route::put('/admin/informasi-berkala/sub/{id}', [SubInformasiPublikBerkalaController::class, 'update'])->name('informasi-berkala.sub.update');
-    Route::delete('/admin/informasi-berkala/sub/{id}', [SubInformasiPublikBerkalaController::class, 'destroy'])->name('informasi-berkala.sub.destroy');
-
-    Route::get('/admin/informasi-setiap-saat', [InformasiPublikSetiapSaatController::class, 'index'])->name('informasi-setiap-saat.index');
-
-    Route::post('/store', [InformasiPublikSetiapSaatController::class, 'store'])->name('informasi-setiap-saat.store');
-    Route::put('/update/{id}', [InformasiPublikSetiapSaatController::class, 'update'])->name('informasi-setiap-saat.update');
-    Route::delete('/delete/{id}', [InformasiPublikSetiapSaatController::class, 'destroy'])->name('informasi-setiap-saat.delete');
-
-    // SUB
-    Route::post('/sub/store', [InformasiPublikSetiapSaatController::class, 'storeSub'])->name('informasi-setiap-saat-sub.store');
-    Route::put('/sub/update/{id}', [InformasiPublikSetiapSaatController::class, 'updateSub'])->name('informasi-setiap-saat-sub.update');
-    Route::delete('/sub/delete/{id}', [InformasiPublikSetiapSaatController::class, 'destroySub'])->name('informasi-setiap-saat-sub.delete');
 
     Route::post('/upload-image', [SummernoteController::class, 'upload'])->name('upload.image');
 

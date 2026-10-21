@@ -8,16 +8,10 @@ use App\Models\GolKPK;
 use App\Models\LaporSpan;
 use App\Models\Pengumuman;
 use App\Models\Posein;
-use App\Models\PPIDFaq;
-use App\Models\PPIDProfil;
-use App\Models\PPIDTugasFungsi;
-use App\Models\PPIDVisiMisi;
 use App\Models\ProfilSKI;
 use App\Models\SejarahDanLatarBelakang;
 use App\Models\StandarPelayanan;
 use App\Models\StrukturOrganisasi;
-use App\Models\SubInformasiPublikBerkala;
-use App\Models\SubInformasiPublikSetiapSaat;
 use App\Models\Survey;
 use App\Models\TugasDanFungsi;
 use App\Models\UPG;
@@ -44,16 +38,10 @@ return [
         LaporSpan::class => ['text'],
         Pengumuman::class => ['isi'],
         Posein::class => ['content'],
-        PPIDFaq::class => ['deskripsi'],
-        PPIDProfil::class => ['text'],
-        PPIDTugasFungsi::class => ['text'],
-        PPIDVisiMisi::class => ['visi', 'misi'],
         ProfilSKI::class => ['text'],
         SejarahDanLatarBelakang::class => ['text'],
         StandarPelayanan::class => ['text'],
         StrukturOrganisasi::class => ['text'],
-        SubInformasiPublikBerkala::class => ['deskripsi'],
-        SubInformasiPublikSetiapSaat::class => ['deskripsi'],
         Survey::class => ['isi'],
         TugasDanFungsi::class => ['text'],
         UPG::class => ['text'],
