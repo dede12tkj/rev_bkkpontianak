@@ -667,7 +667,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <span class="badge bg-danger-subtle text-danger rounded-pill px-2 py-1 small">Instagram</span>
                             </div>
                             <div class="card-body p-2 d-flex align-items-center justify-content-center bg-light overflow-auto position-relative social-embed-card" data-network="instagram" style="height: 480px;">
-                                <div class="elfsight-app-0c08cbbb-d468-455d-877b-292ed57e9abc w-100" data-elfsight-app-lazy></div>
+                                <blockquote class="instagram-media w-100" data-instgrm-permalink="https://www.instagram.com/bkkpontianak/?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:8px; box-shadow:none; margin: 0 auto; max-width:100%; width:100%;">
+                                    <div style="padding:16px; text-align:center;">
+                                        <a href="https://www.instagram.com/bkkpontianak/" style="color:#3897f0; font-family:Poppins,sans-serif; font-size:13px; font-weight:600; text-decoration:none;" target="_blank">
+                                            Memuat Instagram...
+                                        </a>
+                                    </div>
+                                </blockquote>
 
                                 {{-- Postingan baru dimuat setelah tombol ini diklik, supaya script Instagram
                                      (berat + memanggil analitik sendiri) tidak ikut membebani load awal halaman. --}}
@@ -863,25 +869,31 @@ Pelayanan Tanpa Batas: BKK Pontianak Prioritaskan Kelompok Rentan & Lansia 🤝�
 </script>
 
 <!-- Script External Platform Embeds -->
-<!-- Script External Platform Embeds -->
 <script>
-    // Embed Instagram (Elfsight) & TikTok tidak dimuat otomatis, supaya load awal halaman ringan.
-    // Script baru diunduh kalau pengunjung klik tombol "Tampilkan..." di kartu masing-masing.
+    // Embed Instagram & TikTok sengaja TIDAK dimuat otomatis sama sekali — script bawaan mereka
+    // berat (bundle JS besar + memanggil analitik/beacon sendiri ke server TikTok/Meta) dan bisa
+    // membuat halaman terasa "masih memuat" walau konten utama sudah selesai. Baru dimuat kalau
+    // pengunjung klik tombol "Tampilkan..." di kartu masing-masing.
     (function() {
         var loadedScripts = {};
 
-        var SCRIPT_SRC = {
-            instagram: 'https://elfsightcdn.com/platform.js',
-            tiktok: 'https://www.tiktok.com/embed.js'
-        };
-
         function loadNetworkScript(network) {
-            if (loadedScripts[network]) return;
+            if (loadedScripts[network]) {
+                // Sudah pernah dimuat (mis. ada 2 kartu jaringan yang sama): cukup proses ulang.
+                if (network === 'instagram' && window.instgrm) {
+                    window.instgrm.Embeds.process();
+                }
+                return;
+            }
             loadedScripts[network] = true;
+
+            var src = network === 'instagram'
+                ? 'https://www.instagram.com/embed.js'
+                : 'https://www.tiktok.com/embed.js';
 
             var s = document.createElement('script');
             s.async = true;
-            s.src = SCRIPT_SRC[network];
+            s.src = src;
             document.body.appendChild(s);
         }
 
