@@ -677,3 +677,8 @@ Route::post(
     '/layanan-pengaduan-masyarakat-user/store',
     [LayananPengaduanMasyarakatUserController::class, 'store']
 )->name('layanan-pengaduan-masyarakat-user.store');
+
+
+Route::get('/statistik-sikeren', StatistikSikerenController::class)
+    ->middleware('throttle:60,1')
+    ->name('statistik.sikeren');
