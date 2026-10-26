@@ -443,6 +443,16 @@
                             <p class="small text-muted mb-0">Tifoid</p>
                         </div>
                     </div>
+                    <!-- Polio -->
+                    <div class="col-lg-2 col-md-6 col-6">
+                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                            <div class="icon-wrap mx-auto mb-2 text-primary">
+                                <i class="fa fa-pills fa-2x"></i>
+                            </div>
+                            <h3 class="fw-bold text-dark mb-1" id="stat-polio">0</h3>
+                            <p class="small text-muted mb-0">Polio</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -568,6 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Simulasi respon data API (Mock Data)
         const mockApiResponse = {
             today: {
+                polio: 12,
                 yellow_fever: 12,
                 meningitis: 25,
                 influenza: 8,
@@ -581,6 +592,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 vektor: 3
             },
             month: {
+                polio: 24,
                 yellow_fever: 140,
                 meningitis: 380,
                 influenza: 95,
@@ -594,6 +606,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 vektor: 15
             },
             year: {
+                polio: 240
                 yellow_fever: 1520,
                 meningitis: 4200,
                 influenza: 1100,
@@ -634,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const set = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = angka(n); };
     // nama vaksin dari SIKEREN -> kartu (cocok sebagian, tanpa peduli huruf besar/kecil)
     const KARTU = { 'stat-yellow-fever': ['yellow', 'demam kuning'], 'stat-meningitis': ['mening'],
-                    'stat-influenza': ['influenza', 'flu'], 'stat-tifoid': ['tifoid', 'tifus', 'typhoid'] };
+                    'stat-influenza': ['influenza', 'flu'], 'stat-tifoid': ['tifoid', 'tifus', 'typhoid'], 'stat-polio': ['polio'] };
     let permintaan = 0;
 
     function muatVaksinasi(period) {
