@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 vektor: 15
             },
             year: {
-                polio: 240
+                polio: 240,
                 yellow_fever: 1520,
                 meningitis: 4200,
                 influenza: 1100,
