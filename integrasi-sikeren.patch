@@ -1,0 +1,207 @@
+diff --git a/.env.example b/.env.example
+index c0f2987..2885888 100644
+--- a/.env.example
++++ b/.env.example
+@@ -63,4 +63,9 @@ AWS_DEFAULT_REGION=us-east-1
+ AWS_BUCKET=
+ AWS_USE_PATH_STYLE_ENDPOINT=false
+ 
++# Integrasi statistik vaksinasi SIKEREN
++SIKEREN_URL=https://alamat-sikeren-anda
++SIKEREN_KEY=
++SIKEREN_CACHE=60
++
+ VITE_APP_NAME="${APP_NAME}"
+diff --git a/app/Http/Controllers/StatistikSikerenController.php b/app/Http/Controllers/StatistikSikerenController.php
+new file mode 100644
+index 0000000..c9b0fa7
+--- /dev/null
++++ b/app/Http/Controllers/StatistikSikerenController.php
+@@ -0,0 +1,16 @@
++<?php
++
++namespace App\Http\Controllers;
++
++use App\Services\SikerenStatistik;
++use Illuminate\Http\JsonResponse;
++use Illuminate\Http\Request;
++
++/** Proxy JSON untuk tampilan (JS memanggil route ini, bukan SIKEREN langsung). */
++class StatistikSikerenController extends Controller
++{
++    public function __invoke(Request $request, SikerenStatistik $statistik): JsonResponse
++    {
++        return response()->json($statistik->ambil((string) $request->query('periode', 'hari_ini')));
++    }
++}
+diff --git a/app/Services/SikerenStatistik.php b/app/Services/SikerenStatistik.php
+new file mode 100644
+index 0000000..837891c
+--- /dev/null
++++ b/app/Services/SikerenStatistik.php
+@@ -0,0 +1,56 @@
++<?php
++
++namespace App\Services;
++
++use Illuminate\Support\Facades\Cache;
++use Illuminate\Support\Facades\Http;
++use Illuminate\Support\Facades\Log;
++
++/**
++ * Mengambil statistik vaksinasi dari API SIKEREN (server ke server, kunci tidak sampai ke browser).
++ * Hasil di-cache singkat; bila SIKEREN sedang tidak bisa dihubungi, data terakhir yang berhasil
++ * (maksimal 1 hari) tetap ditampilkan dengan penanda 'basi' => true.
++ */
++class SikerenStatistik
++{
++    public const PERIODE = ['hari_ini' => 'Hari Ini', 'bulan_ini' => 'Bulan Ini', 'tahun_ini' => 'Tahun Ini'];
++
++    public function ambil(string $periode = 'hari_ini', ?string $wilker = null): array
++    {
++        $periode = array_key_exists($periode, self::PERIODE) ? $periode : 'hari_ini';
++        $kunciCache = "sikeren.statistik.{$periode}.".($wilker ?: 'semua');
++        $ttl = (int) config('services.sikeren.cache_detik', 60);
++
++        if ($segar = Cache::get($kunciCache)) {
++            return $segar;
++        }
++
++        try {
++            $res = Http::baseUrl(rtrim((string) config('services.sikeren.url'), '/'))
++                ->withToken((string) config('services.sikeren.key'))
++                ->acceptJson()->timeout(5)->retry(1, 200, throw: false)
++                ->get('/api/v1/statistik', array_filter(['periode' => $periode, 'wilker' => $wilker]));
++
++            if ($res->successful() && is_array($res->json())) {
++                $data = $res->json() + ['basi' => false];
++                Cache::put($kunciCache, $data, $ttl);
++                Cache::put($kunciCache.'.terakhir', $data, now()->addDay());
++
++                return $data;
++            }
++            Log::warning('API SIKEREN gagal', ['status' => $res->status()]);
++        } catch (\Throwable $e) {
++            Log::warning('API SIKEREN tidak terhubung: '.$e->getMessage());
++        }
++
++        $terakhir = Cache::get($kunciCache.'.terakhir');
++
++        return $terakhir ? ['basi' => true] + $terakhir : $this->kosong($periode);
++    }
++
++    /** Bentuk data bila belum pernah berhasil mengambil dari SIKEREN. */
++    private function kosong(string $periode): array
++    {
++        return ['periode' => $periode, 'total_pasien' => 0, 'total_dosis' => 0, 'vaksin' => [], 'diperbarui' => null, 'basi' => true, 'kosong' => true];
++    }
++}
+diff --git a/config/services.php b/config/services.php
+index 0f23bc1..7b61a7d 100644
+--- a/config/services.php
++++ b/config/services.php
+@@ -35,6 +35,12 @@
+         ],
+     ],
+ 
++    'sikeren' => [
++        'url' => env('SIKEREN_URL'),
++        'key' => env('SIKEREN_KEY'),
++        'cache_detik' => (int) env('SIKEREN_CACHE', 60),
++    ],
++
+     'recaptcha' => [
+     'site_key' => env('RECAPTCHA_SITE_KEY'),
+     'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+diff --git a/resources/views/pages/frontend/welcome.blade.php b/resources/views/pages/frontend/welcome.blade.php
+index ac2a2e2..3b357f9 100644
+--- a/resources/views/pages/frontend/welcome.blade.php
++++ b/resources/views/pages/frontend/welcome.blade.php
+@@ -540,7 +540,7 @@ class="btn btn-primary btn-lg px-5 rounded-pill">
+     }
+ </style>
+ 
+-<!-- JS Mockup Integrasi API -->
++<!-- JS Statistik: vaksinasi dari SIKEREN (nyata); tim lain masih data contoh -->
+ <script>
+ document.addEventListener('DOMContentLoaded', function () {
+     let currentPeriod = 'today'; // default filter
+@@ -611,13 +611,8 @@ function fetchStatisticsData(period) {
+         // Ambil data sesuai periode
+         const data = mockApiResponse[period];
+ 
+-        // 1. Hitung & pasang data Tim Vaksinasi
+-        const totalVaksin = data.yellow_fever + data.meningitis + data.influenza + data.tifoid;
+-        document.getElementById('stat-vaksin-total').innerText = totalVaksin.toLocaleString('id-ID');
+-        document.getElementById('stat-yellow-fever').innerText = data.yellow_fever.toLocaleString('id-ID');
+-        document.getElementById('stat-meningitis').innerText = data.meningitis.toLocaleString('id-ID');
+-        document.getElementById('stat-influenza').innerText = data.influenza.toLocaleString('id-ID');
+-        document.getElementById('stat-tifoid').innerText = data.tifoid.toLocaleString('id-ID');
++        // 1. Data Tim Vaksinasi diambil dari SIKEREN (lihat muatVaksinasi di bawah)
++        muatVaksinasi(period);
+ 
+         // 2. Pasang data Tim Pengawasan Alat Angkut
+         document.getElementById('stat-pesawat-diperiksa').innerText = data.pesawat.toLocaleString('id-ID');
+@@ -630,9 +625,35 @@ function fetchStatisticsData(period) {
+         document.getElementById('stat-sampel-air').innerText = data.sampel_air.toLocaleString('id-ID');
+         document.getElementById('stat-pengendalian-vektor').innerText = data.vektor.toLocaleString('id-ID');
+ 
+-        // Timestamp
+-        const now = new Date();
+-        document.getElementById('stat-last-updated').innerText = now.toLocaleTimeString('id-ID') + ' WIB';
++    }
++
++    // Ambil statistik vaksinasi nyata dari SIKEREN via proxy server
++    const PERIODE_API = { today: 'hari_ini', month: 'bulan_ini', year: 'tahun_ini' };
++    const URL_SIKEREN = @json(route('statistik.sikeren'));
++    const angka = n => Number(n || 0).toLocaleString('id-ID');
++    const set = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = angka(n); };
++    // nama vaksin dari SIKEREN -> kartu (cocok sebagian, tanpa peduli huruf besar/kecil)
++    const KARTU = { 'stat-yellow-fever': ['yellow', 'demam kuning'], 'stat-meningitis': ['mening'],
++                    'stat-influenza': ['influenza', 'flu'], 'stat-tifoid': ['tifoid', 'tifus', 'typhoid'] };
++    let permintaan = 0;
++
++    function muatVaksinasi(period) {
++        const id = ++permintaan;
++        fetch(URL_SIKEREN + '?periode=' + (PERIODE_API[period] || 'hari_ini'), { headers: { Accept: 'application/json' } })
++            .then(r => r.json())
++            .then(d => {
++                if (id !== permintaan) return; // abaikan jawaban lama bila periode sudah diganti
++                set('stat-vaksin-total', d.total_dosis);
++                Object.entries(KARTU).forEach(([el, kata]) => {
++                    const jml = (d.vaksin || []).filter(v => kata.some(k => String(v.nama).toLowerCase().includes(k)))
++                                                .reduce((a, v) => a + Number(v.jumlah || 0), 0);
++                    set(el, jml);
++                });
++                const t = d.diperbarui ? new Date(d.diperbarui) : new Date();
++                document.getElementById('stat-last-updated').innerText =
++                    t.toLocaleTimeString('id-ID', { timeZone: 'Asia/Pontianak' }) + ' WIB' + (d.basi ? ' (data terakhir tersimpan)' : '');
++            })
++            .catch(() => { document.getElementById('stat-last-updated').innerText = 'gagal memuat'; });
+     }
+ 
+     // First Load
+diff --git a/routes/web.php b/routes/web.php
+index 0dd0e7a..544d675 100644
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -49,6 +49,7 @@
+ use App\Http\Controllers\KontakKamiController;
+ use App\Http\Controllers\LayananPengaduanMasyarakatUserController;
+ use App\Http\Controllers\ProfileController;
++use App\Http\Controllers\StatistikSikerenController;
+ use App\Http\Controllers\UserBeritaController;
+ use App\Models\Akuntabilitas;
+ use App\Models\Artikel;
+@@ -87,6 +88,11 @@
+ 
+ Route::get('/', [HomeController::class, 'index'])->name('beranda');
+ 
++// Proxy statistik vaksinasi dari SIKEREN (kunci API tetap di server)
++Route::get('/statistik-sikeren', StatistikSikerenController::class)
++    ->middleware('throttle:60,1')
++    ->name('statistik.sikeren');
++
+ Route::get('/layanan/{id}', [StandarPelayananController::class, 'show'])
+     ->name('layanan.show');
+ 

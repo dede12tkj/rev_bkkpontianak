@@ -540,7 +540,7 @@
     }
 </style>
 
-<!-- JS Mockup Integrasi API -->
+<!-- JS Statistik: vaksinasi dari SIKEREN (nyata); tim lain masih data contoh -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     let currentPeriod = 'today'; // default filter
@@ -611,13 +611,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ambil data sesuai periode
         const data = mockApiResponse[period];
 
-        // 1. Hitung & pasang data Tim Vaksinasi
-        const totalVaksin = data.yellow_fever + data.meningitis + data.influenza + data.tifoid;
-        document.getElementById('stat-vaksin-total').innerText = totalVaksin.toLocaleString('id-ID');
-        document.getElementById('stat-yellow-fever').innerText = data.yellow_fever.toLocaleString('id-ID');
-        document.getElementById('stat-meningitis').innerText = data.meningitis.toLocaleString('id-ID');
-        document.getElementById('stat-influenza').innerText = data.influenza.toLocaleString('id-ID');
-        document.getElementById('stat-tifoid').innerText = data.tifoid.toLocaleString('id-ID');
+        // 1. Data Tim Vaksinasi diambil dari SIKEREN (lihat muatVaksinasi di bawah)
+        muatVaksinasi(period);
 
         // 2. Pasang data Tim Pengawasan Alat Angkut
         document.getElementById('stat-pesawat-diperiksa').innerText = data.pesawat.toLocaleString('id-ID');
@@ -630,9 +625,35 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('stat-sampel-air').innerText = data.sampel_air.toLocaleString('id-ID');
         document.getElementById('stat-pengendalian-vektor').innerText = data.vektor.toLocaleString('id-ID');
 
-        // Timestamp
-        const now = new Date();
-        document.getElementById('stat-last-updated').innerText = now.toLocaleTimeString('id-ID') + ' WIB';
+    }
+
+    // Ambil statistik vaksinasi nyata dari SIKEREN via proxy server
+    const PERIODE_API = { today: 'hari_ini', month: 'bulan_ini', year: 'tahun_ini' };
+    const URL_SIKEREN = @json(route('statistik.sikeren'));
+    const angka = n => Number(n || 0).toLocaleString('id-ID');
+    const set = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = angka(n); };
+    // nama vaksin dari SIKEREN -> kartu (cocok sebagian, tanpa peduli huruf besar/kecil)
+    const KARTU = { 'stat-yellow-fever': ['yellow', 'demam kuning'], 'stat-meningitis': ['mening'],
+                    'stat-influenza': ['influenza', 'flu'], 'stat-tifoid': ['tifoid', 'tifus', 'typhoid'] };
+    let permintaan = 0;
+
+    function muatVaksinasi(period) {
+        const id = ++permintaan;
+        fetch(URL_SIKEREN + '?periode=' + (PERIODE_API[period] || 'hari_ini'), { headers: { Accept: 'application/json' } })
+            .then(r => r.json())
+            .then(d => {
+                if (id !== permintaan) return; // abaikan jawaban lama bila periode sudah diganti
+                set('stat-vaksin-total', d.total_dosis);
+                Object.entries(KARTU).forEach(([el, kata]) => {
+                    const jml = (d.vaksin || []).filter(v => kata.some(k => String(v.nama).toLowerCase().includes(k)))
+                                                .reduce((a, v) => a + Number(v.jumlah || 0), 0);
+                    set(el, jml);
+                });
+                const t = d.diperbarui ? new Date(d.diperbarui) : new Date();
+                document.getElementById('stat-last-updated').innerText =
+                    t.toLocaleTimeString('id-ID', { timeZone: 'Asia/Pontianak' }) + ' WIB' + (d.basi ? ' (data terakhir tersimpan)' : '');
+            })
+            .catch(() => { document.getElementById('stat-last-updated').innerText = 'gagal memuat'; });
     }
 
     // First Load

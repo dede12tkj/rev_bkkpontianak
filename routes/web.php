@@ -49,6 +49,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontakKamiController;
 use App\Http\Controllers\LayananPengaduanMasyarakatUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatistikSikerenController;
 use App\Http\Controllers\UserBeritaController;
 use App\Models\Akuntabilitas;
 use App\Models\Artikel;
@@ -86,6 +87,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
+
+// Proxy statistik vaksinasi dari SIKEREN (kunci API tetap di server)
+Route::get('/statistik-sikeren', StatistikSikerenController::class)
+    ->middleware('throttle:60,1')
+    ->name('statistik.sikeren');
 
 Route::get('/layanan/{id}', [StandarPelayananController::class, 'show'])
     ->name('layanan.show');
