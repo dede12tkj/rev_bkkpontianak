@@ -648,8 +648,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const angka = n => Number(n || 0).toLocaleString('id-ID');
     const set = (id, n) => { const el = document.getElementById(id); if (el) el.innerText = angka(n); };
     // nama vaksin dari SIKEREN -> kartu (cocok sebagian, tanpa peduli huruf besar/kecil)
-    const KARTU = { 'stat-yellow-fever': ['yellow', 'demam kuning'], 'stat-meningitis': ['mening'],
-                    'stat-influenza': ['influenza', 'flu'], 'stat-tifoid': ['tifoid', 'tifus', 'typhoid'], 'stat-polio': ['polio'] };
+    const KARTU = { 
+    'stat-yellow-fever': ['yellow', 'demam kuning'], 
+    'stat-meningitis': ['mening'],
+    'stat-influenza': ['influenza', 'flu'], 
+    'stat-tifoid': ['tifoid', 'tifus', 'typhoid'],
+    'stat-polio': ['polio'] 
+};
     let permintaan = 0;
 
     function muatVaksinasi(period) {
