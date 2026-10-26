@@ -389,72 +389,74 @@
             <div class="tab-pane fade show active" id="tab-vaksin" role="tabpanel">
                 <div class="row g-4">
                     <!-- Total Vaksinasi -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card border-0 shadow-sm p-4 text-center h-100 bg-primary text-white rounded-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge bg-white text-primary">Total Layanan</span>
-                                <i class="fa fa-users-cog fa-2x opacity-75"></i>
+                    <div class="row g-4">
+                        <!-- Total Layanan -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 bg-primary text-white rounded-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-white text-primary">Total Layanan</span>
+                                    <i class="fa fa-users-cog fa-2x opacity-75"></i>
+                                </div>
+                                <h2 class="display-6 fw-bold text-white mb-0" id="stat-vaksin-total">0</h2>
+                                <p class="small text-white-50 mb-0">Total Dosis Diberikan</p>
                             </div>
-                            <h2 class="display-5 fw-bold text-white mb-0" id="stat-vaksin-total">0</h2>
-                            <p class="small text-white-50 mb-0">Total Dosis Diberikan</p>
+                        </div>
+                    
+                        <!-- Yellow Fever -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                                <div class="icon-wrap mx-auto mb-2 text-warning">
+                                    <i class="fa fa-vial fa-2x"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark mb-1" id="stat-yellow-fever">0</h3>
+                                <p class="small text-muted mb-0">Yellow Fever</p>
+                            </div>
+                        </div>
+                    
+                        <!-- Meningitis -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                                <div class="icon-wrap mx-auto mb-2 text-info">
+                                    <i class="fa fa-capsules fa-2x"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark mb-1" id="stat-meningitis">0</h3>
+                                <p class="small text-muted mb-0">Meningitis</p>
+                            </div>
+                        </div>
+                    
+                        <!-- Influenza -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                                <div class="icon-wrap mx-auto mb-2 text-danger">
+                                    <i class="fa fa-head-side-cough fa-2x"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark mb-1" id="stat-influenza">0</h3>
+                                <p class="small text-muted mb-0">Influenza</p>
+                            </div>
+                        </div>
+                    
+                        <!-- Tifoid -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                                <div class="icon-wrap mx-auto mb-2 text-success">
+                                    <i class="fa fa-shield-virus fa-2x"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark mb-1" id="stat-tifoid">0</h3>
+                                <p class="small text-muted mb-0">Tifoid</p>
+                            </div>
+                        </div>
+                    
+                        <!-- Polio (PASTIKAN id="stat-polio") -->
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
+                                <div class="icon-wrap mx-auto mb-2 text-primary">
+                                    <i class="fa fa-pills fa-2x"></i>
+                                </div>
+                                <h3 class="fw-bold text-dark mb-1" id="stat-polio">0</h3>
+                                <p class="small text-muted mb-0">Polio</p>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Yellow Fever -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
-                            <div class="icon-wrap mx-auto mb-2 text-warning">
-                                <i class="fa fa-vial fa-2x"></i>
-                            </div>
-                            <h3 class="fw-bold text-dark mb-1" id="stat-yellow-fever">0</h3>
-                            <p class="small text-muted mb-0">Yellow Fever</p>
-                        </div>
-                    </div>
-
-                    <!-- Meningitis -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
-                            <div class="icon-wrap mx-auto mb-2 text-info">
-                                <i class="fa fa-capsules fa-2x"></i>
-                            </div>
-                            <h3 class="fw-bold text-dark mb-1" id="stat-meningitis">0</h3>
-                            <p class="small text-muted mb-0">Meningitis</p>
-                        </div>
-                    </div>
-
-                    <!-- Influenza -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
-                            <div class="icon-wrap mx-auto mb-2 text-danger">
-                                <i class="fa fa-head-side-cough fa-2x"></i>
-                            </div>
-                            <h3 class="fw-bold text-dark mb-1" id="stat-influenza">0</h3>
-                            <p class="small text-muted mb-0">Influenza</p>
-                        </div>
-                    </div>
-
-                    <!-- Tifoid -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
-                            <div class="icon-wrap mx-auto mb-2 text-success">
-                                <i class="fa fa-shield-virus fa-2x"></i>
-                            </div>
-                            <h3 class="fw-bold text-dark mb-1" id="stat-tifoid">0</h3>
-                            <p class="small text-muted mb-0">Tifoid</p>
-                        </div>
-                    </div>
-                    <!-- Polio -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <div class="card border-0 shadow-sm p-3 text-center h-100 rounded-4 stat-card">
-                            <div class="icon-wrap mx-auto mb-2 text-primary">
-                                <i class="fa fa-pills fa-2x"></i>
-                            </div>
-                            <h3 class="fw-bold text-dark mb-1" id="stat-polio">0</h3>
-                            <p class="small text-muted mb-0">Polio</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- TIM 2: PENGAWASAN ALAT ANGKUT (Kapal, Pesawat, Peserta/Penumpang) -->
             <div class="tab-pane fade" id="tab-angkut" role="tabpanel">
