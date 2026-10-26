@@ -454,7 +454,6 @@
                                 <p class="small text-muted mb-0">Polio</p>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
 
