@@ -82,6 +82,9 @@
                         <a href="{{ route('posein-aza') }}"
                             class="dropdown-item {{ request()->routeIs('posein-aza') ? 'active' : '' }}"
                             class="dropdown-item">POSEin Aza</a>
+                        <a href="{{ config('sikeren.url') }}" class="dropdown-item">SIKEREN</a>
+                        <a href="{{ config('sidawai.url') }}" class="dropdown-item">SIDAWAI</a>
+                        <a href="{{ config('sikawa.url') }}" class="dropdown-item">SIKAWA</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
