@@ -42,11 +42,11 @@
 
     <!-- Ikon Media Sosial yang akan terbang dari sebelah kanan -->
     <div class="social-media-icons">
-        <a href="https://www.facebook.com/Admin.KKP.Pontianak" target="_blank"
+        <a href="http://facebook.com/karkes.pontianak" target="_blank"
             class="social-icon facebook btn-lg-square">
             <i class="fab fa-facebook-f"></i>
         </a>
-        <a href="https://x.com/kkp_pontianak" target="_blank" class="social-icon twitter btn-lg-square">
+        <a href="https://x.com/bkkpontianak" target="_blank" class="social-icon twitter btn-lg-square">
             <i class="fab fa-twitter"></i>
         </a>
         <a href="https://www.instagram.com/bkk.pontianak/" target="_blank"

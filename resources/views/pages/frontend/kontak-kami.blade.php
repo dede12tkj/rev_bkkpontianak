@@ -39,9 +39,9 @@
                         <a class="btn btn-primary btn-square me-2"
                             href="https://www.tiktok.com/@bkkpontianak?is_from_webapp=1&sender_device=pc" target="blank"><i
                                 class="fab fa-tiktok fw-normal"></i></a>
-                        <a class="btn btn-primary btn-square me-2" href="https://x.com/kkp_pontianak" target="blank"><i
+                        <a class="btn btn-primary btn-square me-2" href="https://x.com/bkkpontianak" target="blank"><i
                                 class="fab fa-twitter fw-normal"></i></a>
-                        <a class="btn btn-primary btn-square me-2" href="https://www.facebook.com/Admin.KKP.Pontianak"
+                        <a class="btn btn-primary btn-square me-2" href="http://facebook.com/karkes.pontianak"
                             target="blank"><i class="fab fa-facebook-f fw-normal"></i></a>
                     </div>
                 </div>
