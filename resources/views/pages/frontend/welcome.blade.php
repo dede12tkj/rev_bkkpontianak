@@ -584,13 +584,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 meningitis: 25,
                 influenza: 8,
                 tifoid: 5,
-                pesawat: 14,
-                kapal: 9,
-                cop: 6,
-                skrining: 320,
-                sampel_makanan: 4,
-                sampel_air: 2,
-                vektor: 3
+                pesawat: 0,
+                kapal: 0,
+                cop: 0,
+                skrining: 0,
+                sampel_makanan: 0,
+                sampel_air: 0,
+                vektor: 0
             },
             month: {
                 polio: 24,
@@ -598,13 +598,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 meningitis: 380,
                 influenza: 95,
                 tifoid: 60,
-                pesawat: 310,
-                kapal: 180,
-                cop: 120,
-                skrining: 8400,
-                sampel_makanan: 45,
-                sampel_air: 30,
-                vektor: 15
+                pesawat: 0,
+                kapal: 0,
+                cop: 0,
+                skrining: 0,
+                sampel_makanan: 0,
+                sampel_air: 0,
+                vektor: 0
             },
             year: {
                 polio: 240,
@@ -612,13 +612,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 meningitis: 4200,
                 influenza: 1100,
                 tifoid: 750,
-                pesawat: 3400,
-                kapal: 2100,
-                cop: 1450,
-                skrining: 95000,
-                sampel_makanan: 480,
-                sampel_air: 320,
-                vektor: 180
+                pesawat: 0,
+                kapal: 0,
+                cop: 0,
+                skrining: 0,
+                sampel_makanan: 0,
+                sampel_air: 0,
+                vektor: 0
             }
         };
 
